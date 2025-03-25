@@ -1,0 +1,55 @@
+#imgProjects {
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 5vh 0;
+  --durationH: 60s;
+  --durationV: 5s;
+}
+#imgProjects:hover .infinite-slide {
+  animation-play-state: paused;
+}
+.infinite-slide {
+  padding: calc(0.06 * 35vh) 0;
+  display: inline-block;
+  animation: var(--durationH) linear infinite slideH;
+}
+.infinite-slide .img {
+  width: 20vw;
+  height: 35vh;
+  object-fit: cover;
+  object-position: 100% center;
+  border-radius: 16px;
+  margin: 0 1.5vw;
+}
+
+.infinite-slide .img.odd {
+  animation: var(--durationV) ease-in-out infinite alternate slideVOdd;
+}
+.infinite-slide .img.even {
+  animation: var(--durationV) ease-in-out infinite alternate slideVEven;
+}
+
+@keyframes slideVOdd {
+  from {
+    transform: translateY(-5%);
+  }
+  to {
+    transform: translateY(5%);
+  }
+}
+@keyframes slideVEven {
+  from {
+    transform: translateY(5%);
+  }
+  to {
+    transform: translateY(-5%);
+  }
+}
+@keyframes slideH {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
