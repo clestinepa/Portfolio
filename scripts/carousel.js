@@ -1,7 +1,7 @@
 /** NEXT STEPS
  * - handle when up mouse, go in a standard position with a smooth animation
  * - after this ↑, handle the power of the movement : if the mouse is fast, go in further standard position (and even do complete circle)
- * - handle that the click on a picture move the carousel to bring it in front
+ * - handle that the click has a smooth animation
  * - add a slow infinite automatic rotation, stop it when the mouse hover a photo
  */
 
@@ -54,7 +54,7 @@ function getScale(pos) {
  * @returns {number} the associated z-index
  */
 function getZIndex(pos) {
-  return Math.abs(parseInt((pos - 0.5) * 100)) - 25;
+  return Math.abs(parseInt((pos - 0.5) * 100));
 }
 /**
  * Apply right style to the image depending of its position.
@@ -76,7 +76,7 @@ function displayImgs() {
   div.id = "carousel";
 
   //initial state of dataset
-  div.dataset.mouseDownAt = "";
+  div.dataset.mouseDownAt = "0";
   div.dataset.prevPosition = "0";
 
   for (let i = 1; i < NB_IMG + 1; i++) {
@@ -89,6 +89,7 @@ function displayImgs() {
     //initial style
     let pos = standardPosImgs[i - 1];
     applyStyleWithoutAnimation(img, pos);
+    img.dataset.position = `${pos}`;
     img.draggable = false;
 
     div.appendChild(img);
@@ -139,28 +140,12 @@ function getAngleOfMouse(e) {
   const startY = e.clientY - centerY;
   return Math.atan2(startY, startX);
 }
-
-displayImgs();
-const carousel = document.getElementById("carousel");
-const listImgCarousel = document.getElementsByClassName("img-carousel");
-imgProjects.onmousedown = (e) => {
-  if (e.button == 0) carousel.dataset.mouseDownAt = getAngleOfMouse(e);
-};
-function finishMoving() {
-  //if we didn't try to move the carousel, do nothing
-  if (carousel.dataset.mouseDownAt == "") return;
-  carousel.dataset.mouseDownAt = "";
-  carousel.dataset.prevPosition = carousel.dataset.position;
-}
-imgProjects.addEventListener("mouseup", finishMoving);
-imgProjects.addEventListener("mouseleave", finishMoving);
-imgProjects.onmousemove = (e) => {
-  //if we don't try to move the carousel, do nothing
-  if (carousel.dataset.mouseDownAt == "") return;
-
-  //we calculated next position of the carousel ie next position of the first image
-  let angleDiff = carousel.dataset.mouseDownAt - getAngleOfMouse(e);
-  let deltaPercentage = angleDiff / (2 * Math.PI);
+/**
+ * Apply all the right style to move the carousel up to the next position
+ * @param {number} deltaPercentage the delta to add to the current position
+ */
+function moveCarousel(deltaPercentage) {
+  //we calculate next position of the carousel ie next position of the first image
   let nextPosUnconstrained = parseFloat(carousel.dataset.prevPosition) + deltaPercentage;
   let nextPosition = getConstrainedPos(nextPosUnconstrained);
   carousel.dataset.position = nextPosition;
@@ -171,8 +156,47 @@ imgProjects.onmousemove = (e) => {
     let linearPos = getConstrainedPos(linearPosUnconstrained);
     let nextPos = getRealPos(linearPos);
     applyStyleWithoutAnimation(img, nextPos);
+    img.dataset.position = nextPos;
   }
+}
+
+displayImgs();
+const carousel = document.getElementById("carousel");
+const listImgCarousel = document.getElementsByClassName("img-carousel");
+imgProjects.onmousedown = (e) => {
+  if (e.button == 0) carousel.dataset.mouseDownAt = getAngleOfMouse(e);
 };
+function finishMoving() {
+  //if we didn't try to move the carousel, do nothing
+  if (carousel.dataset.mouseDownAt == "0") return;
+  carousel.dataset.mouseDownAt = "0";
+  carousel.dataset.prevPosition = carousel.dataset.position;
+}
+imgProjects.addEventListener("mouseup", finishMoving);
+imgProjects.addEventListener("mouseleave", finishMoving);
+imgProjects.onmousemove = (e) => {
+  //if we don't try to move the carousel, do nothing
+  if (carousel.dataset.mouseDownAt == "0") return;
+
+  //we calculate the delta to add to the current position of the carousel
+  let angleDiff = carousel.dataset.mouseDownAt - getAngleOfMouse(e);
+  let deltaPercentage = angleDiff / (2 * Math.PI);
+  moveCarousel(deltaPercentage)
+};
+
+for (let img of listImgCarousel) {
+  let downDate = undefined;
+  img.addEventListener("mousedown", (e) => {
+    downDate = new Date();
+  });
+  img.addEventListener("mouseup", (e) => {
+    //if there's no click or it's longer than 300ms, do nothing
+    if (downDate == undefined || new Date() - downDate > 300) return;
+
+    let deltaPercentage = img.dataset.position < 0.5 ? img.dataset.position * -1 : 1 - img.dataset.position;
+    moveCarousel(deltaPercentage)
+  });
+}
 
 function updateOffsetPath() {
   let x = carousel.clientWidth;
