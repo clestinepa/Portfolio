@@ -5,21 +5,20 @@
  * - maybe when the animation is running but mouse down, save the fact that we try to move and when the animation is done, if mouse still down and moving, then apply usual change of mouse move
  */
 
-const imgProjects = document.getElementById("imgProjects");
-
-// each image is placed based on au %.
-// 0 and 1 is equivalent and correspond to the front.
-// 0.25, 0.5 and 0.75 correspond to the right, back and left
-// for esthetics, NB_IMG and standard position are defined
+/** Description of the logic :
+ * Each image is placed based on a % along an ellipsis.
+ * This ellipsis is recalculated at each resize of the window.
+ * 0 and 1 is equivalent and correspond to the front.
+ * 0.25, 0.5 and 0.75 correspond to the right, back and left.
+ * For esthetics, NB_IMG and standard position are defined
+ */
 const NB_IMG = 9;
 const standardPosImgs = [0, 0.135, 0.25, 0.35, 0.455, 0.545, 0.65, 0.75, 0.865, 1];
+const imgProjects = document.getElementById("imgProjects");
 
-function easeInOutQuad(t) {
-  return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-}
 /**
  * Get brightness of an image depending of its position (ie its percentage).
- * 100 for 0%, 20 for 50%, 100 for 100% with easeInOut interpolation.
+ * 100 for 0%, 20 for 50%, 100 for 100% with ease-in-out interpolation.
  * @param {number} pos the position of the image, in 0 and 1
  * @returns {number} the associated brightness
  */
@@ -27,15 +26,19 @@ function getBrightness(pos) {
   let max = 100;
   let min = 20;
   let opacity;
+  let t;
   if (pos <= 0.5) {
-    const opacityFactor = easeInOutQuad(pos / 0.5);
+    t = pos / 0.5;
+    const opacityFactor = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
     opacity = max - (max - min) * opacityFactor;
   } else {
-    const opacityFactor = easeInOutQuad((pos - 0.5) / 0.5);
+    t = (pos - 0.5) / 0.5;
+    const opacityFactor = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
     opacity = min + (max - min) * opacityFactor;
   }
   return opacity.toFixed(2);
 }
+
 /**
  * Get scale of an image size depending of its position (ie its percentage).
  * 1 for 0%, 0.4 for 50%, 1 for 100% with linear interpolation.
@@ -47,86 +50,17 @@ function getScale(pos) {
   let min = 0.4;
   return pos <= 0.5 ? max - ((max - min) * pos) / 0.5 : min + ((max - min) * (pos - 0.5)) / 0.5;
 }
+
 /**
  * Get proper z-index of an image depending of its position (ie its percentage).
- * when on the back (ie around pos = 0.5) z-index has to be lesser than on the front (ie around pos = 0 or 1)
+ * 50 for 0%, 0 for 50%, 50 for 100% with linear interpolation.
  * @param {number} pos the position of the image, in 0 and 1
  * @returns {number} the associated z-index
  */
 function getZIndex(pos) {
   return Math.abs(parseInt((pos - 0.5) * 100));
 }
-/**
- * Apply right style to the image depending of its position.
- * Modify z-index, filter, transform and offset-distance.
- * @param {Element} img the image that we apply style
- * @param {number} nextPos the next position of the image, in 0 and 1
- */
-function applyStyleWithoutAnimation(img, nextPos) {
-  img.style.zIndex = getZIndex(nextPos);
-  img.style.filter = `brightness(${getBrightness(nextPos)}%)`;
-  img.style.transform = `scale(${getScale(nextPos)})`;
-  img.style.offsetDistance = `${nextPos * 100}%`;
-  img.dataset.position = nextPos;
-}
-/**
- * Create and display all the image in the initial position
- */
-function displayImgs() {
-  const div = document.createElement("div");
-  div.id = "carousel";
 
-  //initial state of dataset
-  div.dataset.mouseDownAt = "0";
-  div.dataset.prevPosition = "0";
-
-  for (let i = 1; i < NB_IMG + 1; i++) {
-    // if (i != 1) continue;
-    const img = document.createElement("img");
-    img.src = `static/img/${i}.jpg`;
-    img.className = "img-carousel";
-    img.id = `img-carousel-${i}`;
-
-    //initial style
-    let pos = standardPosImgs[i - 1];
-    applyStyleWithoutAnimation(img, pos);
-    img.dataset.position = pos;
-    img.draggable = false;
-
-    div.appendChild(img);
-  }
-  imgProjects.appendChild(div);
-}
-
-/**
- * Constrain the position in 0 and 1, circularly.
- * @param {number} pos the position of the image, in 0 and 1
- * @returns {number} the constrained position
- */
-function getConstrainedPos(pos) {
-  return ((pos % 1) + 1) % 1;
-}
-/**
- * Because the standard position aren't linear, we need to remapping it to
- * ensure that the visual remains consistent with the established standard.
- * @param {number} pos the position of the image, in 0 and 1
- * @returns {number} the real nonlinear remapped position
- */
-function getRealPos(pos) {
-  const sizeLinearInterval = 1 / NB_IMG;
-  const ratio = pos / sizeLinearInterval;
-  const x1 = ratio - (ratio % 1);
-  const x2 = x1 + 1;
-  return standardPosImgs[x1] + (standardPosImgs[x2] - standardPosImgs[x1]) * (ratio % 1);
-}
-/**
- * Get static rank of the image (the initial first image is always rank 0)
- * @param {Element} img the image
- * @returns {number} the static rank of the image
- */
-function getRankImg(img) {
-  return parseInt(img.id.replace("img-carousel-", "")) - 1;
-}
 /**
  * Get the angle between the center of imgProjects and the mouse
  * @param {MouseEvent} e the event of the mouse
@@ -141,6 +75,39 @@ function getAngleOfMouse(e) {
   const startY = e.clientY - centerY;
   return Math.atan2(startY, startX);
 }
+
+/**
+ * Constrain the position in 0 and 1, circularly.
+ * @param {number} pos the position of the image, in 0 and 1
+ * @returns {number} the constrained position
+ */
+function getConstrainedPos(pos) {
+  return ((pos % 1) + 1) % 1;
+}
+
+/**
+ * Because the standard position aren't linear, we need to remapping it to
+ * ensure that the visual remains consistent with the established standard.
+ * @param {number} pos the position of the image, in 0 and 1
+ * @returns {number} the real nonlinear remapped position
+ */
+function getRealPos(pos) {
+  const sizeLinearInterval = 1 / NB_IMG;
+  const ratio = pos / sizeLinearInterval;
+  const x1 = ratio - (ratio % 1);
+  const x2 = x1 + 1;
+  return standardPosImgs[x1] + (standardPosImgs[x2] - standardPosImgs[x1]) * (ratio % 1);
+}
+
+/**
+ * Get static rank of the image (the initial first image is always rank 0)
+ * @param {Element} img the image
+ * @returns {number} the static rank of the image
+ */
+function getRankImg(img) {
+  return parseInt(img.id.replace("img-carousel-", "")) - 1;
+}
+
 /**
  * Get the  index of the closest value in the standard position
  * @param {number} pos the position of the image, in 0 and 1
@@ -154,6 +121,7 @@ function getClosestIndexStandardPos(pos) {
   );
   return closestIndex == standardPosImgs.length - 1 ? 0 : closestIndex;
 }
+
 /**
  * Remove each animation style of the image to ensure that element style aren't ignored
  * @param {Element} img the image
@@ -164,6 +132,21 @@ function removeAllAnimations(img) {
     anim.cancel();
   });
 }
+
+/**
+ * Apply right style to the image depending of its position.
+ * Modify z-index, filter, transform and offset-distance.
+ * @param {Element} img the image that we apply style
+ * @param {number} nextPos the next position of the image, in 0 and 1
+ */
+function applyStyleWithoutAnimation(img, nextPos) {
+  img.style.zIndex = getZIndex(nextPos);
+  img.style.filter = `brightness(${getBrightness(nextPos)}%)`;
+  img.style.transform = `scale(${getScale(nextPos)})`;
+  img.style.offsetDistance = `${nextPos * 100}%`;
+  img.dataset.position = nextPos;
+}
+
 /**
  * Animate to the right style to the image depending of its position.
  * Modify z-index, filter, transform and offset-distance.
@@ -267,9 +250,34 @@ function moveCarousel(delta, needAnimation) {
   }
 }
 
+/* Initialization of the carousel  */
+function displayImgs() {
+  const div = document.createElement("div");
+  div.id = "carousel";
+  div.dataset.mouseDownAt = "0";
+  div.dataset.prevPosition = "0";
+
+  for (let i = 1; i < NB_IMG + 1; i++) {
+    const img = document.createElement("img");
+    img.src = `static/img/${i}.jpg`;
+    img.className = "img-carousel";
+    img.id = `img-carousel-${i}`;
+
+    //initial style
+    let pos = standardPosImgs[i - 1];
+    applyStyleWithoutAnimation(img, pos);
+    img.dataset.position = pos;
+    img.draggable = false;
+
+    div.appendChild(img);
+  }
+  imgProjects.appendChild(div);
+}
 displayImgs();
 const carousel = document.getElementById("carousel");
 const listImgCarousel = document.getElementsByClassName("img-carousel");
+
+/* Handle mouse movement in the carousel : move the images according to the mouse movement */
 imgProjects.onmousedown = (e) => {
   //Move the carousel only with left click and when no animation are running
   if (e.button == 0 && listImgCarousel[0].getAnimations().length == 0)
@@ -278,6 +286,7 @@ imgProjects.onmousedown = (e) => {
 function finishMoving() {
   //if we don't try to move the carousel, do nothing
   if (carousel.dataset.mouseDownAt == "0") return;
+
   carousel.dataset.mouseDownAt = "0";
   carousel.dataset.prevPosition = carousel.dataset.position;
 }
@@ -293,6 +302,8 @@ imgProjects.onmousemove = (e) => {
   moveCarousel(deltaPercentage, false);
 };
 
+/* Handle click in an image : move this image in front with an animation */
+const MAX_TIME_OF_PRESSURE = 300;
 for (let img of listImgCarousel) {
   let downDate = undefined;
   img.addEventListener("mousedown", (e) => {
@@ -300,7 +311,8 @@ for (let img of listImgCarousel) {
   });
   img.addEventListener("mouseup", (e) => {
     //if there's no click or it's longer than 300ms or the image is still moving from previous animation, do nothing
-    if (downDate == undefined || new Date() - downDate > 300 || img.getAnimations().length != 0) return;
+    if (downDate == undefined || new Date() - downDate > MAX_TIME_OF_PRESSURE || img.getAnimations().length != 0)
+      return;
     let deltaIndexStandardPos =
       img.dataset.position < 0.5
         ? getClosestIndexStandardPos(img.dataset.position) * -1
@@ -309,6 +321,7 @@ for (let img of listImgCarousel) {
   });
 }
 
+/* Handle resize of the window : recalculate path of the images */
 function updateOffsetPath() {
   let x = carousel.clientWidth;
   let y = carousel.clientHeight;
