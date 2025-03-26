@@ -1,8 +1,8 @@
 /** NEXT STEPS
- * - handle that avoid multiple click : wait the animation to finish
  * - handle when up mouse, go in a standard position with a smooth animation
  * - after this ↑, handle the power of the movement : if the mouse is fast, go in further standard position (and even do complete circle)
  * - add a slow infinite automatic rotation, stop it when the mouse hover a photo
+ * - maybe when the animation is running but mouse down, save the fact that we try to move and when the animation is done, if mouse still down and moving, then apply usual change of mouse move
  */
 
 const imgProjects = document.getElementById("imgProjects");
@@ -271,10 +271,12 @@ displayImgs();
 const carousel = document.getElementById("carousel");
 const listImgCarousel = document.getElementsByClassName("img-carousel");
 imgProjects.onmousedown = (e) => {
-  if (e.button == 0) carousel.dataset.mouseDownAt = getAngleOfMouse(e);
+  //Move the carousel only with left click and when no animation are running
+  if (e.button == 0 && listImgCarousel[0].getAnimations().length == 0)
+    carousel.dataset.mouseDownAt = getAngleOfMouse(e);
 };
 function finishMoving() {
-  //if we didn't try to move the carousel, do nothing
+  //if we don't try to move the carousel, do nothing
   if (carousel.dataset.mouseDownAt == "0") return;
   carousel.dataset.mouseDownAt = "0";
   carousel.dataset.prevPosition = carousel.dataset.position;
@@ -297,9 +299,8 @@ for (let img of listImgCarousel) {
     downDate = new Date();
   });
   img.addEventListener("mouseup", (e) => {
-    //if there's no click or it's longer than 300ms, do nothing
-    if (downDate == undefined || new Date() - downDate > 300) return;
-
+    //if there's no click or it's longer than 300ms or the image is still moving from previous animation, do nothing
+    if (downDate == undefined || new Date() - downDate > 300 || img.getAnimations().length != 0) return;
     let deltaIndexStandardPos =
       img.dataset.position < 0.5
         ? getClosestIndexStandardPos(img.dataset.position) * -1
