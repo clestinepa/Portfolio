@@ -1,6 +1,6 @@
 /** NEXT STEPS
- * - handle when up mouse, go in a standard position with a smooth animation
- * - after this ↑, handle the power of the movement : if the mouse is fast, go in further standard position (and even do complete circle)
+ * - fix when first move during mousedown, the carousel move more than needed (check around delta percentage)
+ * - handle the power of the movement : if the mouse is fast, go in further standard position (and even do complete circle)
  * - add a slow infinite automatic rotation, stop it when the mouse hover a photo
  * - maybe when the animation is running but mouse down, save the fact that we try to move and when the animation is done, if mouse still down and moving, then apply usual change of mouse move
  */
@@ -10,7 +10,7 @@
  * This ellipsis is recalculated at each resize of the window.
  * 0 and 1 is equivalent and correspond to the front.
  * 0.25, 0.5 and 0.75 correspond to the right, back and left.
- * For esthetics, NB_IMG and standard position are defined
+ * For esthetics, NB_IMG and standard position are defined.
  */
 const NB_IMG = 9;
 const standardPosImgs = [0, 0.135, 0.25, 0.35, 0.455, 0.545, 0.65, 0.75, 0.865, 1];
@@ -78,7 +78,7 @@ function getAngleOfMouse(e) {
 
 /**
  * Constrain the position in 0 and 1, circularly.
- * @param {number} pos the position of the image, in 0 and 1
+ * @param {number} pos the position of the image or the carousel, in 0 and 1
  * @returns {number} the constrained position
  */
 function getConstrainedPos(pos) {
@@ -109,7 +109,7 @@ function getRankImg(img) {
 }
 
 /**
- * Get the  index of the closest value in the standard position
+ * Get the index of the closest value in the standard position
  * @param {number} pos the position of the image, in 0 and 1
  * @returns {number} the index of the closest value in standard position
  */
@@ -120,6 +120,46 @@ function getClosestIndexStandardPos(pos) {
     0
   );
   return closestIndex == standardPosImgs.length - 1 ? 0 : closestIndex;
+}
+
+/**
+ * Get the index of the closest value in the standard position without
+ * going backwards, referring to isClockwiseRotation
+ * @param {number} pos the position of the carousel, in 0 and 1
+ * @returns the index of the next closest value in standard position depending of the rotation
+ */
+function getNextClosestIndexStandardPos(pos) {
+  const isClockwiseRotation = carousel.dataset.isClockwiseRotation == "true";
+  const closestIndex = getClosestIndexStandardPos(pos);
+  let closestWithoutBackwards = closestIndex;
+  //we change index to avoid going backwards
+  if (isClockwiseRotation) {
+    //closestIndex is always != 0 here because 0 <= pos <= 1 and standardPosImgs[0] = 0, no need to check
+    if (pos < standardPosImgs[closestIndex]) closestWithoutBackwards--;
+    if (closestIndex == 0) closestWithoutBackwards = standardPosImgs.length - 2;
+  } else {
+    //closestIndex is always != standardPosImgs.length - 1 here because 0 <= pos <= 1 and standardPosImgs[standardPosImgs.length - 1] = 1, no need to check
+    if (standardPosImgs[closestIndex] < pos) closestWithoutBackwards++;
+  }
+
+  return closestWithoutBackwards;
+}
+
+/**
+ * Apply the right value of isClockwiseRotation depending of the difference
+ * between nextPos and the current position
+ * @param {number} nextPos the position of the carousel, in 0 and 1
+ */
+function applyIsClockwiseRotation(nextPos) {
+  let diffAngleBetweenCurrentAndNext = nextPos - carousel.dataset.position;
+  //keep previous isClockwiseRotation
+  if (diffAngleBetweenCurrentAndNext == 0) null;
+  //handle crossing 0
+  else if (diffAngleBetweenCurrentAndNext > 0.5) carousel.dataset.isClockwiseRotation = "true";
+  //handle crossing 1
+  else if (diffAngleBetweenCurrentAndNext < -0.5) carousel.dataset.isClockwiseRotation = "false";
+  //usual movement
+  else carousel.dataset.isClockwiseRotation = diffAngleBetweenCurrentAndNext > 0 ? "false" : "true";
 }
 
 /**
@@ -152,9 +192,9 @@ function applyStyleWithoutAnimation(img, nextPos) {
  * Modify z-index, filter, transform and offset-distance.
  * @param {Element} img the image that we apply style
  * @param {number} nextPos the next position of the image, in 0 and 1
- * @param {boolean} isClockwiseRotation the rotation of the animation
  */
-function applyStyleWithAnimation(img, nextPos, isClockwiseRotation) {
+function applyStyleWithAnimation(img, nextPos) {
+  const isClockwiseRotation = carousel.dataset.isClockwiseRotation == "true";
   let duration = 1000;
   if (
     (nextPos < img.dataset.position && !isClockwiseRotation) ||
@@ -172,7 +212,6 @@ function applyStyleWithAnimation(img, nextPos, isClockwiseRotation) {
       sizeStep2 = nextPos;
       step1To = 1;
     }
-    //we need to force img to cross 0%
     let sizeAllSteps = sizeStep1 + sizeStep2;
     let step1Duration = (sizeStep1 / sizeAllSteps) * duration;
     let step2Duration = (sizeStep2 / sizeAllSteps) * duration;
@@ -226,10 +265,9 @@ function applyStyleWithAnimation(img, nextPos, isClockwiseRotation) {
  */
 function moveCarousel(delta, needAnimation) {
   if (!needAnimation) {
-    //we calculate next position of the carousel ie next position of the first image
+    //we calculate next position of the carousel
     let nextPosUnconstrainedCarousel = parseFloat(carousel.dataset.prevPosition) + delta;
     let nextPosCarousel = getConstrainedPos(nextPosUnconstrainedCarousel);
-    carousel.dataset.position = nextPosCarousel;
 
     //we change style of each image depending of their next position
     for (let img of listImgCarousel) {
@@ -237,13 +275,20 @@ function moveCarousel(delta, needAnimation) {
       let nextLinearPos = getConstrainedPos(nextLinearPosUnconstrained);
       let nextPos = getRealPos(nextLinearPos);
       applyStyleWithoutAnimation(img, nextPos);
+      if (getRankImg(img) == 0) {
+        //we define the direction of the rotation
+        applyIsClockwiseRotation(nextPos);
+        //we apply the next position of the carousel ie next position of the first image
+        carousel.dataset.position = nextPos;
+      }
     }
   } else {
+    carousel.dataset.isClockwiseRotation = delta < 0;
     //we animate style of each image depending of their next position
     for (let img of listImgCarousel) {
       const indexOfNextPos = (NB_IMG + getClosestIndexStandardPos(img.dataset.position) + delta) % NB_IMG;
       const nextPos = standardPosImgs[indexOfNextPos];
-      applyStyleWithAnimation(img, nextPos, delta < 0);
+      applyStyleWithAnimation(img, nextPos);
       //we apply the next position of the carousel ie next position of the first image
       if (getRankImg(img) == 0) carousel.dataset.position = nextPos;
     }
@@ -287,6 +332,17 @@ function finishMoving() {
   //if we don't try to move the carousel, do nothing
   if (carousel.dataset.mouseDownAt == "0") return;
 
+  //move carousel to a standard position
+  let standardNextIndex = getNextClosestIndexStandardPos(carousel.dataset.position);
+  if (standardPosImgs[standardNextIndex] != carousel.dataset.position) {
+    for (let img of listImgCarousel) {
+      const index = (getRankImg(img) + standardNextIndex) % NB_IMG;
+      const nextPos = standardPosImgs[index];
+      applyStyleWithAnimation(img, nextPos);
+      if (getRankImg(img) == 0) carousel.dataset.position = nextPos;
+    }
+  }
+
   carousel.dataset.mouseDownAt = "0";
   carousel.dataset.prevPosition = carousel.dataset.position;
 }
@@ -317,7 +373,7 @@ for (let img of listImgCarousel) {
       img.dataset.position < 0.5
         ? getClosestIndexStandardPos(img.dataset.position) * -1
         : NB_IMG - getClosestIndexStandardPos(img.dataset.position);
-    moveCarousel(deltaIndexStandardPos, true);
+    if (deltaIndexStandardPos != 0) moveCarousel(deltaIndexStandardPos, true);
   });
 }
 
