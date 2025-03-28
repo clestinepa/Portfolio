@@ -10,11 +10,9 @@ const dodgeZone = 20; //(in px) distance between mouse and colibri needed to dod
 //scared params
 const waitBack = 25; //frame before come back
 const scaredJumpMax = 50; //(in px) distance max of a scared jump
-const scaredJumpMin = 50; //(in px) distance min of a scared jump
 /** ****** **/
 
 /** Init **/
-const flowers = document.getElementsByClassName("flower");
 const colibri = document.getElementById("colibri");
 colibri.style.width = `${colibriSize}px`;
 colibri.style.height = `${colibriSize}px`;
@@ -103,27 +101,6 @@ function interpolation(a, b, t, type) {
     default:
       return (1 - t) * a + t * b;
   }
-}
-let velocity = { x: 0, y: 0 };
-let oscillationAngle = 0;
-function bouncing(goal) {
-  const smoothing = 0.1;
-  const friction = 0.9;
-
-  velocity.x += (goal.x - colibriPosition.x) * smoothing;
-  velocity.y += (goal.y - colibriPosition.y) * smoothing;
-
-  velocity.x *= friction;
-  velocity.y *= friction;
-
-  const oscillationAmplitude = 1;
-  const oscillationFrequency = 0.1;
-
-  oscillationAngle += oscillationFrequency;
-  const oscillationOffset = Math.sin(oscillationAngle) * oscillationAmplitude;
-
-  colibriPosition.x += velocity.x;
-  colibriPosition.y += velocity.y + oscillationOffset;
 }
 function getDistanceGoalMouse() {
   const xColibri = colibriPosition.x + colibriSize / 2;
