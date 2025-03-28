@@ -13,8 +13,6 @@
       <div class="presentation-column">
         <h1>Bonjour !</h1>
         <h1>Je m'appelle <span>Célestine Paillé</span></h1>
-        <!-- change span and bckground en fonction
-          -->
         <h2>Je suis <span>Développeuse Front</span></h2>
       </div>
       <div class="presentation-column">
@@ -60,9 +58,19 @@
 
     <!-- absolute element -->
     <div id="cursor"></div>
+    <dotlottie-player
+      id="colibri"
+      src="https://lottie.host/4791dce5-2418-4db3-ad8b-db164b2beac1/ycnRisXl8L.lottie"
+      background="transparent"
+      speed="1"
+      loop
+      autoplay
+    ></dotlottie-player>
     <!-- scripts -->
     <script src="scripts/carousel.js"></script>
     <script src="scripts/slide.js"></script>
     <script src="scripts/cursor.js"></script>
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <script src="scripts/colibri.js"></script>
   </body>
 </html>
