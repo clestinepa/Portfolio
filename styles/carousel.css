@@ -1,7 +1,6 @@
-#imgProjects {
+#carousel-container {
   display: inline-flex;
   justify-content: center;
-  margin: 5vh 0;
   padding: 20vmin 0;
   width: 100%;
   overflow: hidden;
@@ -9,7 +8,7 @@
 #carousel {
   user-select: none;
   height: 50vh;
-  width: 70vw;
+  width: 60vw;
   position: relative;
   --path: "";
 }
@@ -18,9 +17,6 @@
   /* appearance */
   width: 40vmin;
   height: 40vmin;
-  object-fit: cover;
-  object-position: 100% center;
-  border-radius: 16px;
 
   /* position */
   position: absolute;

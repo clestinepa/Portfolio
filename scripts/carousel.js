@@ -1,5 +1,6 @@
 /** NEXT STEPS
- * - fix when first move during mousedown, the carousel move more than needed (check around delta percentage)
+ * - fix when first move during mousedown, the carousel move more than needed
+ *   (because of getRealPos... but if real only for other than first, first isn't placed right)
  * - handle the power of the movement : if the mouse is fast, go in further standard position (and even do complete circle)
  * - add a slow infinite automatic rotation, stop it when the mouse hover a photo
  * - maybe when the animation is running but mouse down, save the fact that we try to move and when the animation is done, if mouse still down and moving, then apply usual change of mouse move
@@ -10,11 +11,11 @@
  * This ellipsis is recalculated at each resize of the window.
  * 0 and 1 is equivalent and correspond to the front.
  * 0.25, 0.5 and 0.75 correspond to the right, back and left.
- * For esthetics, NB_IMG and standard position are defined.
+ * For esthetics, NB_IMG_CAROUSEL and standard position are defined.
  */
-const NB_IMG = 9;
+const NB_IMG_CAROUSEL = 9;
 const standardPosImgs = [0, 0.135, 0.25, 0.35, 0.455, 0.545, 0.65, 0.75, 0.865, 1];
-const imgProjects = document.getElementById("imgProjects");
+const carouselContainer = document.getElementById("carousel-container");
 
 /**
  * Get brightness of an image depending of its position (ie its percentage).
@@ -62,12 +63,12 @@ function getZIndex(pos) {
 }
 
 /**
- * Get the angle between the center of imgProjects and the mouse
+ * Get the angle between the center of the container and the mouse
  * @param {MouseEvent} e the event of the mouse
- * @returns the angle between the center of imgProjects and the mouse
+ * @returns the angle between the center of the container  and the mouse
  */
 function getAngleOfMouse(e) {
-  const rect = imgProjects.getBoundingClientRect();
+  const rect = carouselContainer.getBoundingClientRect();
   const centerX = rect.left + rect.width / 2;
   const centerY = rect.top + rect.height / 2;
 
@@ -92,7 +93,7 @@ function getConstrainedPos(pos) {
  * @returns {number} the real nonlinear remapped position
  */
 function getRealPos(pos) {
-  const sizeLinearInterval = 1 / NB_IMG;
+  const sizeLinearInterval = 1 / NB_IMG_CAROUSEL;
   const ratio = pos / sizeLinearInterval;
   const x1 = ratio - (ratio % 1);
   const x2 = x1 + 1;
@@ -271,7 +272,7 @@ function moveCarousel(delta, needAnimation) {
 
     //we change style of each image depending of their next position
     for (let img of listImgCarousel) {
-      let nextLinearPosUnconstrained = nextPosCarousel + (1 / NB_IMG) * getRankImg(img);
+      let nextLinearPosUnconstrained = nextPosCarousel + (1 / NB_IMG_CAROUSEL) * getRankImg(img);
       let nextLinearPos = getConstrainedPos(nextLinearPosUnconstrained);
       let nextPos = getRealPos(nextLinearPos);
       applyStyleWithoutAnimation(img, nextPos);
@@ -286,7 +287,7 @@ function moveCarousel(delta, needAnimation) {
     carousel.dataset.isClockwiseRotation = delta < 0;
     //we animate style of each image depending of their next position
     for (let img of listImgCarousel) {
-      const indexOfNextPos = (NB_IMG + getClosestIndexStandardPos(img.dataset.position) + delta) % NB_IMG;
+      const indexOfNextPos = (NB_IMG_CAROUSEL + getClosestIndexStandardPos(img.dataset.position) + delta) % NB_IMG_CAROUSEL;
       const nextPos = standardPosImgs[indexOfNextPos];
       applyStyleWithAnimation(img, nextPos);
       //we apply the next position of the carousel ie next position of the first image
@@ -302,7 +303,7 @@ function displayImgs() {
   div.dataset.mouseDownAt = "0";
   div.dataset.prevPosition = "0";
 
-  for (let i = 1; i < NB_IMG + 1; i++) {
+  for (let i = 1; i < NB_IMG_CAROUSEL + 1; i++) {
     const img = document.createElement("img");
     img.src = `static/img/${i}.jpg`;
     img.className = "img-carousel";
@@ -316,14 +317,14 @@ function displayImgs() {
 
     div.appendChild(img);
   }
-  imgProjects.appendChild(div);
+  carouselContainer.appendChild(div);
 }
 displayImgs();
 const carousel = document.getElementById("carousel");
 const listImgCarousel = document.getElementsByClassName("img-carousel");
 
 /* Handle mouse movement in the carousel : move the images according to the mouse movement */
-imgProjects.onmousedown = (e) => {
+carouselContainer.onmousedown = (e) => {
   //Move the carousel only with left click and when no animation are running
   if (e.button == 0 && listImgCarousel[0].getAnimations().length == 0)
     carousel.dataset.mouseDownAt = getAngleOfMouse(e);
@@ -336,7 +337,7 @@ function finishMoving() {
   let standardNextIndex = getNextClosestIndexStandardPos(carousel.dataset.position);
   if (standardPosImgs[standardNextIndex] != carousel.dataset.position) {
     for (let img of listImgCarousel) {
-      const index = (getRankImg(img) + standardNextIndex) % NB_IMG;
+      const index = (getRankImg(img) + standardNextIndex) % NB_IMG_CAROUSEL;
       const nextPos = standardPosImgs[index];
       applyStyleWithAnimation(img, nextPos);
       if (getRankImg(img) == 0) carousel.dataset.position = nextPos;
@@ -346,9 +347,9 @@ function finishMoving() {
   carousel.dataset.mouseDownAt = "0";
   carousel.dataset.prevPosition = carousel.dataset.position;
 }
-imgProjects.addEventListener("mouseup", finishMoving);
-imgProjects.addEventListener("mouseleave", finishMoving);
-imgProjects.onmousemove = (e) => {
+carouselContainer.addEventListener("mouseup", finishMoving);
+carouselContainer.addEventListener("mouseleave", finishMoving);
+carouselContainer.onmousemove = (e) => {
   //if we don't try to move the carousel, do nothing
   if (carousel.dataset.mouseDownAt == "0") return;
 
@@ -372,7 +373,7 @@ for (let img of listImgCarousel) {
     let deltaIndexStandardPos =
       img.dataset.position < 0.5
         ? getClosestIndexStandardPos(img.dataset.position) * -1
-        : NB_IMG - getClosestIndexStandardPos(img.dataset.position);
+        : NB_IMG_CAROUSEL - getClosestIndexStandardPos(img.dataset.position);
     if (deltaIndexStandardPos != 0) moveCarousel(deltaIndexStandardPos, true);
   });
 }

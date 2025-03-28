@@ -1,11 +1,10 @@
-#imgProjects {
+#slide-container {
   white-space: nowrap;
   overflow: hidden;
-  margin: 5vh 0;
   --durationH: 60s;
   --durationV: 5s;
 }
-#imgProjects:hover .infinite-slide {
+#slide-container:hover .infinite-slide {
   animation-play-state: paused;
 }
 .infinite-slide {

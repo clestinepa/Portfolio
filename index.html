@@ -4,19 +4,61 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles/global.css" />
-    <!-- <link rel="stylesheet" href="styles/infiniteSlide.css"> -->
     <link rel="stylesheet" href="styles/carousel.css" />
+    <link rel="stylesheet" href="styles/slide.css" />
     <title>Clemestine</title>
   </head>
   <body>
-    <h1>UX/UI Designeuse</h1>
-    <h1>Developpeuse Front End</h1>
-    <p>Maquetter avec une pensée pour le code et coder avec une pensée pour l'utilisateur</p>
-    <button>Discover</button>
-    <h1>Créative et touche à tout</h1>
-    <div id="imgProjects"></div>
-    
-    <!-- <script src="scripts/infiniteSide.js"></script> -->
+    <div class="section" id="presentation">
+      <div class="presentation-column">
+        <h1>Bonjour !</h1>
+        <h1>Je m'appelle <span>Célestine Paillé</span></h1>
+        <!-- change span and bckground en fonction
+          -->
+        <h2>Je suis <span>Développeuse Front</span></h2>
+      </div>
+      <div class="presentation-column">
+        <img id="profile-picture" src="static/img/1.jpg" />
+      </div>
+    </div>
+
+    <div class="section" id="about">
+      <h1>Un peu plus sur moi</h1>
+      <p>
+        Lorem ipsum dolor sit amet. Ut pariatur nisi qui sunt numquam et consequuntur mollitia id dolore quisquam 33
+        dicta galisum et temporibus facilis. Et illo fugiat sit minus quae ut omnis quae. Cum consectetur laboriosam ab
+        voluptas voluptatem et modi voluptas et sunt dolores et sunt repellendus est facere distinctio. Ut minus error
+        sit possimus optio et recusandae quasi sit quia repudiandae ut reprehenderit dolores aut autem tenetur et quia
+        voluptatum.
+      </p>
+      <p>
+        33 omnis debitis qui libero libero id dolor galisum At optio voluptas in sequi ipsam. In velit molestiae et
+        dolor suscipit ut pariatur doloribus eum quia quia et commodi maxime et ducimus eligendi sit quas voluptas. Aut
+        omnis repudiandae quo consequatur corrupti et odio sint. Eos explicabo veritatis ea inventore atque eum maiores
+        sint eum omnis maxime est molestiae totam.
+      </p>
+      <p>
+        Eum quae voluptatum aut excepturi autem et quaerat voluptas et distinctio laborum non consectetur autem est
+        voluptatibus sunt! Et quia quaerat et corporis dolore eos dignissimos eaque est excepturi alias id inventore
+        pariatur aut cumque aperiam.
+      </p>
+    </div>
+
+    <div class="section" id="design">
+      <h1>Mes projets créatifs</h1>
+      <div id="carousel-container"></div>
+    </div>
+
+    <div class="section" id="code">
+      <h1>Mes développements</h1>
+      <div id="slide-container"></div>
+    </div>
+
+    <div class="section" id="contact">
+      <h1>Contact me !</h1>
+    </div>
+
     <script src="scripts/carousel.js"></script>
+    <script src="scripts/slide.js"></script>
   </body>
 </html>
