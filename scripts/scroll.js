@@ -1,7 +1,8 @@
 let scrollTimeout;
 let userScrolling = false;
 let isAnimating = false;
-let animationFrameId;
+const DURATION_ANIMATION = 1500;
+const TIMEOUT_ANIMATION = 1000;
 
 function getClosestSection() {
   const sections = document.getElementsByClassName("section");
@@ -30,7 +31,7 @@ function smoothScrollTo(targetY) {
   function animationStep(currentTime) {
     if (!isAnimating) return;
     const elapsedTime = currentTime - startTime;
-    const progress = Math.min(elapsedTime / 1000, 1);
+    const progress = Math.min(elapsedTime / DURATION_ANIMATION, 1);
     const easedProgress = 1 - (1 - progress) * (1 - progress);
     userScrolling = false;
     window.scrollTo(0, startY + distance * easedProgress);
@@ -57,10 +58,7 @@ window.addEventListener("touchmove", userIsScrolling);
 
 window.addEventListener("scroll", (e) => {
   clearTimeout(scrollTimeout);
-  if (userScrolling && isAnimating) {
-    isAnimating = false;
-    cancelAnimationFrame(animationFrameId);
-  }
-  scrollTimeout = setTimeout(snapToClosestSection, 1000);
+  if (userScrolling && isAnimating) isAnimating = false;
+  scrollTimeout = setTimeout(snapToClosestSection, TIMEOUT_ANIMATION);
 });
 snapToClosestSection();
