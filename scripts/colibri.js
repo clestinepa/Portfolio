@@ -2,6 +2,8 @@
  * - determine randomScared based of the mousePosition: closer => jump higher
  * - add flower around text
  * - recreate goAway effect
+ * - if mouse come closer to colibri during scared, keep a distance min between them 
+ *   (distance min=initial scared distance calculated)
  */
 
 /** Params **/

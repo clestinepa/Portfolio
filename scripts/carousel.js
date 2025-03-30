@@ -287,7 +287,8 @@ function moveCarousel(delta, needAnimation) {
     carousel.dataset.isClockwiseRotation = delta < 0;
     //we animate style of each image depending of their next position
     for (let img of listImgCarousel) {
-      const indexOfNextPos = (NB_IMG_CAROUSEL + getClosestIndexStandardPos(img.dataset.position) + delta) % NB_IMG_CAROUSEL;
+      const indexOfNextPos =
+        (NB_IMG_CAROUSEL + getClosestIndexStandardPos(img.dataset.position) + delta) % NB_IMG_CAROUSEL;
       const nextPos = standardPosImgs[indexOfNextPos];
       applyStyleWithAnimation(img, nextPos);
       //we apply the next position of the carousel ie next position of the first image

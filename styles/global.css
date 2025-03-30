@@ -1,12 +1,18 @@
 * {
   margin: 0;
   padding: 0;
-  color: wheat;
+  --themeColor1: #00B6E3;
+  --themeColor2: #38C557;
+  --themeColor3: #3CD4B9;
+  --themeColor4: #68ECDF;
+  --themeColor5: #DD9658;
+  --themeColor6: #D5DF48;
+  color: var(--themeColor5);
 }
 
 html {
   cursor: none;
-  background: #171616;
+  background: #D8F8F2;
   overflow-x: hidden;
 }
 

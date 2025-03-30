@@ -1,0 +1,32 @@
+@keyframes move {
+  50% {
+    transform: scale(0.5);
+  }
+  100% {
+    offset-distance: 100%;
+    transform: scale(1);
+  }
+}
+
+#background {
+  z-index: -999;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: transparent;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+#background span {
+  mix-blend-mode: screen;
+  opacity: 0.2;
+  offset-rotate: 0deg;
+  border-radius: 50%;
+  position: absolute;
+  animation: move;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
