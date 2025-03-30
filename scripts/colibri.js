@@ -1,7 +1,5 @@
 /** NEXT STEPS
- * - recreate dodge effect
  * - determine randomScared based of the mousePosition: closer => jump higher
- * - make it disappear if not in about section
  * - add flower around text
  * - recreate goAway effect
  */
@@ -22,41 +20,31 @@ const t_interpolation = {
   dodge: 0.25,
   goAway: 0.05,
   scared: 0.25,
+  hide: 0.03,
 };
 /** ****** **/
 
-/** Init **/
-const colibriElement = document.getElementById("colibri");
-colibriElement.style.width = `${defaultColibriSize}px`;
-colibriElement.style.height = `${defaultColibriSize}px`;
-colibriElement.style.position = "fixed";
-colibriElement.style.zIndex = "999";
-const mousePosition = {
-  x: 0,
-  y: 0,
-  lastMove: null,
-};
-/** **** **/
-
+/** Class **/
 class Colibri {
   size = defaultColibriSize;
-
-  constructor() {
-    this.goal = { x: null, y: null };
-    this.action = "follow";
-    this.position = {
-      flip: false,
-      x: 0,
-      y: 0,
-      angle: 0,
-    };
-    this.counterBeforeBack = 0;
-  }
+  isVisible = true;
+  goal = { x: null, y: null };
+  action = "follow";
+  position = {
+    flip: false,
+    x: 0,
+    y: 0,
+    angle: 0,
+  };
+  counterBeforeBack = 0;
+  constructor() {}
 
   get #t() {
     switch (this.action) {
       case "goAway":
         return t_interpolation.goAway;
+      case "hide":
+        return t_interpolation.hide;
       case "dodge":
         return t_interpolation.dodge;
       case "scared":
@@ -71,11 +59,11 @@ class Colibri {
     return this.size / ratioHeadPosition;
   }
 
-  get center() {
+  get #center() {
     return { x: this.position.x + this.size / 2, y: this.position.y + this.size / 2 };
   }
 
-  get head() {
+  get #head() {
     return { x: this.position.x + this.size / 2, y: this.position.y + this.#deltaYHead };
   }
 
@@ -83,19 +71,31 @@ class Colibri {
   get #isGoalAchieved() {
     //precisionGoalAchieved is necessary because the interpolation makes
     //the movement very slow near the goal
-    return this.getDistanceTo(this.goal) < this.size / 2 + marginMouse + precisionGoalAchieved;
+    return this.#getDistanceTo(this.goal) < this.size / 2 + marginMouse + precisionGoalAchieved;
   }
 
-  get focus() {
-    return mousePosition;
+  get #focus() {
+    switch (this.action) {
+      case "goAway":
+      case "hide":
+        return this.goal;
+      case "dodge":
+      case "scared":
+      case "follow":
+      default:
+        return mousePosition;
+    }
   }
 
   #setFlip() {
-    this.position.flip = this.center.x > this.focus.x;
+    this.position.flip = this.#center.x > this.#focus.x;
   }
 
   #setAngle() {
-    this.position.angle = Math.atan2(this.focus.y - this.head.y, this.focus.x - this.head.x);
+    this.position.angle = Math.atan2(this.#focus.y - this.#head.y, this.#focus.x - this.#head.x);
+    colibriElement.style.transform = `rotate(${colibri.position.angle}rad) scaleY(${
+      colibri.position.flip ? "-1" : "1"
+    })`;
   }
 
   /**marginMouse or -marginMouse depending of the flip*/
@@ -103,8 +103,8 @@ class Colibri {
     return marginMouse * (this.position.flip ? -1 : 1);
   }
 
-  getDistanceTo(pos) {
-    return Math.sqrt(Math.pow(pos.x - this.head.x, 2) + Math.pow(pos.y - this.head.y, 2));
+  #getDistanceTo(pos) {
+    return Math.sqrt(Math.pow(pos.x - this.#head.x, 2) + Math.pow(pos.y - this.#head.y, 2));
   }
 
   #setGoal() {
@@ -118,6 +118,12 @@ class Colibri {
       case "scared":
         //already define
         break;
+      case "hide":
+        this.goal = {
+          x: colibriSection.offsetLeft + (colibriSection.clientWidth / 2) * -1,
+          y: colibriSection.offsetTop + colibriSection.clientHeight / 2,
+        };
+        break;
       case "follow":
       default:
         this.goal = mousePosition;
@@ -125,20 +131,26 @@ class Colibri {
   }
 
   #setAction() {
-    if (this.getDistanceTo(mousePosition) < this.size / 2) this.action = "dodge";
-    else if (this.#isGoalAchieved) {
-      switch (this.action) {
-        case "dodge":
-          this.action = "follow";
-          break;
-        case "scared":
-          this.counterBeforeBack++;
-          if (this.counterBeforeBack >= waitBack) this.action = "follow";
-          break;
-        case "follow":
-          this.counterBeforeBack = 0;
+    if (this.isVisible) {
+      if (this.#getDistanceTo(mousePosition) < this.size / 2) this.action = "dodge";
+      else if (this.action == "hide") this.action = "follow";
+      else if (this.#isGoalAchieved) {
+        switch (this.action) {
+          case "dodge":
+            this.action = "follow";
+            break;
+          case "scared":
+            this.counterBeforeBack++;
+            if (this.counterBeforeBack >= waitBack) this.action = "follow";
+            break;
+          case "follow":
+            this.counterBeforeBack = 0;
+        }
       }
+    } else {
+      this.action = "hide";
     }
+    colibriElement.dataset.action = colibri.action;
   }
 
   get #estheticGoal() {
@@ -163,6 +175,8 @@ class Colibri {
       this.position.y =
         this.position.y + (this.#estheticGoal.y - this.position.y) * (0.5 - 0.5 * Math.cos(Math.PI * this.#t));
     }
+    colibriElement.style.top = `${colibri.position.y}px`;
+    colibriElement.style.left = `${colibri.position.x}px`;
   }
 
   handleMouseDown() {
@@ -170,8 +184,8 @@ class Colibri {
     const randomY = Math.floor(Math.random() * scaredJumpMax);
     const randomX = Math.floor(Math.random() * scaredJumpMax) + this.size;
     this.goal = {
-      x: this.head.x - randomX * (this.position.flip ? -1 : 1),
-      y: this.head.y - randomY,
+      x: this.#head.x - randomX * (this.position.flip ? -1 : 1),
+      y: this.#head.y - randomY,
     };
     this.counterBeforeBack = 0;
   }
@@ -183,13 +197,44 @@ class Colibri {
     this.#setFlip();
     this.#setAngle();
   }
+
+  changeVisibility() {
+    this.isVisible = !this.isVisible;
+    colibriElement.style.opacity = this.isVisible ? "1" : "0";
+  }
 }
-let colibri = new Colibri();
+/** ***** **/
+
+/** Init **/
+const colibriElement = document.getElementById("colibri");
+const colibriSection = document.getElementById("about");
+colibriElement.style.width = `${defaultColibriSize}px`;
+colibriElement.style.height = `${defaultColibriSize}px`;
+colibriElement.style.position = "absolute";
+colibriElement.style.zIndex = "999";
+colibriElement.style.opacity = "0";
+colibriElement.style.transition = "opacity 1s ease-in-out";
+const mousePosition = {
+  x: 0,
+  y: 0,
+  fixedX: 0,
+  fixedY: 0,
+  lastMove: null,
+};
+export const colibri = new Colibri();
+/** **** **/
 
 /** EventListener **/
+document.addEventListener("scroll", () => {
+  mousePosition.x = mousePosition.fixedX + window.scrollX;
+  mousePosition.y = mousePosition.fixedY + window.scrollY;
+  mousePosition.lastMove = Date.now();
+});
 document.addEventListener("mousemove", (e) => {
-  mousePosition.x = e.clientX;
-  mousePosition.y = e.clientY;
+  mousePosition.fixedX = e.clientX;
+  mousePosition.fixedY = e.clientY;
+  mousePosition.x = mousePosition.fixedX + window.scrollX;
+  mousePosition.y = mousePosition.fixedY + window.scrollY;
   mousePosition.lastMove = Date.now();
 });
 document.addEventListener("mousedown", () => {
@@ -201,12 +246,6 @@ document.addEventListener("mousedown", () => {
 /** RequestAnimationFrame **/
 const refColibri = () => {
   colibri.handleFrame();
-
-  colibriElement.dataset.action = colibri.action;
-  colibriElement.style.top = `${colibri.position.y}px`;
-  colibriElement.style.left = `${colibri.position.x}px`;
-  colibriElement.style.transform = `rotate(${colibri.position.angle}rad) scaleY(${colibri.position.flip ? "-1" : "1"})`;
-
   requestAnimationFrame(refColibri);
 };
 

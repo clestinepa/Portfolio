@@ -1,3 +1,5 @@
+import { colibri } from "./colibri.js";
+
 let scrollTimeout;
 let userScrolling = false;
 let isAnimating = false;
@@ -46,6 +48,8 @@ function smoothScrollTo(targetY) {
 function snapToClosestSection() {
   const closestSection = getClosestSection();
   if (closestSection) {
+    if ((closestSection.id == "about" && !colibri.isVisible) || (closestSection.id != "about" && colibri.isVisible))
+      colibri.changeVisibility();
     smoothScrollTo(closestSection.offsetTop);
   }
 }
@@ -56,7 +60,7 @@ function userIsScrolling() {
 window.addEventListener("wheel", userIsScrolling);
 window.addEventListener("touchmove", userIsScrolling);
 
-window.addEventListener("scroll", (e) => {
+window.addEventListener("scroll", () => {
   clearTimeout(scrollTimeout);
   if (userScrolling && isAnimating) isAnimating = false;
   scrollTimeout = setTimeout(snapToClosestSection, TIMEOUT_ANIMATION);

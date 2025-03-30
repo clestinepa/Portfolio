@@ -71,65 +71,7 @@
     <script src="scripts/slide.js"></script>
     <script src="scripts/cursor.js"></script>
     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
-    <script src="scripts/colibri.js"></script>
-    <script src="scripts/scroll.js"></script>
-    <!-- <script>
-      let scrollTimeout;
-
-      function getClosestSection() {
-        const sections = document.querySelectorAll("section");
-        let closest = null;
-        let minDistance = Infinity;
-        const scrollPosition = window.scrollY;
-
-        sections.forEach((section) => {
-          const offset = section.offsetTop;
-          const distance = Math.abs(scrollPosition - offset);
-
-          if (distance < minDistance) {
-            minDistance = distance;
-            closest = section;
-          }
-        });
-        return closest;
-      }
-
-      function easeOutQuad(t) {
-        return 1 - (1 - t) * (1 - t); // Quadratic ease-out
-      }
-
-      function smoothScrollTo(targetY, duration = 1000) {
-        const startY = window.scrollY;
-        const distance = targetY - startY;
-        const startTime = performance.now();
-
-        function animationStep(currentTime) {
-          const elapsedTime = currentTime - startTime;
-          const progress = Math.min(elapsedTime / duration, 1);
-          const easedProgress = easeOutQuad(progress);
-          window.scrollTo(0, startY + distance * easedProgress);
-
-          if (progress < 1) {
-            requestAnimationFrame(animationStep);
-          }
-        }
-
-        requestAnimationFrame(animationStep);
-      }
-
-      function snapToClosestSection() {
-        console.log("yoo");
-
-        const closestSection = getClosestSection();
-        if (closestSection) {
-          smoothScrollTo(closestSection.offsetTop, 1000);
-        }
-      }
-
-      window.addEventListener("scroll", () => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(snapToClosestSection, 1000);
-      });
-    </script> -->
+    <script src="scripts/colibri.js" type="module"></script>
+    <script src="scripts/scroll.js" type="module"></script>
   </body>
 </html>
