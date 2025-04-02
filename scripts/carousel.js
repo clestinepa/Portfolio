@@ -1,5 +1,4 @@
 /** NEXT STEPS
- * - PB : when click on 2, then 6, then 1, BUG ! check it !! 
  * - fix when first move during mousedown, the carousel move more than needed
  *   (because of getRealPos... but if real only for other than first, first isn't placed right)
  * - handle the power of the movement : if the mouse is fast, go in further standard position (and even do complete circle)
@@ -356,6 +355,7 @@ function displayImgs() {
   div.dataset.prevPosition = "0";
 
   for (let i = 1; i < NB_IMG_CAROUSEL + 1; i++) {
+    // if (i != 1) continue;
     const img = document.createElement("img");
     img.src = `static/img/${i}.jpg`;
     img.className = "img-carousel";
@@ -381,21 +381,24 @@ carouselContainer.onmousedown = (e) => {
   if (e.button == 0 && listImgCarousel[0].getAnimations().length == 0)
     carousel.dataset.mouseDownAt = getAngleOfMouse(e);
 };
+let isClicked = false;
 function finishMoving() {
   //if we don't try to move the carousel, do nothing
   if (carousel.dataset.mouseDownAt == "0") return;
 
-  //move carousel to a standard position
-  let standardNextIndex = getNextClosestIndexStandardPos(carousel.dataset.position);
-  if (standardPosImgs[standardNextIndex] != carousel.dataset.position) {
-    for (let img of listImgCarousel) {
-      const index = (getRankImg(img) + standardNextIndex) % NB_IMG_CAROUSEL;
-      const nextPos = standardPosImgs[index];
-      applyStyleWithAnimation(img, nextPos);
-      if (getRankImg(img) == 0) carousel.dataset.position = nextPos;
+  //move carousel to a standard position if it isn't a click
+  if (!isClicked) {
+    let standardNextIndex = getNextClosestIndexStandardPos(carousel.dataset.position);
+    if (standardPosImgs[standardNextIndex] != carousel.dataset.position) {
+      for (let img of listImgCarousel) {
+        const index = (getRankImg(img) + standardNextIndex) % NB_IMG_CAROUSEL;
+        const nextPos = standardPosImgs[index];
+        applyStyleWithAnimation(img, nextPos);
+        if (getRankImg(img) == 0) carousel.dataset.position = nextPos;
+      }
     }
   }
-
+  isClicked = false;
   carousel.dataset.mouseDownAt = "0";
   carousel.dataset.prevPosition = carousel.dataset.position;
 }
@@ -422,6 +425,7 @@ for (let img of listImgCarousel) {
     //if there's no click or it's longer than 300ms or the image is still moving from previous animation, do nothing
     if (downDate == undefined || new Date() - downDate > MAX_TIME_OF_PRESSURE || img.getAnimations().length != 0)
       return;
+    isClicked = true;
     let deltaIndexStandardPos =
       img.dataset.position < 0.5
         ? getClosestIndexStandardPos(img.dataset.position) * -1
