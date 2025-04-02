@@ -2,7 +2,7 @@
  * - determine randomScared based of the mousePosition: closer => jump higher
  * - add flower around text
  * - recreate goAway effect
- * - if mouse come closer to colibri during scared, keep a distance min between them 
+ * - if mouse come closer to colibri during scared, keep a distance min between them
  *   (distance min=initial scared distance calculated)
  */
 
@@ -22,7 +22,6 @@ const t_interpolation = {
   dodge: 0.25,
   goAway: 0.05,
   scared: 0.25,
-  hide: 0.03,
 };
 /** ****** **/
 
@@ -39,14 +38,17 @@ class Colibri {
     angle: 0,
   };
   counterBeforeBack = 0;
+  animationFrame = null;
   constructor() {}
+
+  set animationFrame(value) {
+    this.animationFrame = value;
+  }
 
   get #t() {
     switch (this.action) {
       case "goAway":
         return t_interpolation.goAway;
-      case "hide":
-        return t_interpolation.hide;
       case "dodge":
         return t_interpolation.dodge;
       case "scared":
@@ -120,12 +122,6 @@ class Colibri {
       case "scared":
         //already define
         break;
-      case "hide":
-        this.goal = {
-          x: colibriSection.offsetLeft + (colibriSection.clientWidth / 2) * -1,
-          y: colibriSection.offsetTop + colibriSection.clientHeight / 2,
-        };
-        break;
       case "follow":
       default:
         this.goal = mousePosition;
@@ -133,24 +129,19 @@ class Colibri {
   }
 
   #setAction() {
-    if (this.isVisible) {
-      if (this.#getDistanceTo(mousePosition) < this.size / 2) this.action = "dodge";
-      else if (this.action == "hide") this.action = "follow";
-      else if (this.#isGoalAchieved) {
-        switch (this.action) {
-          case "dodge":
-            this.action = "follow";
-            break;
-          case "scared":
-            this.counterBeforeBack++;
-            if (this.counterBeforeBack >= waitBack) this.action = "follow";
-            break;
-          case "follow":
-            this.counterBeforeBack = 0;
-        }
+    if (this.#getDistanceTo(mousePosition) < this.size / 2) this.action = "dodge";
+    else if (this.#isGoalAchieved) {
+      switch (this.action) {
+        case "dodge":
+          this.action = "follow";
+          break;
+        case "scared":
+          this.counterBeforeBack++;
+          if (this.counterBeforeBack >= waitBack) this.action = "follow";
+          break;
+        case "follow":
+          this.counterBeforeBack = 0;
       }
-    } else {
-      this.action = "hide";
     }
     colibriElement.dataset.action = colibri.action;
   }
@@ -202,7 +193,13 @@ class Colibri {
 
   changeVisibility() {
     this.isVisible = !this.isVisible;
-    colibriElement.style.opacity = this.isVisible ? "1" : "0";
+    if (this.isVisible) {
+      colibriElement.style.opacity = "1";
+      refColibri();
+    } else {
+      colibriElement.style.opacity = "0";
+      cancelAnimationFrame(this.animationFrame);
+    }
   }
 }
 /** ***** **/
@@ -248,7 +245,7 @@ document.addEventListener("mousedown", () => {
 /** RequestAnimationFrame **/
 const refColibri = () => {
   colibri.handleFrame();
-  requestAnimationFrame(refColibri);
+  colibri.animationFrame = requestAnimationFrame(refColibri);
 };
 
 refColibri();
