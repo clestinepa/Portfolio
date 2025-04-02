@@ -4,7 +4,8 @@
   --durationH: 60s;
   --durationV: 5s;
 }
-#slide-container:hover .infinite-slide {
+#slide-container:hover .infinite-slide,
+#slide-container:hover .img {
   animation-play-state: paused;
 }
 .infinite-slide {

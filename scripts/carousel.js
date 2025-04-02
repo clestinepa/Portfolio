@@ -1,4 +1,5 @@
 /** NEXT STEPS
+ * - PB : when click on 2, then 6, then 1, BUG ! check it !! 
  * - fix when first move during mousedown, the carousel move more than needed
  *   (because of getRealPos... but if real only for other than first, first isn't placed right)
  * - handle the power of the movement : if the mouse is fast, go in further standard position (and even do complete circle)
@@ -26,6 +27,52 @@ const carouselContainer = document.getElementById("carousel-container");
 function getBrightness(pos) {
   let max = 100;
   let min = 20;
+  let opacity;
+  let t;
+  if (pos <= 0.5) {
+    t = pos / 0.5;
+    const opacityFactor = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    opacity = max - (max - min) * opacityFactor;
+  } else {
+    t = (pos - 0.5) / 0.5;
+    const opacityFactor = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    opacity = min + (max - min) * opacityFactor;
+  }
+  return opacity.toFixed(2);
+}
+
+/**
+ * Get blur of an image depending of its position (ie its percentage).
+ * 0 for 0%, 10 for 50%, 0 for 100% with ease-in-out interpolation.
+ * @param {number} pos the position of the image, in 0 and 1
+ * @returns {number} the associated blur
+ */
+function getBlur(pos) {
+  let max = 0;
+  let min = 2;
+  let opacity;
+  let t;
+  if (pos <= 0.5) {
+    t = pos / 0.5;
+    const opacityFactor = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    opacity = max - (max - min) * opacityFactor;
+  } else {
+    t = (pos - 0.5) / 0.5;
+    const opacityFactor = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    opacity = min + (max - min) * opacityFactor;
+  }
+  return opacity.toFixed(2);
+}
+
+/**
+ * Get opacity of an image depending of its position (ie its percentage).
+ * 1 for 0%, 0.3 for 50%, 1 for 100% with ease-in-out interpolation.
+ * @param {number} pos the position of the image, in 0 and 1
+ * @returns {number} the associated blur
+ */
+function getOpacity(pos) {
+  let max = 1;
+  let min = 0.5;
   let opacity;
   let t;
   if (pos <= 0.5) {
@@ -182,7 +229,8 @@ function removeAllAnimations(img) {
  */
 function applyStyleWithoutAnimation(img, nextPos) {
   img.style.zIndex = getZIndex(nextPos);
-  img.style.filter = `brightness(${getBrightness(nextPos)}%)`;
+  img.style.filter = `blur(${getBlur(nextPos)}px)`;
+  img.style.opacity = `${getOpacity(nextPos)}`;
   img.style.transform = `scale(${getScale(nextPos)})`;
   img.style.offsetDistance = `${nextPos * 100}%`;
   img.dataset.position = nextPos;
@@ -221,7 +269,8 @@ function applyStyleWithAnimation(img, nextPos) {
     img.animate(
       {
         zIndex: [`${getZIndex(img.dataset.position)}`, `${getZIndex(step1To)}`],
-        filter: [`brightness(${getBrightness(img.dataset.position)}%)`, `brightness(${getBrightness(step1To)}%)`],
+        filter: [`blur(${getBlur(img.dataset.position)}px)`, `blur(${getBlur(step1To)}px)`],
+        opacity: [`${getOpacity(img.dataset.position)}`, `${getOpacity(step1To)}`],
         transform: [`scale(${getScale(img.dataset.position)})`, `scale(${getScale(step1To)})`],
         offsetDistance: [`${img.dataset.position * 100}%`, `${step1To * 100}%`],
       },
@@ -233,7 +282,8 @@ function applyStyleWithAnimation(img, nextPos) {
       img.animate(
         {
           zIndex: [`${getZIndex(afterCrossing)}`, `${getZIndex(nextPos)}`],
-          filter: [`brightness(${getBrightness(afterCrossing)}%)`, `brightness(${getBrightness(nextPos)}%)`],
+          filter: [`blur(${getBlur(afterCrossing)}px)`, `blur(${getBlur(nextPos)}px)`],
+          opacity: [`${getOpacity(afterCrossing)}`, `${getOpacity(nextPos)}`],
           transform: [`scale(${getScale(afterCrossing)})`, `scale(${getScale(nextPos)})`],
           offsetDistance: [`${afterCrossing * 100}%`, `${nextPos * 100}%`],
         },
@@ -247,7 +297,8 @@ function applyStyleWithAnimation(img, nextPos) {
     img.animate(
       {
         zIndex: [`${getZIndex(img.dataset.position)}`, `${getZIndex(nextPos)}`],
-        filter: [`brightness(${getBrightness(img.dataset.position)}%)`, `brightness(${getBrightness(nextPos)}%)`],
+        filter: [`blur(${getBlur(img.dataset.position)}px)`, `blur(${getBlur(nextPos)}px)`],
+        opacity: [`${getOpacity(img.dataset.position)}`, `${getOpacity(nextPos)}`],
         transform: [`scale(${getScale(img.dataset.position)})`, `scale(${getScale(nextPos)})`],
         offsetDistance: [`${img.dataset.position * 100}%`, `${nextPos * 100}%`],
       },

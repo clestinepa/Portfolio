@@ -22,7 +22,7 @@
 
 #background span {
   mix-blend-mode: screen;
-  opacity: 0.2;
+  opacity: 0.25;
   offset-rotate: 0deg;
   border-radius: 50%;
   position: absolute;
