@@ -1,5 +1,5 @@
 const slideContainer = document.getElementById("slide-container");
-const NB_IMG_SLIDE = 7;
+const NB_IMG_SLIDE = 7; //nb image in the slide
 
 function displayImg() {
   for (let j = 0; j < 2; j++) {

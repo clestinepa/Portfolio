@@ -1,3 +1,5 @@
+import { getRandomInt } from "./global.js";
+
 /** NEXT STEPS
  * - determine randomScared based of the mousePosition: closer => jump higher
  * - add flower around text
@@ -6,29 +8,30 @@
  *   (distance min=initial scared distance calculated)
  */
 
-/** Params **/
-const defaultColibriSize = 50; //(in px) size of the colibri
-const marginMouse = 10; //(in px) margin x between mouse and colibri
-const ratioHeadPosition = 3.5; //head position relative to the colibri top
-const precisionGoalAchieved = 10; //(in px) distance between colibri and mouse needed to considered goal achieved
+/** Constants **/
+//appearance constants
+const COLIBRI_SIZE = 50; //(in px) size of the colibri
+const MARGIN_MOUSE = 10; //(in px) margin x between mouse and colibri
+const RATIO_HEAD_POSITION = 3.5; //head position relative to the colibri top
 
-//scared params
-const waitBack = 50; //frame before come back
-const scaredJumpMax = 100; //(in px) distance max of a scared jump
+//scared constants
+const NB_FRAME_MAX_SCARED = 50; //frame before come back
+const MAX_SCARED_JUMP = 100; //(in px) distance max of a scared jump
+const MIN_SCARED_JUMP = COLIBRI_SIZE; //(in px) distance min of a scared jump
 
-//movement params
-const t_interpolation = {
+//movement constants
+const T_INTERPOLATION = {
   follow: 0.1,
   dodge: 0.25,
   goAway: 0.05,
   scared: 0.25,
 };
-/** ****** **/
+const PRECISION_ACHIEVED = 10; //(in px) distance between colibri and mouse needed to considered goal achieved
+/** ********* **/
 
 /** Class **/
 class Colibri {
-  size = defaultColibriSize;
-  isVisible = true;
+  isVisible = false;
   goal = { x: null, y: null };
   action = "follow";
   position = {
@@ -37,7 +40,7 @@ class Colibri {
     y: 0,
     angle: 0,
   };
-  counterBeforeBack = 0;
+  counterFrameScared = 0;
   animationFrame = null;
   constructor() {}
 
@@ -48,34 +51,34 @@ class Colibri {
   get #t() {
     switch (this.action) {
       case "goAway":
-        return t_interpolation.goAway;
+        return T_INTERPOLATION.goAway;
       case "dodge":
-        return t_interpolation.dodge;
+        return T_INTERPOLATION.dodge;
       case "scared":
-        return t_interpolation.scared;
+        return T_INTERPOLATION.scared;
       case "follow":
       default:
-        return t_interpolation.follow;
+        return T_INTERPOLATION.follow;
     }
   }
 
   get #deltaYHead() {
-    return this.size / ratioHeadPosition;
+    return COLIBRI_SIZE / RATIO_HEAD_POSITION;
   }
 
   get #center() {
-    return { x: this.position.x + this.size / 2, y: this.position.y + this.size / 2 };
+    return { x: this.position.x + COLIBRI_SIZE / 2, y: this.position.y + COLIBRI_SIZE / 2 };
   }
 
   get #head() {
-    return { x: this.position.x + this.size / 2, y: this.position.y + this.#deltaYHead };
+    return { x: this.position.x + COLIBRI_SIZE / 2, y: this.position.y + this.#deltaYHead };
   }
 
   /** do the distance head-goal is close enough ? */
   get #isGoalAchieved() {
-    //precisionGoalAchieved is necessary because the interpolation makes
+    //PRECISION_ACHIEVED is necessary because the interpolation makes
     //the movement very slow near the goal
-    return this.#getDistanceTo(this.goal) < this.size / 2 + marginMouse + precisionGoalAchieved;
+    return this.#getDistanceTo(this.goal) < COLIBRI_SIZE / 2 + MARGIN_MOUSE + PRECISION_ACHIEVED;
   }
 
   get #focus() {
@@ -102,9 +105,9 @@ class Colibri {
     })`;
   }
 
-  /**marginMouse or -marginMouse depending of the flip*/
+  /**MARGIN_MOUSE or -MARGIN_MOUSE depending of the flip*/
   get #mouseGap() {
-    return marginMouse * (this.position.flip ? -1 : 1);
+    return MARGIN_MOUSE * (this.position.flip ? -1 : 1);
   }
 
   #getDistanceTo(pos) {
@@ -129,18 +132,18 @@ class Colibri {
   }
 
   #setAction() {
-    if (this.#getDistanceTo(mousePosition) < this.size / 2) this.action = "dodge";
+    if (this.#getDistanceTo(mousePosition) < COLIBRI_SIZE / 2) this.action = "dodge";
     else if (this.#isGoalAchieved) {
       switch (this.action) {
         case "dodge":
           this.action = "follow";
           break;
         case "scared":
-          this.counterBeforeBack++;
-          if (this.counterBeforeBack >= waitBack) this.action = "follow";
+          this.counterFrameScared++;
+          if (this.counterFrameScared >= NB_FRAME_MAX_SCARED) this.action = "follow";
           break;
         case "follow":
-          this.counterBeforeBack = 0;
+          this.counterFrameScared = 0;
       }
     }
     colibriElement.dataset.action = colibri.action;
@@ -150,14 +153,14 @@ class Colibri {
     //because we want the head of the colibri to be in the same x than the goal
     //and we don't want to be to close from the cursor
     return {
-      x: this.goal.x - this.size * (this.position.flip ? 0 : 1) - this.#mouseGap,
+      x: this.goal.x - COLIBRI_SIZE * (this.position.flip ? 0 : 1) - this.#mouseGap,
       y: this.goal.y - this.#deltaYHead,
     };
   }
 
   #setPosition() {
     //we are in "back" situation => exponential interpolation
-    if (this.action == "follow" && this.counterBeforeBack != 0) {
+    if (this.action == "follow" && this.counterFrameScared != 0) {
       this.position.x = this.position.x + (this.#estheticGoal.x - this.position.x) * Math.pow(this.#t, 2);
       this.position.y = this.position.y + (this.#estheticGoal.y - this.position.y) * Math.pow(this.#t, 2);
     }
@@ -174,13 +177,13 @@ class Colibri {
 
   handleMouseDown() {
     this.action = "scared";
-    const randomY = Math.floor(Math.random() * scaredJumpMax);
-    const randomX = Math.floor(Math.random() * scaredJumpMax) + this.size;
+    const randomY = getRandomInt(MIN_SCARED_JUMP, MAX_SCARED_JUMP);
+    const randomX = getRandomInt(MIN_SCARED_JUMP, MAX_SCARED_JUMP);
     this.goal = {
       x: this.#head.x - randomX * (this.position.flip ? -1 : 1),
       y: this.#head.y - randomY,
     };
-    this.counterBeforeBack = 0;
+    this.counterFrameScared = 0;
   }
 
   handleFrame() {
@@ -207,8 +210,8 @@ class Colibri {
 /** Init **/
 const colibriElement = document.getElementById("colibri");
 const colibriSection = document.getElementById("about");
-colibriElement.style.width = `${defaultColibriSize}px`;
-colibriElement.style.height = `${defaultColibriSize}px`;
+colibriElement.style.width = `${COLIBRI_SIZE}px`;
+colibriElement.style.height = `${COLIBRI_SIZE}px`;
 colibriElement.style.position = "absolute";
 colibriElement.style.zIndex = "999";
 colibriElement.style.opacity = "0";

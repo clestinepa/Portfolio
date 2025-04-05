@@ -1,10 +1,11 @@
 import { colibri } from "./colibri.js";
 
+const DURATION_ANIMATION_SCROLL = 1500; //(in ms) duration of the animation scroll
+const TIMEOUT_ANIMATION_SCROLL = 1000; //(in ms) timeout of no scroll needed before start the animation scroll
+
 let scrollTimeout;
 let userScrolling = false;
 let isAnimating = false;
-const DURATION_ANIMATION = 1500;
-const TIMEOUT_ANIMATION = 1000;
 
 function getClosestSection() {
   const sections = document.getElementsByClassName("section");
@@ -33,7 +34,7 @@ function smoothScrollTo(targetY) {
   function animationStep(currentTime) {
     if (!isAnimating) return;
     const elapsedTime = currentTime - startTime;
-    const progress = Math.min(elapsedTime / DURATION_ANIMATION, 1);
+    const progress = Math.min(elapsedTime / DURATION_ANIMATION_SCROLL, 1);
     const easedProgress = 1 - (1 - progress) * (1 - progress);
     userScrolling = false;
     window.scrollTo(0, startY + distance * easedProgress);
@@ -63,6 +64,6 @@ window.addEventListener("touchmove", userIsScrolling);
 window.addEventListener("scroll", () => {
   clearTimeout(scrollTimeout);
   if (userScrolling && isAnimating) isAnimating = false;
-  scrollTimeout = setTimeout(snapToClosestSection, TIMEOUT_ANIMATION);
+  scrollTimeout = setTimeout(snapToClosestSection, TIMEOUT_ANIMATION_SCROLL);
 });
 snapToClosestSection();

@@ -1,19 +1,38 @@
 * {
   margin: 0;
   padding: 0;
-  --themeColor1: #00b6e3;
-  --themeColor2: #38c557;
-  --themeColor3: #3cd4b9;
-  --themeColor4: #68ecdf;
-  --themeColor5: #dd9658;
-  --themeColor6: #d5df48;
-  color: black;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --main-design: #e63946;
+  --main-dev: #3cd4b9;
+  --main-photo: #a0e8af;
+  --main-montage: #ff9f1c;
+  --secondary-design: var(--main-montage);
+  --secondary-dev: var(--main-design);
+  --secondary-photo: var(--main-dev);
+  --secondary-montage: var(--main-photo);
+  --black-design: #011713;
+  --black-dev: #170e01;
+  --black-photo: #170103;
+  --black-montage: #011706;
+  --white-design: #f7fef9;
+  --white-dev: #fef7f8;
+  --white-photo: #fefbf7;
+  --white-montage: #f7fefc;
+
+  --main: var(--main-design);
+  --secondary: var(--secondary-design);
+  --black: var(--black-design);
+  --white: var(--white-design);
+
+  --font-title: Baloo, Tahoma, Geneva, Verdana, sans-serif;
+  --font-corps: Poppins, Tahoma, Geneva, Verdana, sans-serif;
+
+  color: var(--black);
+  font-family: var(--font-corps);
 }
 
 html {
   cursor: none;
-  background: #d8f8f2;
+  background: var(--white);
   overflow-x: hidden;
 }
 
@@ -52,6 +71,11 @@ h1 {
 #profile-picture {
   width: var(--widthProfile);
   aspect-ratio: 4/5;
+}
+#presentation span {
+  font-size: larger;
+  font-family: var(--font-title);
+  color: var(--main);
 }
 
 #design {
