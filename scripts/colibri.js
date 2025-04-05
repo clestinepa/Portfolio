@@ -246,10 +246,8 @@ document.addEventListener("mousedown", () => {
 /** ************* **/
 
 /** RequestAnimationFrame **/
-const refColibri = () => {
+export const refColibri = () => {
   colibri.handleFrame();
   colibri.animationFrame = requestAnimationFrame(refColibri);
 };
-
-refColibri();
 /** ********************* **/

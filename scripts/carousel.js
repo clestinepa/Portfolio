@@ -370,14 +370,14 @@ function displayImgs() {
 displayImgs();
 const carousel = document.getElementById("carousel");
 const listImgCarousel = document.getElementsByClassName("img-carousel");
+let isClicked = false;
 
 /* Handle mouse movement in the carousel : move the images according to the mouse movement */
-carouselContainer.onmousedown = (e) => {
+function handleStartMoving(e) {
   //Move the carousel only with left click and when no animation are running
   if (e.button == 0 && listImgCarousel[0].getAnimations().length == 0)
     carousel.dataset.mouseDownAt = getAngleOfMouse(e);
-};
-let isClicked = false;
+}
 function finishMoving() {
   //if we don't try to move the carousel, do nothing
   if (carousel.dataset.mouseDownAt == "0") return;
@@ -398,9 +398,7 @@ function finishMoving() {
   carousel.dataset.mouseDownAt = "0";
   carousel.dataset.prevPosition = carousel.dataset.position;
 }
-carouselContainer.addEventListener("mouseup", finishMoving);
-carouselContainer.addEventListener("mouseleave", finishMoving);
-carouselContainer.onmousemove = (e) => {
+function handleMoving(e) {
   //if we don't try to move the carousel, do nothing
   if (carousel.dataset.mouseDownAt == "0") return;
 
@@ -408,29 +406,30 @@ carouselContainer.onmousemove = (e) => {
   let angleDiff = carousel.dataset.mouseDownAt - getAngleOfMouse(e);
   let deltaPercentage = angleDiff / (2 * Math.PI);
   moveCarousel(deltaPercentage, false);
-};
-
-/* Handle click in an image : move this image in front with an animation */
-for (let img of listImgCarousel) {
-  let downDate = undefined;
-  img.addEventListener("mousedown", (e) => {
-    downDate = new Date();
-  });
-  img.addEventListener("mouseup", (e) => {
-    //if there's no click or it's longer than 300ms or the image is still moving from previous animation, do nothing
-    if (downDate == undefined || new Date() - downDate > MAX_TIME_OF_PRESSURE || img.getAnimations().length != 0)
-      return;
-    isClicked = true;
-    let deltaIndexStandardPos =
-      img.dataset.position < 0.5
-        ? getClosestIndexStandardPos(img.dataset.position) * -1
-        : NB_IMG_CAROUSEL - getClosestIndexStandardPos(img.dataset.position);
-    if (deltaIndexStandardPos != 0) moveCarousel(deltaIndexStandardPos, true);
-  });
 }
 
+/* Handle click in an image : move this image in front with an animation */
+function handleClickImgCarousel() {
+  for (let img of listImgCarousel) {
+    let downDate = undefined;
+    img.addEventListener("mousedown", (e) => {
+      downDate = new Date();
+    });
+    img.addEventListener("mouseup", (e) => {
+      //if there's no click or it's longer than 300ms or the image is still moving from previous animation, do nothing
+      if (downDate == undefined || new Date() - downDate > MAX_TIME_OF_PRESSURE || img.getAnimations().length != 0)
+        return;
+      isClicked = true;
+      let deltaIndexStandardPos =
+        img.dataset.position < 0.5
+          ? getClosestIndexStandardPos(img.dataset.position) * -1
+          : NB_IMG_CAROUSEL - getClosestIndexStandardPos(img.dataset.position);
+      if (deltaIndexStandardPos != 0) moveCarousel(deltaIndexStandardPos, true);
+    });
+  }
+}
 /* Handle resize of the window : recalculate path of the images */
-function updateOffsetPath() {
+function updatePathCarousel() {
   let x = carousel.clientWidth;
   let y = carousel.clientHeight;
   carousel.style.setProperty(
@@ -438,5 +437,13 @@ function updateOffsetPath() {
     `path("M ${x * 0.5} ${y} A ${x * 0.5} ${y * 0.5} 0 1 0 ${x * 0.5} 0 A ${x * 0.5} ${y * 0.5} 0 1 0 ${x * 0.5} ${y}")`
   );
 }
-window.addEventListener("resize", updateOffsetPath);
-updateOffsetPath();
+
+export function initCarousel() {
+  carouselContainer.addEventListener("mousedown", handleStartMoving);
+  carouselContainer.addEventListener("mousemove", handleMoving);
+  carouselContainer.addEventListener("mouseup", finishMoving);
+  carouselContainer.addEventListener("mouseleave", finishMoving);
+  handleClickImgCarousel();
+  window.addEventListener("resize", updatePathCarousel);
+  updatePathCarousel();
+}

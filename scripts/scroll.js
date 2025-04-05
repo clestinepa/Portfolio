@@ -58,12 +58,15 @@ function snapToClosestSection() {
 function userIsScrolling() {
   userScrolling = true;
 }
-window.addEventListener("wheel", userIsScrolling);
-window.addEventListener("touchmove", userIsScrolling);
-
-window.addEventListener("scroll", () => {
+function constrainedScrolling() {
   clearTimeout(scrollTimeout);
   if (userScrolling && isAnimating) isAnimating = false;
   scrollTimeout = setTimeout(snapToClosestSection, TIMEOUT_ANIMATION_SCROLL);
-});
-snapToClosestSection();
+}
+
+export function initConstrainedScroll() {
+  window.addEventListener("wheel", userIsScrolling);
+  window.addEventListener("touchmove", userIsScrolling);
+  window.addEventListener("scroll", constrainedScrolling);
+  snapToClosestSection();
+}

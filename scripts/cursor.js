@@ -18,17 +18,19 @@ cursor.style.left = "0px";
 cursor.style.pointerEvents = "none";
 cursor.style.transition = "width 0.2s ease-in-out, height  0.2s ease-in-out";
 
-window.onmousemove = (e) => {
-  cursor.style.top = `${e.clientY}px`;
-  cursor.style.left = `${e.clientX}px`;
-};
+export function initCursor() {
+  window.onmousemove = (e) => {
+    cursor.style.top = `${e.clientY}px`;
+    cursor.style.left = `${e.clientX}px`;
+  };
 
-window.onmousedown = () => {
-  cursor.style.width = `${PRESS_SIZE}px`;
-  cursor.style.height = `${PRESS_SIZE}px`;
-};
+  window.onmousedown = () => {
+    cursor.style.width = `${PRESS_SIZE}px`;
+    cursor.style.height = `${PRESS_SIZE}px`;
+  };
 
-window.onmouseup = () => {
-  cursor.style.width = `${DEFAULT_SIZE}px`;
-  cursor.style.height = `${DEFAULT_SIZE}px`;
-};
+  window.onmouseup = () => {
+    cursor.style.width = `${DEFAULT_SIZE}px`;
+    cursor.style.height = `${DEFAULT_SIZE}px`;
+  };
+}

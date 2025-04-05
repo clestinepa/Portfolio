@@ -65,18 +65,20 @@ function getRandomVariableColor() {
   return `var(--main-${theme})`;
 }
 
-for (let i = 0; i < NB_SPHERES_BG; i++) {
-  const span = document.createElement("span");
-  const size = getRandom(MIN_SIZE_SPHERE, MAX_SIZE_SPHERE);
-  const blur = getRandom(MIN_BLUR_SPHERE, MAX_BLUR_SPHERE);
-  const offsetShadow = size + blur;
-  const path = generateRandomEllipsePath(vminToPx(offsetShadow));
-  const duration = getRandomInt(MIN_DURATION_ANIMATION_SPHERE, MAX_DURATION_ANIMATION_SPHERE);
-  span.style.width = `${size}vmin`;
-  span.style.height = `${size}vmin`;
-  span.style.offsetPath = `path("${path}")`;
-  span.style.animationDuration = `${duration}s`;
-  //shadow is always same y and x + offsetShadow of the element
-  span.style.boxShadow = `${offsetShadow}vmin 0 ${blur}vmin ${getRandomVariableColor()}`;
-  bgContainer.appendChild(span);
+export function displayBg() {
+  for (let i = 0; i < NB_SPHERES_BG; i++) {
+    const span = document.createElement("span");
+    const size = getRandom(MIN_SIZE_SPHERE, MAX_SIZE_SPHERE);
+    const blur = getRandom(MIN_BLUR_SPHERE, MAX_BLUR_SPHERE);
+    const offsetShadow = size + blur;
+    const path = generateRandomEllipsePath(vminToPx(offsetShadow));
+    const duration = getRandomInt(MIN_DURATION_ANIMATION_SPHERE, MAX_DURATION_ANIMATION_SPHERE);
+    span.style.width = `${size}vmin`;
+    span.style.height = `${size}vmin`;
+    span.style.offsetPath = `path("${path}")`;
+    span.style.animationDuration = `${duration}s`;
+    //shadow is always same y and x + offsetShadow of the element
+    span.style.boxShadow = `${offsetShadow}vmin 0 ${blur}vmin ${getRandomVariableColor()}`;
+    bgContainer.appendChild(span);
+  }
 }
