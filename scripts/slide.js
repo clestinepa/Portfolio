@@ -1,5 +1,8 @@
-const slideContainer = document.getElementById("slide-container");
+/** Constants **/
 const NB_IMG_SLIDE = 7; //nb image in the slide
+/** ********* **/
+
+const slideContainer = document.getElementById("slide-container");
 
 export function displaySlide() {
   for (let j = 0; j < 2; j++) {

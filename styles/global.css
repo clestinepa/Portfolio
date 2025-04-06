@@ -43,7 +43,8 @@ img {
 }
 
 h1 {
-  margin-bottom: 32px;
+  font-size: 1.8em;
+  margin-bottom: 16px;
 }
 
 .section {

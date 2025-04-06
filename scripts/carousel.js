@@ -14,9 +14,10 @@
  * For esthetics, NB_IMG_CAROUSEL and standard position are defined.
  */
 
+/** Constants **/
 const NB_IMG_CAROUSEL = 9; //nb of images in the carousel
 const STANDARD_POS_IMGS = [0, 0.135, 0.25, 0.35, 0.455, 0.545, 0.65, 0.75, 0.865, 1]; //standard positions of the image for esthetic
-
+//appearance
 const MAX_BLUR = 0; //(in px) blur for position 0% and 100%
 const MIN_BLUR = 2; //(in px) blur for position 50%
 const MAX_OPACITY = 1; //opacity for position 0% and 100%
@@ -25,9 +26,10 @@ const MAX_SCALE = 1; //scale for position 0% and 100%
 const MIN_SCALE = 0.4; //scale for position 50%
 const MAX_Z_INDEX = 50; //z-index for position 0% and 100%
 const MIN_Z_INDEX = 0; //z-index for position 50%
-
+//animation
 const DURATION_ANIMATION_CAROUSEL = 1000; //(in ms) duration of the animation carousel
 const MAX_TIME_OF_PRESSURE = 300; //(in ms) time maximum for the mouse to be down to be considered as a click when up
+/** ********* **/
 
 const carouselContainer = document.getElementById("carousel-container");
 

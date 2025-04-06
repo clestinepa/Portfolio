@@ -1,5 +1,7 @@
+/** Constants **/
 const DEFAULT_SIZE = 5; //(in px) size of the cursor in default state
 const PRESS_SIZE = 15; //(in px) size of the cursor in press state
+/** ********* **/
 
 const cursor = document.getElementById("cursor");
 

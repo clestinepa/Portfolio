@@ -1,0 +1,26 @@
+@keyframes shake {
+  0% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+  20% {
+    transform: rotate(5deg) translate(2px, -1px);
+  }
+  40% {
+    transform: rotate(-5deg) translate(-2px, 1px);
+  }
+  60% {
+    transform: rotate(4deg) translate(1px, -2px);
+  }
+  80% {
+    transform: rotate(-4deg) translate(-1px, 2px);
+  }
+  100% {
+    transform: rotate(var(--deg-after-shake)) translate(0, 0);
+  }
+}
+
+#profile-picture {
+  --deg-after-shake: 1deg;
+  transform-origin: center center;
+  transition: transform 0.25s ease-out;
+}

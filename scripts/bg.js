@@ -1,16 +1,18 @@
 import { getRandom, getRandomInt } from "./global.js";
 
-const bgContainer = document.getElementById("background");
+/** Constants **/
 const NB_SPHERES_BG = 8; //nb of random spheres in the bg
-
+//random interval
 const MIN_R_ELLIPSE = 40; //(in px) minimum size of ellipse radius
-
 const MAX_SIZE_SPHERE = 80; //(in vmin) maximum size of a sphere
 const MIN_SIZE_SPHERE = 40; //(in vmin) minimum size of a sphere
 const MAX_BLUR_SPHERE = 14; //(in vmin) maximum blur of a sphere
 const MIN_BLUR_SPHERE = 12; //(in vmin) minimum blur of a sphere
 const MAX_DURATION_ANIMATION_SPHERE = 50; //(in s) maximum duration of an animation sphere
 const MIN_DURATION_ANIMATION_SPHERE = 15; //(in s) minimum duration of an animation sphere
+/** ********* **/
+
+const bgContainer = document.getElementById("background");
 
 /**
  * Get the pixel value associated to a vmin value

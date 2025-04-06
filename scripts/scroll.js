@@ -1,7 +1,9 @@
 import { colibri } from "./colibri.js";
 
+/** Constants **/
 const DURATION_ANIMATION_SCROLL = 1500; //(in ms) duration of the animation scroll
 const TIMEOUT_ANIMATION_SCROLL = 1000; //(in ms) timeout of no scroll needed before start the animation scroll
+/** ********* **/
 
 let scrollTimeout;
 let userScrolling = false;
