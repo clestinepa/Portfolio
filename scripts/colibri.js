@@ -10,9 +10,9 @@ import { getRandomInt } from "./global.js";
 
 /** Constants **/
 //appearance
-const COLIBRI_SIZE = 50; //(in px) size of the colibri
+const COLIBRI_SIZE = 70; //(in px) size of the colibri
 const MARGIN_MOUSE = 10; //(in px) margin x between mouse and colibri
-const RATIO_HEAD_POSITION = 3.5; //head position relative to the colibri top
+const RATIO_HEAD_POSITION = 3; //head position relative to the colibri top
 //scared
 const NB_FRAME_MAX_SCARED = 50; //frame before come back
 const MAX_SCARED_JUMP = 100; //(in px) distance max of a scared jump
