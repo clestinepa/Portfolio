@@ -207,7 +207,6 @@ class Colibri {
 
 /** Init **/
 const colibriElement = document.getElementById("colibri");
-const colibriSection = document.getElementById("about");
 colibriElement.style.width = `${COLIBRI_SIZE}px`;
 colibriElement.style.height = `${COLIBRI_SIZE}px`;
 colibriElement.style.position = "absolute";
