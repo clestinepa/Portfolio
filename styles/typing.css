@@ -19,8 +19,22 @@
   }
 }
 
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
 #profile-picture {
   --deg-after-shake: 1deg;
   transform-origin: center center;
   transition: transform 0.25s ease-out;
+}
+
+#caret {
+  display: inline-flex;
+  height: 30px;
+  margin-bottom: -5px;
+  margin-left: 3px;
+  border-left: 1.5px solid rgba(1, 23, 19, 0.5);
 }
