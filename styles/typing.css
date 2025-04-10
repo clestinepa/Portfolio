@@ -18,10 +18,39 @@
     transform: rotate(var(--deg-after-shake)) translate(0, 0);
   }
 }
-
 @keyframes blink {
+  0% {
+    opacity: 1;
+  }
   50% {
     opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes caretDrawBulb {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0);
+  }
+}
+@keyframes drawBulb {
+  from {
+    stroke-dashoffset: var(--size-dash);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes deleteBulb {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: var(--size-dash);
   }
 }
 
@@ -32,9 +61,34 @@
 }
 
 #caret {
-  display: inline-flex;
+  /* appearance */
   height: 30px;
   margin-bottom: -5px;
   margin-left: 3px;
-  border-left: 1.5px solid rgba(1, 23, 19, 0.5);
+  border-left: 2px solid var(--black);
+  /* position */
+  display: inline-flex;
+  transform-origin: top;
+}
+
+#container-caret {
+  position: relative;
+  --size-dash: 160;
+}
+#ampoule {
+  /* appearance */
+  transform: rotate(35deg);
+  /* position */
+  position: absolute;
+  top: -25px;
+  left: -8.5px;
+}
+#ampoule-bulb {
+  stroke: var(--black);
+  stroke-dasharray: var(--size-dash);
+  stroke-dashoffset: var(--size-dash);
+}
+#ampoule-light {
+  opacity: 0;
+  stroke: var(--secondary);
 }
