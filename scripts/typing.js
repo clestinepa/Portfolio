@@ -67,7 +67,7 @@ function handleWordsAnimation() {
   if (currentWord == "créative" && !isDeleting && letterIndex == 1) {
     restartAnimation(
       bulb,
-      `drawBulb ${DURATION_ANIMATION_WORD_CREATIVE}s ease-out both, deleteBulb ${timeRemoveBulb}ms linear ${delayBeforeDeleteAnimationBulb}ms forwards`
+      `drawBulb ${DURATION_ANIMATION_WORD_CREATIVE}s ease-out 100ms both, deleteBulb ${timeRemoveBulb}ms linear ${delayBeforeDeleteAnimationBulb}ms forwards`
     );
     restartAnimation(
       caret,

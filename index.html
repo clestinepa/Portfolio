@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles/global.css" />
+    <link rel="stylesheet" href="styles/cursor.css" />
     <link rel="stylesheet" href="styles/carousel.css" />
     <link rel="stylesheet" href="styles/slide.css" />
     <link rel="stylesheet" href="styles/bg.css" />
@@ -29,7 +30,7 @@
         <h2>
           Je suis <span id="typing"></span>
           <span id="container-caret">
-            <span id="caret"> </span>
+            <span id="caret"></span>
             <svg id="ampoule" width="51" height="49" viewBox="0 0 51 49" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 id="ampoule-light"
@@ -86,7 +87,11 @@
     </div>
 
     <!-- absolute element -->
-    <div id="cursor"></div>
+    <svg id="cursor" viewBox="0 0 11 11" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M4.54395 1.7138C5.03126 0.560244 6.666 0.560244 7.15332 1.7138L7.77004 3.1737C7.91354 3.51339 8.18387 3.78372 8.52357 3.92722L9.98347 4.54395C11.137 5.03126 11.137 6.666 9.98347 7.15332L8.52357 7.77004C8.18387 7.91354 7.91354 8.18387 7.77004 8.52357L7.15332 9.98347C6.666 11.137 5.03126 11.137 4.54395 9.98347L3.92722 8.52357C3.78372 8.18387 3.51339 7.91354 3.1737 7.77004L1.7138 7.15332C0.560244 6.666 0.560244 5.03126 1.7138 4.54395L3.1737 3.92722C3.51339 3.78372 3.78372 3.51339 3.92722 3.1737L4.54395 1.7138Z"
+      />
+    </svg>
     <dotlottie-player
       id="colibri"
       src="static/animations/Colibri.json"
