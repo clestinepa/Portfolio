@@ -4,23 +4,22 @@
   padding: 20vmin 0;
   width: 100%;
   overflow: hidden;
-}
-#carousel {
-  user-select: none;
-  height: 50vh;
-  width: 60vw;
-  position: relative;
-  --path: "";
-}
+  & #carousel {
+    user-select: none;
+    height: 50vh;
+    width: 60vw;
+    position: relative;
+    --path: "";
+    & .img-carousel {
+      /* appearance */
+      width: 40vmin;
+      height: 40vmin;
 
-#carousel .img-carousel {
-  /* appearance */
-  width: 40vmin;
-  height: 40vmin;
-
-  /* position */
-  position: absolute;
-  offset-path: var(--path);
-  offset-rotate: 0deg;
-  offset-anchor: center;
+      /* position */
+      position: absolute;
+      offset-path: var(--path);
+      offset-rotate: 0deg;
+      offset-anchor: center;
+    }
+  }
 }
