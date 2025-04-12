@@ -1,4 +1,4 @@
-import { getRandom, getRandomInt } from "./global.js";
+import { getRandom, getRandomInt, getRandomVariableCSSColor } from "./global.js";
 
 /** Constants **/
 const NB_SPHERES_BG = 8; //nb of random spheres in the bg
@@ -43,30 +43,6 @@ function generateRandomEllipsePath(offsetX) {
   } ${centerY} A ${rx} ${ry} 0 ${large} ${direction} ${centerX - rx} ${centerY}`;
 }
 
-/**
- * Get random variable color
- * @returns the random variable color with format "var(--name-variable)"
- */
-function getRandomVariableColor() {
-  const randomIndex = getRandomInt(1, 4);
-  let theme;
-  switch (randomIndex) {
-    case 1:
-      theme = "design";
-      break;
-    case 2:
-      theme = "dev";
-      break;
-    case 3:
-      theme = "photo";
-      break;
-    default:
-    case 4:
-      theme = "montage";
-  }
-  return `var(--main-${theme})`;
-}
-
 export function displayBg() {
   for (let i = 0; i < NB_SPHERES_BG; i++) {
     const span = document.createElement("span");
@@ -80,7 +56,7 @@ export function displayBg() {
     span.style.offsetPath = `path("${path}")`;
     span.style.animationDuration = `${duration}s`;
     //shadow is always same y and x + offsetShadow of the element
-    span.style.boxShadow = `${offsetShadow}vmin 0 ${blur}vmin ${getRandomVariableColor()}`;
+    span.style.boxShadow = `${offsetShadow}vmin 0 ${blur}vmin ${getRandomVariableCSSColor()}`;
     bgContainer.appendChild(span);
   }
 }

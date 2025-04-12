@@ -4,3 +4,27 @@ export function getRandom(min, max) {
 export function getRandomInt(min, max) {
   return Math.floor(getRandom(min, max));
 }
+
+/**
+ * Get random variable color
+ * @returns the random variable color with format "var(--name-variable)"
+ */
+export function getRandomVariableCSSColor() {
+  const randomIndex = getRandomInt(1, 4);
+  let theme;
+  switch (randomIndex) {
+    case 1:
+      theme = "design";
+      break;
+    case 2:
+      theme = "dev";
+      break;
+    case 3:
+      theme = "photo";
+      break;
+    default:
+    case 4:
+      theme = "montage";
+  }
+  return `var(--main-${theme})`;
+}
