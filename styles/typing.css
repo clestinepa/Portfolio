@@ -29,28 +29,18 @@
     opacity: 1;
   }
 }
-@keyframes caretDrawBulb {
-  from {
-    transform: scaleY(1);
-  }
-  to {
-    transform: scaleY(0);
-  }
-}
 @keyframes drawBulb {
-  from {
-    stroke-dashoffset: var(--size-dash);
-  }
-  to {
+  0% {
+    stroke-dasharray: var(--size-dash-caret) var(--size-dash-bulb);
     stroke-dashoffset: 0;
   }
-}
-@keyframes deleteBulb {
-  from {
-    stroke-dashoffset: 0;
+  19% {
+    stroke-dasharray: var(--size-dash-caret) var(--size-dash-bulb);
+    stroke-dashoffset: var(--size-offset-caret);
   }
-  to {
-    stroke-dashoffset: var(--size-dash);
+  100% {
+    stroke-dasharray: var(--size-dash-bulb) var(--size-dash-bulb);
+    stroke-dashoffset: var(--size-offset-caret);
   }
 }
 
@@ -60,33 +50,22 @@
   transition: transform 0.25s ease-out;
 }
 
-#caret {
-  /* appearance */
-  height: 30px;
-  margin-bottom: -5px;
-  margin-left: 3px;
-  border-left: 2px solid var(--black);
-  /* position */
-  display: inline-flex;
-  transform-origin: top;
-}
-
 #container-caret {
   position: relative;
-  --size-dash: 160;
+  --size-dash-bulb: 159;
+  --size-dash-caret: 30;
+  --size-offset-caret: -24;
 }
 #ampoule {
-  /* appearance */
-  transform: rotate(35deg);
   /* position */
   position: absolute;
   top: -25px;
-  left: -8.5px;
+  left: -5px;
 }
-#ampoule-bulb {
-  stroke: var(--black);
-  stroke-dasharray: var(--size-dash);
-  stroke-dashoffset: var(--size-dash);
+#caret-and-bulb {
+  stroke: rgba(1, 23, 19, 0.5);
+  stroke-dasharray: var(--size-dash-caret) var(--size-dash-bulb);
+  stroke-dashoffset: 0;
 }
 #ampoule-light {
   opacity: 0;

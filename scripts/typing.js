@@ -19,21 +19,17 @@ const TIME_DONE_DELETING = 500; //(in ms) time before starting typing new word
 const DURATION_ANIMATION_WORD = 0.5; //(in s) duration of an word animation
 const DURATION_ANIMATION_WORD_CREATIVE = 1; //(in s) duration of the creative word animation
 const DURATION_ANIMATION_BLINK_CARET = 1000; //(in ms) duration of the caret animation
-const PER_ANIMATION_CARET_CREATION = 3; //(ratio) ratio of the caret animation during the creative word animation
 const DURATION_ANIMATION_BLINK_LIGHT = 300; //(in ms) duration of the blink animation of the light bulb
 const NB_BLINK_LIGHT = 1.5;
 //calculated
 const nb_blink_caret = TIME_DONE_TYPING / DURATION_ANIMATION_BLINK_CARET;
-const timeRemoveBulb = TIME_DELETING * "créative".length + TIME_DONE_DELETING / 2;
-const timeRemoveBulbCaret = timeRemoveBulb / PER_ANIMATION_CARET_CREATION;
+const timeRemoveBulb = DURATION_ANIMATION_WORD_CREATIVE / 2;
 const delayBeforeDeleteAnimationBulb = TIME_TYPING * "créative".length + TIME_DONE_TYPING - 150; //150 for esthetic
-const delayBeforeDeleteAnimationCaret = delayBeforeDeleteAnimationBulb + timeRemoveBulb - timeRemoveBulbCaret;
 /** ********* **/
 
 const typingElement = document.getElementById("typing");
 const profile = document.getElementById("profile-picture");
-const caret = document.getElementById("caret");
-const bulb = document.getElementById("ampoule-bulb");
+const caretAndBulb = document.getElementById("caret-and-bulb");
 const light = document.getElementById("ampoule-light");
 
 let wordIndex = 0;
@@ -54,11 +50,11 @@ function restartAnimation(element, animation) {
 function handleCaretAnimation() {
   const currentWord = words[wordIndex];
   if (letterIndex == currentWord.length) {
-    if (wordIndex == 0) caret.style.opacity = "0";
+    if (wordIndex == 0) caretAndBulb.style.opacity = "0";
     else if (currentWord != "créative")
-      restartAnimation(caret, `blink ${DURATION_ANIMATION_BLINK_CARET}ms step-end ${nb_blink_caret}`);
+      restartAnimation(caretAndBulb, `blink ${DURATION_ANIMATION_BLINK_CARET}ms step-end ${nb_blink_caret}`);
   } else {
-    caret.style.opacity = "1";
+    caretAndBulb.style.opacity = "1";
   }
 }
 
@@ -66,13 +62,8 @@ function handleWordsAnimation() {
   const currentWord = words[wordIndex];
   if (currentWord == "créative" && !isDeleting && letterIndex == 1) {
     restartAnimation(
-      bulb,
-      `drawBulb ${DURATION_ANIMATION_WORD_CREATIVE}s ease-out 100ms both, deleteBulb ${timeRemoveBulb}ms linear ${delayBeforeDeleteAnimationBulb}ms forwards`
-    );
-    restartAnimation(
-      caret,
-      `caretDrawBulb ${DURATION_ANIMATION_WORD_CREATIVE / PER_ANIMATION_CARET_CREATION}s linear both, 
-       caretDrawBulb ${timeRemoveBulbCaret}ms linear ${delayBeforeDeleteAnimationCaret}ms reverse forwards`
+      caretAndBulb,
+      `drawBulb ${DURATION_ANIMATION_WORD_CREATIVE}s ease-out 100ms both, drawBulb ${timeRemoveBulb}s linear ${delayBeforeDeleteAnimationBulb}ms reverse forwards`
     );
     restartAnimation(
       light,
