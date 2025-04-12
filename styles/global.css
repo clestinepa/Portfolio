@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  text-decoration: none;
   --main-design: #e63946;
   --main-dev: #3cd4b9;
   --main-photo: #a0e8af;
@@ -47,6 +48,46 @@ h1 {
   margin-bottom: 16px;
 }
 
+.button {
+  /* appearance */
+  text-transform: uppercase;
+  font-family: var(--font-title);
+  background: transparent;
+  border-radius: 5px;
+  padding: 5px 15px 3px 15px;
+  color: var(--main);
+  border: 2px solid var(--main);
+  /* position */
+  position: relative;
+  /* interaction */
+  cursor: none;
+  display: inline-block;
+  overflow: hidden;
+  &::after {
+    content: attr(data-hover);
+    /* appearance */
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    align-content: center;
+    background: var(--main);
+    color: var(--white);
+    /* position */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translate(0, -100%);
+    /* interaction */
+    transition: all 0.2s;
+  }
+  &:hover {
+    box-shadow: 0 0 0.5em 0em rgba(1, 23, 19, 0.2);
+    &::after {
+      transform: translate(0, 0);
+    }
+  }
+}
+
 header {
   box-sizing: border-box;
   display: flex;
@@ -55,24 +96,15 @@ header {
   position: fixed;
   z-index: 990;
   width: 100%;
-}
-.container-header {
-  padding: 15px;
-  backdrop-filter: blur(3px);
-  border-radius: 5px;
-}
-header img {
-  border-radius: 0px;
-  width: 50px;
-}
-button {
-  text-transform: uppercase;
-  font-family: var(--font-title);
-  background: transparent;
-  border-radius: 5px;
-  padding: 5px 15px 3px 15px;
-  color: var(--main);
-  border-color: var(--main);
+  & .container-header {
+    padding: 15px;
+    backdrop-filter: blur(3px);
+    border-radius: 5px;
+  }
+  & img {
+    border-radius: 0px;
+    width: 50px;
+  }
 }
 
 .section {
@@ -96,31 +128,31 @@ button {
   align-items: center;
   justify-content: center;
   gap: var(--gap);
-}
-#profile-picture {
-  width: var(--widthProfile);
-  aspect-ratio: 4/5;
-}
-#presentation span {
-  font-size: larger;
-  font-family: var(--font-title);
-  color: var(--main);
+  & #profile-picture {
+    width: var(--widthProfile);
+    aspect-ratio: 4/5;
+  }
+  & span {
+    font-size: larger;
+    font-family: var(--font-title);
+    color: var(--main);
+  }
 }
 
 #design {
   margin: 0;
   padding: 0;
   position: relative;
-}
-#design h1 {
-  position: absolute;
-  z-index: 25;
-  top: 37%;
+  & h1 {
+    position: absolute;
+    z-index: 25;
+    top: 37%;
+  }
 }
 
 #code {
   margin: 0;
-}
-#code .title {
-  margin: 0 var(--margin-h);
+  & .title {
+    margin: 0 var(--margin-h);
+  }
 }
