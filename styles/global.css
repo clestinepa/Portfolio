@@ -78,13 +78,16 @@ h1 {
     left: 0;
     transform: translate(0, -100%);
     /* interaction */
-    transition: all 0.2s;
+    transition: transform 0.2s;
   }
   &:hover {
     box-shadow: 0 0 0.5em 0em rgba(1, 23, 19, 0.2);
     &::after {
       transform: translate(0, 0);
     }
+  }
+  &:active::after {
+    box-shadow: inset 0 0 0.5em 0em rgba(1, 23, 19, 0.2);
   }
 }
 
