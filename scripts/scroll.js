@@ -16,19 +16,34 @@ let isAnimating = false;
 function getClosestSection() {
   const sections = document.getElementsByClassName("section");
 
-  let closest = null;
-  let minDistance = Infinity;
-  const scrollPosition = window.scrollY;
+  const visibleSections = [];
+  let closestSection = null;
+  let closestEdge = null;
+  let closestDistance = Infinity;
+
+  const viewportTop = window.scrollY;
+  const viewportBottom = viewportTop + window.innerHeight;
+  const viewportCenter = viewportTop + window.innerHeight / 2;
 
   for (let section of sections) {
-    const offset = section.offsetTop;
-    const distance = Math.abs(scrollPosition - offset);
-    if (distance < minDistance) {
-      minDistance = distance;
-      closest = section;
+    const sectionTop = section.offsetTop;
+    const sectionBottom = sectionTop + section.offsetHeight;
+    const CenterToTop = Math.abs(viewportCenter - sectionTop);
+    const CenterToBottom = Math.abs(viewportCenter - sectionBottom);
+
+    // Check if section is at least partially visible
+    if (sectionBottom > viewportTop && sectionTop < viewportBottom) {
+      visibleSections.push(section);
+      const edge = CenterToTop < CenterToBottom ? sectionTop : sectionBottom - window.innerHeight;
+      const distance = Math.abs(viewportTop - edge);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestEdge = edge;
+        closestSection = section;
+      }
     }
   }
-  return closest;
+  return { visibleSections, section: closestSection, edge: closestEdge };
 }
 
 function smoothScrollTo(targetY) {
@@ -53,11 +68,14 @@ function smoothScrollTo(targetY) {
 }
 
 function snapToClosestSection() {
-  const closestSection = getClosestSection();
-  if (closestSection) {
-    if ((closestSection.id == "about" && !colibri.isVisible) || (closestSection.id != "about" && colibri.isVisible))
+  const closest = getClosestSection();
+
+  if (closest.visibleSections.length <= 1) return; // Don't scroll if only one section is visible
+
+  if (closest.section) {
+    if ((closest.section == "about" && !colibri.isVisible) || (closest.section.id != "about" && colibri.isVisible))
       colibri.changeVisibility();
-    smoothScrollTo(closestSection.offsetTop);
+    smoothScrollTo(closest.edge);
   }
 }
 

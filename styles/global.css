@@ -117,7 +117,7 @@ header {
   --margin-h: 20vw;
   --gap: 5vw;
   --widthProfile: 25vw;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0 var(--margin-h);
   padding: var(--padding-v) 0;
   box-sizing: border-box;
