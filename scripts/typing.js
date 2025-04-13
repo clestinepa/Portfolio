@@ -105,7 +105,7 @@ function handleWordsAnimation() {
 function getTimeBeforeNextEffect() {
   const currentWord = words[wordIndex];
 
-  let time = isDeleting ? TYPING.TIME.D.DEFAULT : TYPING.TIME.TYPING.DEFAULT;
+  let time = isDeleting ? TYPING.TIME.DELETING.DEFAULT : TYPING.TIME.TYPING.DEFAULT;
   if (!isDeleting && letterIndex == currentWord.length) {
     time = wordIndex == 0 ? TYPING.TIME.TYPING.DONE_FIRST : TYPING.TIME.TYPING.DONE;
     isDeleting = true;
