@@ -9,22 +9,38 @@ const words = [
   "exigeante",
   "pédagogue",
 ];
-//time
-const TIME_DELETING = 30; //(in ms) time before deleting next letter
-const TIME_TYPING = 50; //(in ms) time before typing next letter
-const TIME_DONE_TYPING = 2000; //(in ms) time before starting deleting word
-const TIME_DONE_TYPING_FIRST = 3000; //(in ms) time before starting deleting word
-const TIME_DONE_DELETING = 500; //(in ms) time before starting typing new word
-//animation
-const DURATION_ANIMATION_WORD = 0.5; //(in s) duration of an word animation
-const DURATION_ANIMATION_WORD_CREATIVE = 1; //(in s) duration of the creative word animation
-const DURATION_ANIMATION_BLINK_CARET = 1000; //(in ms) duration of the caret animation
-const DURATION_ANIMATION_BLINK_LIGHT = 300; //(in ms) duration of the blink animation of the light bulb
-const NB_BLINK_LIGHT = 1.5;
+const TYPING = {
+  TIME: {
+    DELETING: {
+      DEFAULT: 30, //(in ms) time before deleting next letter
+      DONE: 500, //(in ms) time before starting typing new word
+    },
+    TYPING: {
+      DEFAULT: 50, //(in ms) time before typing next letter
+      DONE: 2000, //(in ms) time before starting deleting word
+      DONE_FIRST: 3000, //(in ms) time before starting deleting word
+    },
+  },
+  ANIMATION: {
+    WORD: {
+      DURATION: {
+        DEFAULT: 0.5, //(in s) duration of an word animation
+        LONG: 1, //(in s) duration of the creative word animation
+      },
+    },
+    BLINK_CARET: {
+      DURATION: 1000, //(in ms) duration of the caret animation
+    },
+    BLINK_LIGHT: {
+      DURATION: 300, //(in ms) duration of the blink animation of the light bulb
+      ITERATION: 1.5, //iteration of the blink animation
+    },
+  },
+};
 //calculated
-const nb_blink_caret = TIME_DONE_TYPING / DURATION_ANIMATION_BLINK_CARET;
-const timeRemoveBulb = DURATION_ANIMATION_WORD_CREATIVE / 2;
-const delayBeforeDeleteAnimationBulb = TIME_TYPING * "créative".length + TIME_DONE_TYPING - 150; //150 for esthetic
+const iteration_blink_caret = TYPING.TIME.TYPING.DONE / TYPING.ANIMATION.BLINK_CARET.DURATION;
+const timeRemoveBulb = TYPING.ANIMATION.WORD.DURATION.LONG / 2;
+const delayBeforeDeleteAnimationBulb = TYPING.TIME.TYPING.DEFAULT * "créative".length + TYPING.TIME.TYPING.DONE - 150; //150 for esthetic
 /** ********* **/
 
 const typingElement = document.getElementById("typing");
@@ -52,7 +68,10 @@ function handleCaretAnimation() {
   if (letterIndex == currentWord.length) {
     if (wordIndex == 0) caretAndBulb.style.opacity = "0";
     else if (currentWord != "créative")
-      restartAnimation(caretAndBulb, `blink ${DURATION_ANIMATION_BLINK_CARET}ms step-end ${nb_blink_caret}`);
+      restartAnimation(
+        caretAndBulb,
+        `blink ${TYPING.ANIMATION.BLINK_CARET.DURATION}ms step-end ${iteration_blink_caret}`
+      );
   } else {
     caretAndBulb.style.opacity = "1";
   }
@@ -63,16 +82,16 @@ function handleWordsAnimation() {
   if (currentWord == "créative" && !isDeleting && letterIndex == 1) {
     restartAnimation(
       caretAndBulb,
-      `drawBulb ${DURATION_ANIMATION_WORD_CREATIVE}s ease-out 100ms both, drawBulb ${timeRemoveBulb}s linear ${delayBeforeDeleteAnimationBulb}ms reverse forwards`
+      `drawBulb ${TYPING.ANIMATION.WORD.DURATION.LONG}s ease-out 100ms both, drawBulb ${timeRemoveBulb}s linear ${delayBeforeDeleteAnimationBulb}ms reverse forwards`
     );
     restartAnimation(
       light,
-      `blink ${DURATION_ANIMATION_BLINK_LIGHT}ms ${DURATION_ANIMATION_WORD_CREATIVE}s step-end ${NB_BLINK_LIGHT}`
+      `blink ${TYPING.ANIMATION.BLINK_LIGHT.DURATION}ms ${TYPING.ANIMATION.WORD.DURATION.LONG}s step-end ${TYPING.ANIMATION.BLINK_LIGHT.ITERATION}`
     );
   } else if (letterIndex == currentWord.length) {
     switch (currentWord) {
       case "énergique":
-        restartAnimation(profile, `shake ${DURATION_ANIMATION_WORD}s`);
+        restartAnimation(profile, `shake ${TYPING.ANIMATION.WORD.DURATION.DEFAULT}s`);
         profile.style.transform = "rotate(var(--deg-after-shake))";
         break;
       case "exigeante":
@@ -86,14 +105,14 @@ function handleWordsAnimation() {
 function getTimeBeforeNextEffect() {
   const currentWord = words[wordIndex];
 
-  let time = isDeleting ? TIME_DELETING : TIME_TYPING;
+  let time = isDeleting ? TYPING.TIME.D.DEFAULT : TYPING.TIME.TYPING.DEFAULT;
   if (!isDeleting && letterIndex == currentWord.length) {
-    time = wordIndex == 0 ? TIME_DONE_TYPING_FIRST : TIME_DONE_TYPING;
+    time = wordIndex == 0 ? TYPING.TIME.TYPING.DONE_FIRST : TYPING.TIME.TYPING.DONE;
     isDeleting = true;
   } else if (isDeleting && letterIndex == 0) {
     isDeleting = false;
     wordIndex = (wordIndex + 1) % words.length;
-    time = TIME_DONE_DELETING;
+    time = TYPING.TIME.DELETING.DONE;
   }
   return time;
 }

@@ -11,24 +11,36 @@
  * This ellipsis is recalculated at each resize of the window.
  * 0 and 1 is equivalent and correspond to the front.
  * 0.25, 0.5 and 0.75 correspond to the right, back and left.
- * For esthetics, NB_IMG_CAROUSEL and standard position are defined.
+ * For esthetics, NB_IMG and standard position are defined.
  */
 
 /** Constants **/
-const NB_IMG_CAROUSEL = 9; //nb of images in the carousel
-const STANDARD_POS_IMGS = [0, 0.135, 0.25, 0.35, 0.455, 0.545, 0.65, 0.75, 0.865, 1]; //standard positions of the image for esthetic
-//appearance
-const MAX_BLUR = 0; //(in px) blur for position 0% and 100%
-const MIN_BLUR = 2; //(in px) blur for position 50%
-const MAX_OPACITY = 1; //opacity for position 0% and 100%
-const MIN_OPACITY = 0.5; //opacity for position 50%
-const MAX_SCALE = 1; //scale for position 0% and 100%
-const MIN_SCALE = 0.4; //scale for position 50%
-const MAX_Z_INDEX = 50; //z-index for position 0% and 100%
-const MIN_Z_INDEX = 0; //z-index for position 50%
-//animation
-const DURATION_ANIMATION_CAROUSEL = 1000; //(in ms) duration of the animation carousel
-const MAX_TIME_OF_PRESSURE = 300; //(in ms) time maximum for the mouse to be down to be considered as a click when up
+const CAROUSEL = {
+  NB_IMG: 9, //nb of images in the carousel
+  STANDARD_POS: [0, 0.135, 0.25, 0.35, 0.455, 0.545, 0.65, 0.75, 0.865, 1], //standard positions of the image for esthetic
+  //appearance
+  BLUR: {
+    MAX: 0, //(in px) blur for position 0% and 100%
+    MIN: 2, //(in px) blur for position 50%
+  },
+  OPACITY: {
+    MAX: 1, //opacity for position 0% and 100%
+    MIN: 0.5, //opacity for position 50%
+  },
+  SCALE: {
+    MAX: 1, //scale for position 0% and 100%
+    MIN: 0.4, //scale for position 50%
+  },
+  Z_INDEX: {
+    MAX: 50, //z-index for position 0% and 100%
+    MIN: 0, //z-index for position 50%
+  },
+  //animation
+  ANIMATION: {
+    DURATION: 1000, //(in ms) duration of the animation carousel
+  },
+  MAX_TIME_OF_PRESSURE: 300, //(in ms) time maximum for the mouse to be down to be considered as a click when up
+};
 /** ********* **/
 
 const carouselContainer = document.getElementById("carousel-container");
@@ -74,7 +86,7 @@ function specificLinearInterpolation(max, min, pos) {
  * @returns {number} the associated blur
  */
 function getBlur(pos) {
-  return specificEaseInOutInterpolation(MAX_BLUR, MIN_BLUR, pos);
+  return specificEaseInOutInterpolation(CAROUSEL.BLUR.MAX, CAROUSEL.BLUR.MIN, pos);
 }
 
 /**
@@ -84,7 +96,7 @@ function getBlur(pos) {
  * @returns {number} the associated blur
  */
 function getOpacity(pos) {
-  return specificEaseInOutInterpolation(MAX_OPACITY, MIN_OPACITY, pos);
+  return specificEaseInOutInterpolation(CAROUSEL.OPACITY.MAX, CAROUSEL.OPACITY.MIN, pos);
 }
 
 /**
@@ -94,7 +106,7 @@ function getOpacity(pos) {
  * @returns {number} the associated scale
  */
 function getScale(pos) {
-  return specificLinearInterpolation(MAX_SCALE, MIN_SCALE, pos);
+  return specificLinearInterpolation(CAROUSEL.SCALE.MAX, CAROUSEL.SCALE.MIN, pos);
 }
 
 /**
@@ -104,7 +116,7 @@ function getScale(pos) {
  * @returns {number} the associated z-index
  */
 function getZIndex(pos) {
-  return Math.floor(specificLinearInterpolation(MAX_Z_INDEX, MIN_Z_INDEX, pos));
+  return Math.floor(specificLinearInterpolation(CAROUSEL.Z_INDEX.MAX, CAROUSEL.Z_INDEX.MIN, pos));
 }
 
 /**
@@ -138,11 +150,11 @@ function getConstrainedPos(pos) {
  * @returns {number} the real nonlinear remapped position
  */
 function getRealPos(pos) {
-  const sizeLinearInterval = 1 / NB_IMG_CAROUSEL;
+  const sizeLinearInterval = 1 / CAROUSEL.NB_IMG;
   const ratio = pos / sizeLinearInterval;
   const x1 = ratio - (ratio % 1);
   const x2 = x1 + 1;
-  return STANDARD_POS_IMGS[x1] + (STANDARD_POS_IMGS[x2] - STANDARD_POS_IMGS[x1]) * (ratio % 1);
+  return CAROUSEL.STANDARD_POS[x1] + (CAROUSEL.STANDARD_POS[x2] - CAROUSEL.STANDARD_POS[x1]) * (ratio % 1);
 }
 
 /**
@@ -160,12 +172,12 @@ function getRankImg(img) {
  * @returns {number} the index of the closest value in standard position
  */
 function getClosestIndexStandardPos(pos) {
-  let closestIndex = STANDARD_POS_IMGS.reduce(
+  let closestIndex = CAROUSEL.STANDARD_POS.reduce(
     (closestIdx, current, idx) =>
-      Math.abs(current - pos) < Math.abs(STANDARD_POS_IMGS[closestIdx] - pos) ? idx : closestIdx,
+      Math.abs(current - pos) < Math.abs(CAROUSEL.STANDARD_POS[closestIdx] - pos) ? idx : closestIdx,
     0
   );
-  return closestIndex == STANDARD_POS_IMGS.length - 1 ? 0 : closestIndex;
+  return closestIndex == CAROUSEL.STANDARD_POS.length - 1 ? 0 : closestIndex;
 }
 
 /**
@@ -180,12 +192,12 @@ function getNextClosestIndexStandardPos(pos) {
   let closestWithoutBackwards = closestIndex;
   //we change index to avoid going backwards
   if (isClockwiseRotation) {
-    //closestIndex is always != 0 here because 0 <= pos <= 1 and STANDARD_POS_IMGS[0] = 0, no need to check
-    if (pos < STANDARD_POS_IMGS[closestIndex]) closestWithoutBackwards--;
-    if (closestIndex == 0) closestWithoutBackwards = STANDARD_POS_IMGS.length - 2;
+    //closestIndex is always != 0 here because 0 <= pos <= 1 and STANDARD_POS[0] = 0, no need to check
+    if (pos < CAROUSEL.STANDARD_POS[closestIndex]) closestWithoutBackwards--;
+    if (closestIndex == 0) closestWithoutBackwards = CAROUSEL.STANDARD_POS.length - 2;
   } else {
-    //closestIndex is always != STANDARD_POS_IMGS.length - 1 here because 0 <= pos <= 1 and STANDARD_POS_IMGS[STANDARD_POS_IMGS.length - 1] = 1, no need to check
-    if (STANDARD_POS_IMGS[closestIndex] < pos) closestWithoutBackwards++;
+    //closestIndex is always != STANDARD_POS.length - 1 here because 0 <= pos <= 1 and STANDARD_POS[STANDARD_POS.length - 1] = 1, no need to check
+    if (CAROUSEL.STANDARD_POS[closestIndex] < pos) closestWithoutBackwards++;
   }
 
   return closestWithoutBackwards;
@@ -259,8 +271,8 @@ function applyStyleWithAnimation(img, nextPos) {
       step1To = 1;
     }
     let sizeAllSteps = sizeStep1 + sizeStep2;
-    let step1Duration = (sizeStep1 / sizeAllSteps) * DURATION_ANIMATION_CAROUSEL;
-    let step2Duration = (sizeStep2 / sizeAllSteps) * DURATION_ANIMATION_CAROUSEL;
+    let step1Duration = (sizeStep1 / sizeAllSteps) * CAROUSEL.ANIMATION.DURATION;
+    let step2Duration = (sizeStep2 / sizeAllSteps) * CAROUSEL.ANIMATION.DURATION;
 
     // 1. Animate to 0% or 100%
     img.animate(
@@ -299,7 +311,7 @@ function applyStyleWithAnimation(img, nextPos) {
         transform: [`scale(${getScale(img.dataset.position)})`, `scale(${getScale(nextPos)})`],
         offsetDistance: [`${img.dataset.position * 100}%`, `${nextPos * 100}%`],
       },
-      { duration: DURATION_ANIMATION_CAROUSEL, fill: "forwards", easing: "linear" }
+      { duration: CAROUSEL.ANIMATION.DURATION, fill: "forwards", easing: "linear" }
     ).onfinish = () => {
       removeAllAnimations(img);
     };
@@ -309,7 +321,7 @@ function applyStyleWithAnimation(img, nextPos) {
 
 /**
  * Apply all the right style to move the carousel up to the next position
- * @param {number} delta the delta to add to the current position, is percentage without animation and index from STANDARD_POS_IMGS with
+ * @param {number} delta the delta to add to the current position, is percentage without animation and index from STANDARD_POS with
  * @param {boolean} needAnimation the boolean that say if we animate or not
  */
 function moveCarousel(delta, needAnimation) {
@@ -320,7 +332,7 @@ function moveCarousel(delta, needAnimation) {
 
     //we change style of each image depending of their next position
     for (let img of listImgCarousel) {
-      let nextLinearPosUnconstrained = nextPosCarousel + (1 / NB_IMG_CAROUSEL) * getRankImg(img);
+      let nextLinearPosUnconstrained = nextPosCarousel + (1 / CAROUSEL.NB_IMG) * getRankImg(img);
       let nextLinearPos = getConstrainedPos(nextLinearPosUnconstrained);
       let nextPos = getRealPos(nextLinearPos);
       applyStyleWithoutAnimation(img, nextPos);
@@ -336,8 +348,8 @@ function moveCarousel(delta, needAnimation) {
     //we animate style of each image depending of their next position
     for (let img of listImgCarousel) {
       const indexOfNextPos =
-        (NB_IMG_CAROUSEL + getClosestIndexStandardPos(img.dataset.position) + delta) % NB_IMG_CAROUSEL;
-      const nextPos = STANDARD_POS_IMGS[indexOfNextPos];
+        (CAROUSEL.NB_IMG + getClosestIndexStandardPos(img.dataset.position) + delta) % CAROUSEL.NB_IMG;
+      const nextPos = CAROUSEL.STANDARD_POS[indexOfNextPos];
       applyStyleWithAnimation(img, nextPos);
       //we apply the next position of the carousel ie next position of the first image
       if (getRankImg(img) == 0) carousel.dataset.position = nextPos;
@@ -352,7 +364,7 @@ function displayImgs() {
   div.dataset.mouseDownAt = "0";
   div.dataset.prevPosition = "0";
 
-  for (let i = 1; i < NB_IMG_CAROUSEL + 1; i++) {
+  for (let i = 1; i < CAROUSEL.NB_IMG + 1; i++) {
     // if (i != 1) continue;
     const img = document.createElement("img");
     img.src = `static/img/${i}.jpg`;
@@ -360,7 +372,7 @@ function displayImgs() {
     img.id = `img-carousel-${i}`;
 
     //initial style
-    let pos = STANDARD_POS_IMGS[i - 1];
+    let pos = CAROUSEL.STANDARD_POS[i - 1];
     applyStyleWithoutAnimation(img, pos);
     img.dataset.position = pos;
     img.draggable = false;
@@ -387,10 +399,10 @@ function finishMoving() {
   //move carousel to a standard position if it isn't a click
   if (!isClicked) {
     let standardNextIndex = getNextClosestIndexStandardPos(carousel.dataset.position);
-    if (STANDARD_POS_IMGS[standardNextIndex] != carousel.dataset.position) {
+    if (CAROUSEL.STANDARD_POS[standardNextIndex] != carousel.dataset.position) {
       for (let img of listImgCarousel) {
-        const index = (getRankImg(img) + standardNextIndex) % NB_IMG_CAROUSEL;
-        const nextPos = STANDARD_POS_IMGS[index];
+        const index = (getRankImg(img) + standardNextIndex) % CAROUSEL.NB_IMG;
+        const nextPos = CAROUSEL.STANDARD_POS[index];
         applyStyleWithAnimation(img, nextPos);
         if (getRankImg(img) == 0) carousel.dataset.position = nextPos;
       }
@@ -425,7 +437,7 @@ function handleClickImgCarousel() {
       let deltaIndexStandardPos =
         img.dataset.position < 0.5
           ? getClosestIndexStandardPos(img.dataset.position) * -1
-          : NB_IMG_CAROUSEL - getClosestIndexStandardPos(img.dataset.position);
+          : CAROUSEL.NB_IMG - getClosestIndexStandardPos(img.dataset.position);
       if (deltaIndexStandardPos != 0) moveCarousel(deltaIndexStandardPos, true);
     });
   }

@@ -1,8 +1,12 @@
 import { colibri } from "./colibri.js";
 
 /** Constants **/
-const DURATION_ANIMATION_SCROLL = 1500; //(in ms) duration of the animation scroll
-const TIMEOUT_ANIMATION_SCROLL = 1000; //(in ms) timeout of no scroll needed before start the animation scroll
+const SCROLL = {
+  ANIMATION: {
+    DURATION: 1500, //(in ms) duration of the animation scroll
+    TIMEOUT: 1000, //(in ms) timeout of no scroll needed before start the animation scroll
+  },
+};
 /** ********* **/
 
 let scrollTimeout;
@@ -36,7 +40,7 @@ function smoothScrollTo(targetY) {
   function animationStep(currentTime) {
     if (!isAnimating) return;
     const elapsedTime = currentTime - startTime;
-    const progress = Math.min(elapsedTime / DURATION_ANIMATION_SCROLL, 1);
+    const progress = Math.min(elapsedTime / SCROLL.ANIMATION.DURATION, 1);
     const easedProgress = 1 - (1 - progress) * (1 - progress);
     userScrolling = false;
     window.scrollTo(0, startY + distance * easedProgress);
@@ -63,7 +67,7 @@ function userIsScrolling() {
 function constrainedScrolling() {
   clearTimeout(scrollTimeout);
   if (userScrolling && isAnimating) isAnimating = false;
-  scrollTimeout = setTimeout(snapToClosestSection, TIMEOUT_ANIMATION_SCROLL);
+  scrollTimeout = setTimeout(snapToClosestSection, SCROLL.ANIMATION.TIMEOUT);
 }
 
 export function initConstrainedScroll() {

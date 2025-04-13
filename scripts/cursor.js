@@ -1,20 +1,31 @@
 import { getRandomInt, getRandomVariableCSSColor } from "./global.js";
 
 /** Constants **/
-const DEFAULT_SIZE = 15; //(in px) size of the cursor in default state
-const PRESS_SIZE = 20; //(in px) size of the cursor in press state
-const MAX_SIZE_SPARKLE = 6; //(in px) maximum size of a sparkle
-const MIN_SIZE_SPARKLE = 3; //(in px) minimum size of a sparkle
-const MAX_DELAY_ANIMATION_SPARKLE = 100; //(in ms) maximum delay for the sparkle animation
-const DURATION_ANIMATION_SPARKLE = 1000; //(in ms) duration of the sparkle animation
-const SIZE_SQUARE_APPARITION_SPARKLE = 10; //(in px) size of the square where the sparkles randomly appear
+const CURSOR = {
+  DEFAULT_SIZE: 15, //(in px) size of the cursor in default state
+  PRESS_SIZE: 20, //(in px) size of the cursor in press state
+  SPARKLE: {
+    SIZE: {
+      MAX: 6, //(in px) maximum size of a sparkle
+      MIN: 3, //(in px) minimum size of a sparkle
+    },
+    SIZE_SQUARE_APPARITION: 10, //(in px) size of the square where the sparkles randomly appear
+    ANIMATION: {
+      DELAY: {
+        MAX: 100, //(in ms) maximum delay for the sparkle animation
+        MIN: 0, //(in ms) minimum delay for the sparkle animation
+      },
+      DURATION: 1000, //(in ms) duration of the sparkle animation
+    },
+  },
+};
 /** ********* **/
 
 const cursor = document.getElementById("cursor");
 const cursorForm = document.getElementById("cursor-form");
 
-cursorForm.style.width = `${DEFAULT_SIZE}px`;
-cursorForm.style.height = `${DEFAULT_SIZE}px`;
+cursorForm.style.width = `${CURSOR.DEFAULT_SIZE}px`;
+cursorForm.style.height = `${CURSOR.DEFAULT_SIZE}px`;
 
 var sparklesArr = [];
 
@@ -29,11 +40,11 @@ function trailAnimation(e) {
 }
 
 function styleSparkle(elem, e) {
-  const midSquare = SIZE_SQUARE_APPARITION_SPARKLE / 2;
+  const midSquare = CURSOR.SPARKLE.SIZE_SQUARE_APPARITION / 2;
   elem.style.top = e.pageY - window.scrollY + getRandomInt(-midSquare, midSquare) + "px";
   elem.style.left = e.pageX + getRandomInt(-midSquare, midSquare) + "px";
 
-  let size = getRandomInt(MIN_SIZE_SPARKLE, MAX_SIZE_SPARKLE) + "px";
+  let size = getRandomInt(CURSOR.SPARKLE.SIZE.MIN, CURSOR.SPARKLE.SIZE.MAX) + "px";
   elem.style.width = size;
   elem.style.height = size;
   elem.style.background = getRandomVariableCSSColor();
@@ -42,12 +53,12 @@ function styleSparkle(elem, e) {
 }
 
 function addAnimationProperties(elem) {
-  let lifeExpectancy = getRandomInt(0, DURATION_ANIMATION_SPARKLE);
+  let lifeExpectancy = getRandomInt(0, CURSOR.SPARKLE.ANIMATION.DURATION);
   elem.created = Date.now();
   elem.diesAt = elem.created + lifeExpectancy;
-  elem.style.animation = `fall ${DURATION_ANIMATION_SPARKLE}ms ease-in ${getRandomInt(
-    0,
-    MAX_DELAY_ANIMATION_SPARKLE
+  elem.style.animation = `fall ${CURSOR.SPARKLE.ANIMATION.DURATION}ms ease-in ${getRandomInt(
+    CURSOR.SPARKLE.ANIMATION.DELAY.MIN,
+    CURSOR.SPARKLE.ANIMATION.DELAY.MAX
   )}ms forwards`;
   return elem;
 }
@@ -77,13 +88,13 @@ export function initCursor() {
 
   window.onmousedown = () => {
     cursorForm.style.animation = "";
-    cursorForm.style.width = `${PRESS_SIZE}px`;
-    cursorForm.style.height = `${PRESS_SIZE}px`;
+    cursorForm.style.width = `${CURSOR.PRESS_SIZE}px`;
+    cursorForm.style.height = `${CURSOR.PRESS_SIZE}px`;
   };
 
   window.onmouseup = () => {
     cursorForm.style.animation = "rotate 0.5s ease-out both";
-    cursorForm.style.width = `${DEFAULT_SIZE}px`;
-    cursorForm.style.height = `${DEFAULT_SIZE}px`;
+    cursorForm.style.width = `${CURSOR.DEFAULT_SIZE}px`;
+    cursorForm.style.height = `${CURSOR.DEFAULT_SIZE}px`;
   };
 }
