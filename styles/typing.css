@@ -9,17 +9,17 @@
   --size-dash-bulb: 159;
   --size-dash-caret: 30;
   --size-offset-caret: -24;
-  &#ampoule {
+  & #ampoule {
     /* position */
     position: absolute;
     top: -25px;
     left: -5px;
-    &#caret-and-bulb {
+    & #caret-and-bulb {
       stroke: rgba(1, 23, 19, 0.5);
       stroke-dasharray: var(--size-dash-caret) var(--size-dash-bulb);
       stroke-dashoffset: 0;
     }
-    &#ampoule-light {
+    & #ampoule-light {
       opacity: 0;
       stroke: var(--secondary);
     }
