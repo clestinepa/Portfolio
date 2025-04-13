@@ -11,7 +11,19 @@ export function displayGrid() {
     let div = document.createElement("div");
     div.style.setProperty("--bg-url", `url("/static/img/${i}.jpg")`);
     div.className = "img-grid";
-    div.dataset.hover = 'Eum quae voluptatum aut excepturi autem et quaerat voluptas et distinctio laborum non consectetur autem est voluptatibus sunt! Et quia quaerat et corporis dolore eos dignissimos eaque est excepturi alias id inventore pariatur aut cumque aperiam. Eum quae voluptatum aut excepturi autem et quaerat voluptas et distinctio laborum non consectetur autem est voluptatibus sunt! Et quia quaerat et corporis dolore eos dignissimos eaque est excepturi alias id inventore pariatur aut cumque aperiam.'
+    let hover = document.createElement("div");
+    hover.className = "img-grid-hover";
+    let title = document.createElement("h2");
+    title.innerHTML = "SacredRobo";
+    let text = document.createElement("p");
+    text.innerHTML =
+      "Eum quae voluptatum aut excepturi autem et quaerat voluptas et distinctio laborum non consectetur autem est voluptatibus sunt!";
+    let logos = document.createElement("div");
+    logos.innerHTML = "LOGOOGOGO";
+    hover.appendChild(title);
+    hover.appendChild(text);
+    hover.appendChild(logos);
+    div.appendChild(hover);
     gridContainer.appendChild(div);
   }
 }

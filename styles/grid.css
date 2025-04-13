@@ -16,7 +16,7 @@
   --duration-transition: 0.3s;
 
   &::before,
-  &::after {
+  & .img-grid-hover {
     /* appearance */
     aspect-ratio: 1/1;
     /* position */
@@ -34,19 +34,29 @@
     top: 0;
     left: 0;
   }
-  &::after {
+  & .img-grid-hover {
     content: attr(data-hover);
     /* appearance */
     box-sizing: border-box;
     width: 100%;
     max-height: 100%;
-    overflow: hidden;
     padding: 16px;
     border-radius: 50%;
     background: rgb(247, 254, 249, 0.2);
     backdrop-filter: blur(15px);
     transform: scale(0.2);
-    color: transparent;
+    display: flex;
+    flex-direction: column;
+    & * {
+      color: transparent;
+    }
+    & p {
+      overflow: hidden;
+      flex: 1 1 0;
+    }
+    & h2 {
+      font-family: var(--font-title);
+    }
     /* position */
     transform-origin: bottom right;
     bottom: calc(-0.5 * var(--gain-size));
@@ -60,11 +70,17 @@
       top: var(--gain-size);
       left: calc(-0.5 * var(--gain-size));
     }
-    &::after {
+    & .img-grid-hover {
       /* appearance */
       transform: scale(1);
       border-radius: var(--border-radius);
-      color: inherit;
+      & p,
+      & div {
+        color: var(--black);
+      }
+      & h2 {
+        color: var(--secondary);
+      }
       /* position */
       bottom: 0;
       right: 0;
@@ -74,7 +90,7 @@
     }
   }
 
-  &:active::after {
+  &:active .img-grid-hover {
     /* position */
     transform: translate(0, calc(0.5 * var(--gain-size)));
     /* interaction */
