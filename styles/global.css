@@ -27,6 +27,8 @@
   --font-title: Baloo, Tahoma, Geneva, Verdana, sans-serif;
   --font-corps: Poppins, Tahoma, Geneva, Verdana, sans-serif;
 
+  --border-radius: 16px;
+
   color: var(--black);
   font-family: var(--font-corps);
 }
@@ -40,7 +42,7 @@ html {
 img {
   object-fit: cover;
   object-position: 100% center;
-  border-radius: 16px;
+  border-radius: var(--border-radius);
 }
 
 h1 {
@@ -150,12 +152,5 @@ header {
     position: absolute;
     z-index: 25;
     top: 37%;
-  }
-}
-
-#code {
-  margin: 0;
-  & .title {
-    margin: 0 var(--margin-h);
   }
 }

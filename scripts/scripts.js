@@ -4,6 +4,7 @@ import { initConstrainedScroll } from "./scroll.js";
 import { typeEffect } from "./typing.js";
 import { initCarousel } from "./carousel.js";
 import { displaySlide } from "./slide.js";
+import { displayGrid } from "./grid.js";
 
 //global scripts
 displayBg();
@@ -14,4 +15,5 @@ typeEffect();
 //design section
 initCarousel();
 //dev section
-displaySlide();
+// displaySlide();
+displayGrid();
