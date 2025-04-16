@@ -8,9 +8,9 @@
   background: transparent;
   overflow: hidden;
   isolation: isolate;
+  opacity: 0.2;
   & span {
     mix-blend-mode: screen;
-    opacity: 0.2;
     offset-rotate: 0deg;
     border-radius: 50%;
     position: absolute;
