@@ -6,20 +6,43 @@ const GRID = {
 
 const gridContainer = document.getElementById("grid-container");
 
-export function displayGrid() {
-  for (let i = 1; i < GRID.NB_IMG + 1; i++) {
+async function loadAndInjectSVG(name) {
+  const response = await fetch(`/static/logos/${name}.svg`);
+  const svgText = await response.text();
+
+  const wrapper = document.createElement("div");
+  wrapper.innerHTML = svgText;
+
+  const svg = wrapper.querySelector("svg");
+  svg.classList.add("tech-logo");
+
+  return svg;
+}
+
+export async function displayGrid() {
+  const response = await fetch("/static/dev/data.json");
+  const data = await response.json();
+
+  for (const item of data) {
     let div = document.createElement("div");
-    div.style.setProperty("--bg-url", `url("/static/img/${i}.jpg")`);
+    div.style.setProperty("--bg-url", `url("/static/dev/img/${item.id}-main.jpg")`);
     div.className = "img-grid";
+
     let hover = document.createElement("div");
     hover.className = "img-grid-hover";
+
     let title = document.createElement("h2");
-    title.innerHTML = "SacredRobo";
+    title.innerHTML = item.title;
+
     let text = document.createElement("p");
-    text.innerHTML =
-      "Eum quae voluptatum aut excepturi autem et quaerat voluptas et distinctio laborum non consectetur autem est voluptatibus sunt!";
+    text.innerHTML = item.text;
+
     let logos = document.createElement("div");
-    logos.innerHTML = "LOGOOGOGO";
+    for (const logoName of item.logos) {
+      const svg = await loadAndInjectSVG(logoName);
+      logos.appendChild(svg);
+    }
+
     hover.appendChild(title);
     hover.appendChild(text);
     hover.appendChild(logos);

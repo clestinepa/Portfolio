@@ -1,15 +1,14 @@
 #grid-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 5vw;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 6vw;
   grid-auto-rows: minmax(100px, auto);
 }
 & .img-grid {
   /* appearance */
   --gain-size: 10%;
-  /* width: 250px; */
-
-  aspect-ratio: 1/1;
+  --aspect-ratio: 45/32;
+  aspect-ratio: var(--aspect-ratio);
   /* position */
   position: relative;
   /* interaction */
@@ -17,8 +16,6 @@
 
   &::before,
   & .img-grid-hover {
-    /* appearance */
-    aspect-ratio: 1/1;
     /* position */
     position: absolute;
     /* interaction */
@@ -27,6 +24,7 @@
   &::before {
     content: "";
     /* appearance */
+    aspect-ratio: var(--aspect-ratio);
     width: 100%;
     border-radius: var(--border-radius);
     background: center / cover no-repeat var(--bg-url);
@@ -37,13 +35,13 @@
   & .img-grid-hover {
     content: attr(data-hover);
     /* appearance */
+    aspect-ratio: 1/1;
     box-sizing: border-box;
-    width: 100%;
-    max-height: 100%;
+    height: 100%;
     padding: 16px;
     border-radius: 50%;
     background: rgb(247, 254, 249, 0.2);
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(20px);
     transform: scale(0.2);
     display: flex;
     flex-direction: column;
@@ -61,6 +59,13 @@
     transform-origin: bottom right;
     bottom: calc(-0.5 * var(--gain-size));
     right: calc(-0.5 * var(--gain-size));
+    & .tech-logo {
+      border-radius: 0;
+      width: 25px;
+      height: 25px;
+      margin: 0 5px;
+      fill: transparent;
+    }
   }
   &:hover {
     &::before {
@@ -72,11 +77,14 @@
     }
     & .img-grid-hover {
       /* appearance */
+      aspect-ratio: var(--aspect-ratio);
       transform: scale(1);
       border-radius: var(--border-radius);
-      & p,
-      & div {
+      & p {
         color: var(--black);
+      }
+      & .tech-logo {
+        fill: var(--black);
       }
       & h2 {
         color: var(--secondary);
