@@ -12,11 +12,10 @@ async function loadAndInjectSVG(name) {
 
   const wrapper = document.createElement("div");
   wrapper.innerHTML = svgText;
+  wrapper.setAttribute("data-tooltip", name.replace("-", " "));
+  wrapper.classList = "tech-logo tooltip";
 
-  const svg = wrapper.querySelector("svg");
-  svg.classList.add("tech-logo");
-
-  return svg;
+  return wrapper;
 }
 
 export async function displayGrid() {
@@ -38,6 +37,7 @@ export async function displayGrid() {
     text.innerHTML = item.text;
 
     let logos = document.createElement("div");
+    logos.className = "logos";
     for (const logoName of item.logos) {
       const svg = await loadAndInjectSVG(logoName);
       logos.appendChild(svg);

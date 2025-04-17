@@ -1,56 +1,50 @@
 [
-    {
-      "id": 1,
-      "title": "Front-End",
-      "text": "Text explicatif",
-      "logos": ["html", "css", "js"]
-    },
-    {
-      "id": 2,
-      "title": "Front-End",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "logos": ["react", "redux", "material-ui", "chart-js"]
-    },
-    {
-      "id": 3,
-      "title": "Front-End",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "logos": ["react", "redux"]
-    },
-    {
-      "id": 4,
-      "title": "Data-Analytics & Front-End",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "logos": ["python", "html", "css", "js"]
-    },
-    {
-      "id": 5,
-      "title": "Games",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "logos": ["python"]
-    },
-    {
-      "id": 6,
-      "title": "Front-end",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "logos": ["svelte"]
-    },
-    {
-      "id": 7,
-      "title": "Front-end",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "logos": ["java"]
-    },
-    {
-      "id": 8,
-      "title": "Front-end",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "logos": ["html", "css", "js"]
-    },
-    {
-      "id": 9,
-      "title": "Art Génératif",
-      "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "logos": ["ada"]
-    }
-  ]
+  {
+    "id": 1,
+    "title": "Un portfolio expérimental",
+    "text": "Etant pationnée de développement web, je voulais créer un portfolio personnalisé dans lequel je pourrais exprimer ma créativité librement.",
+    "logos": ["html", "css", "js"]
+  },
+  {
+    "id": 2,
+    "title": "Une plateforme ambitieuse",
+    "text": "Dans mon dernier emploi, j'ai travaillé sur une application de grande ampleur dans une équipe internationnale.",
+    "logos": ["react", "redux", "material-ui", "chart-js", "openlayers"]
+  },
+  {
+    "id": 3,
+    "title": "Une mise en pratique concluante",
+    "text": "Pour ma première expérience professionnelle, j'ai codé seule et entièrement le front d'une application web.",
+    "logos": ["react", "redux", "mapbox"]
+  },
+  {
+    "id": 4,
+    "title": "Un passe temps stimulant",
+    "text": "Férue de jeux de logique, j'aime réfléchir à la manière de les implémenter.",
+    "logos": ["python"]
+  },
+  {
+    "id": 5,
+    "title": "Un projet pluridisciplinaire",
+    "text": "Pendant mes études, j'ai pu travaillé sur un projet d'analyse de donnée combiné avec dyu développement front-end.",
+    "logos": ["jupyter", "html", "css", "js"]
+  },
+  {
+    "id": 6,
+    "title": "Une initiation en autodidacte",
+    "text": "Pour le plaisir, je me suis formée seule sur un nouveau moyen de développer des applications web : les framework JavaScript.",
+    "logos": ["svelte"]
+  },
+  {
+    "id": 7,
+    "title": "Une découverte passionnelle",
+    "text": "Pour mes études, j'ai pu développer de A à Z ma première application sur plusieurs mois sans contrainte dans la création.",
+    "logos": ["java"]
+  },
+  {
+    "id": 8,
+    "title": "Une première application",
+    "text": "En équipe, nous avons déveloper un site web simple afin de nous familiariser avec les langages.",
+    "logos": ["html", "css", "js"]
+  }
+]
