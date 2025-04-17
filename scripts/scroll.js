@@ -73,7 +73,7 @@ function snapToClosestSection() {
   if (closest.visibleSections.length <= 1) return; // Don't scroll if only one section is visible
 
   if (closest.section) {
-    if ((closest.section == "about" && !colibri.isVisible) || (closest.section.id != "about" && colibri.isVisible))
+    if ((closest.section.id == "about" && !colibri.isVisible) || (closest.section.id != "about" && colibri.isVisible))
       colibri.changeVisibility();
     smoothScrollTo(closest.edge);
   }
