@@ -22,7 +22,7 @@
 
 @keyframes move {
   50% {
-    transform: scale(0.5);
+    transform: scale(0.7);
   }
   100% {
     offset-distance: 100%;

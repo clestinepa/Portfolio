@@ -8,8 +8,8 @@ const BG = {
       MIN: 40, //(in px) minimum size of ellipse radius
     },
     SIZE: {
-      MAX: 80, //(in vmin) maximum size of a sphere
-      MIN: 40, //(in vmin) minimum size of a sphere
+      MAX: 140, //(in vmin) maximum size of a sphere
+      MIN: 100, //(in vmin) minimum size of a sphere
     },
     BLUR: {
       MAX: 14, //(in vmin) maximum blur of a sphere

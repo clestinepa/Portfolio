@@ -121,6 +121,9 @@ header {
   margin: 0 var(--margin-h);
   padding: var(--padding-v) 0;
   box-sizing: border-box;
+  & h1 {
+    font-family: var(--font-title);
+  }
 }
 .text p {
   text-align: justify;
@@ -136,6 +139,9 @@ header {
   & #profile-picture {
     width: var(--widthProfile);
     aspect-ratio: 4/5;
+  }
+  & h1 {
+    font-family: var(--font-corps);
   }
   & span {
     font-size: larger;
