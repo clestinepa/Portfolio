@@ -41,7 +41,7 @@ class Colibri {
   position = {
     flip: false,
     x: 0,
-    y: 0,
+    y: window.innerHeight,
     angle: 0,
   };
   counterFrameScared = 0;

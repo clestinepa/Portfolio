@@ -10,12 +10,16 @@
   --size-dash-caret: 30;
   --size-offset-caret: -24;
   & #ampoule {
+    /* appearance */
+    height: 2.5em; /* initial svg height is 60px bas on a 24px font-size */
+    width: 2.04em; /* initial svg height is 49px bas on a 24px font-size */
     /* position */
     position: absolute;
-    top: -25px;
-    left: -5px;
+    top: -1.15em;
+    left: -0.2em;
     & #caret-and-bulb {
-      stroke: rgba(1, 23, 19, 0.5);
+      --opacity-black: 0.6;
+      stroke: var(--black-opacity);
       stroke-dasharray: var(--size-dash-caret) var(--size-dash-bulb);
       stroke-dashoffset: 0;
     }
@@ -62,7 +66,7 @@
     stroke-dasharray: var(--size-dash-caret) var(--size-dash-bulb);
     stroke-dashoffset: 0;
   }
-  19% {
+  19% { /* --size-offset-caret is ~19% of --size-dash-bulb */
     stroke-dasharray: var(--size-dash-caret) var(--size-dash-bulb);
     stroke-dashoffset: var(--size-offset-caret);
   }
