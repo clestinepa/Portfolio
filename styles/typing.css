@@ -9,14 +9,15 @@
   --size-dash-bulb: 159;
   --size-dash-caret: 30;
   --size-offset-caret: -24;
+  --up-during-draw: -10%;
   & #ampoule {
     /* appearance */
-    height: 2.5em; /* initial svg height is 60px bas on a 24px font-size */
-    width: 2.04em; /* initial svg height is 49px bas on a 24px font-size */
+    transform: scale(calc(1em / 24px)); /* initial svg size is based on a 24px font-size */
+    overflow: visible;
     /* position */
     position: absolute;
-    top: -1.15em;
-    left: -0.2em;
+    top: -1em;
+    left: -0.1em;
     & #caret-and-bulb {
       --opacity-black: 0.6;
       stroke: var(--black-opacity);
@@ -26,6 +27,7 @@
     & #ampoule-light {
       opacity: 0;
       stroke: var(--secondary);
+      transform: translateY(var(--up-during-draw));
     }
   }
 }
@@ -65,13 +67,16 @@
   0% {
     stroke-dasharray: var(--size-dash-caret) var(--size-dash-bulb);
     stroke-dashoffset: 0;
+    transform: translateY(0);
   }
   19% { /* --size-offset-caret is ~19% of --size-dash-bulb */
     stroke-dasharray: var(--size-dash-caret) var(--size-dash-bulb);
     stroke-dashoffset: var(--size-offset-caret);
+    transform: translateY(var(--up-during-draw));
   }
   100% {
     stroke-dasharray: var(--size-dash-bulb) var(--size-dash-bulb);
     stroke-dashoffset: var(--size-offset-caret);
+    transform: translateY(var(--up-during-draw));
   }
 }

@@ -1,14 +1,20 @@
 #grid-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 6vw;
-  grid-auto-rows: minmax(100px, auto);
+  grid-template-columns: repeat(auto-fit, minmax(var(--min-width-column), 1fr));
+  grid-gap: var(--gap);
+  justify-content: center;
 }
-& .img-grid {
+.grid-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.img-grid {
   /* appearance */
   --gain-size: 10%;
   --aspect-ratio: 45/32;
   aspect-ratio: var(--aspect-ratio);
+  width: 100%;
+  max-width: var(--max-width-column);
   /* position */
   position: relative;
   /* interaction */
@@ -71,10 +77,10 @@
   aspect-ratio: 1/1;
   box-sizing: border-box;
   height: 100%;
-  padding: 16px;
+  padding: var(--font-size-p);
   border-radius: 50%;
-  background: rgb(247, 254, 249, 0.4);
-  backdrop-filter: blur(20px);
+  background: var(--white-opacity);
+  backdrop-filter: blur(var(--blur));
   transform: scale(0.2);
   display: flex;
   flex-direction: column;
@@ -90,21 +96,25 @@
     color: transparent;
   }
   & h2 {
+    font-size: var(--font-size-h2);
     font-family: var(--font-title);
+    line-height: 125%;
   }
   & p {
+    font-size: var(--font-size-p);
     overflow: hidden;
+    text-align: left;
     flex: 1 1 0;
   }
 }
 
 .logos {
   display: flex;
-  gap: 5px;
+  gap: calc(var(--font-size-p) / 2);
   & .tech-logo {
     border-radius: 0;
-    width: 25px;
-    height: 25px;
+    width: calc(var(--font-size-h2) * 1.2);
+    height: calc(var(--font-size-h2) * 1.2);
     fill: transparent;
     position: relative;
     & svg {
