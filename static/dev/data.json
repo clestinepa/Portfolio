@@ -2,49 +2,49 @@
   {
     "id": 1,
     "title": "Un portfolio expérimental",
-    "text": "Etant pationnée de développement web, je voulais créer un portfolio personnalisé dans lequel je pourrais exprimer ma créativité librement.",
+    "text": "Étant passionnée de développement web, j'ai créé un portfolio totalement personnalisé, pensé comme un terrain de jeu pour ma créativité.",
     "logos": ["html", "css", "js"]
   },
   {
     "id": 2,
     "title": "Une plateforme ambitieuse",
-    "text": "Dans mon dernier emploi, j'ai travaillé sur une application de grande ampleur dans une équipe internationnale.",
+    "text": "Lors de mon dernier emploi, j'ai travaillé sur une application complexe et de grande ampleur dans une équipe internationale.",
     "logos": ["react", "redux", "material-ui", "chart-js", "openlayers"]
   },
   {
     "id": 3,
-    "title": "Une mise en pratique concluante",
-    "text": "Pour ma première expérience professionnelle, j'ai codé seule et entièrement le front d'une application web.",
+    "title": "Une création concluante",
+    "text": "Pour ma première expérience professionnelle, j'ai codé entièrement seule le front-end d'une application web.",
     "logos": ["react", "redux", "mapbox"]
   },
   {
     "id": 4,
-    "title": "Un passe temps stimulant",
+    "title": "Un passe-temps stimulant",
     "text": "Férue de jeux de logique, j'aime réfléchir à la manière de les implémenter.",
     "logos": ["python"]
   },
   {
     "id": 5,
     "title": "Un projet pluridisciplinaire",
-    "text": "Pendant mes études, j'ai pu travaillé sur un projet d'analyse de donnée combiné avec dyu développement front-end.",
+    "text": "Lors de mes études, j’ai contribué à un projet mêlant analyse de données et développement front-end, alliant technique et visualisation.",
     "logos": ["jupyter", "html", "css", "js"]
   },
   {
     "id": 6,
-    "title": "Une initiation en autodidacte",
-    "text": "Pour le plaisir, je me suis formée seule sur un nouveau moyen de développer des applications web : les framework JavaScript.",
+    "title": "Une initiation formatrice",
+    "text": "Par curiosité, je me suis initiée seule aux frameworks JavaScript, découvrant une nouvelle façon de concevoir des applications web.",
     "logos": ["svelte"]
   },
   {
     "id": 7,
-    "title": "Une découverte passionnelle",
-    "text": "Pour mes études, j'ai pu développer de A à Z ma première application sur plusieurs mois sans contrainte dans la création.",
+    "title": "Une découverte attirante",
+    "text": "Pour mes études, j'ai pu développer de A à Z ma première application sur plusieurs mois, sans contrainte dans la création.",
     "logos": ["java"]
   },
   {
     "id": 8,
     "title": "Une première application",
-    "text": "En équipe, nous avons déveloper un site web simple afin de nous familiariser avec les langages.",
+    "text": "En équipe, nous avons conçu un site web simple, idéal pour nous initier aux langages du web et à la collaboration.",
     "logos": ["html", "css", "js"]
   }
 ]
