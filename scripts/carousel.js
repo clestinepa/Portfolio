@@ -21,7 +21,7 @@ const CAROUSEL = {
   //appearance
   BLUR: {
     MAX: 0, //(in px) blur for position 0% and 100%
-    MIN: 2, //(in px) blur for position 50%
+    MIN: 5, //(in px) blur for position 50%
   },
   OPACITY: {
     MAX: 1, //opacity for position 0% and 100%
@@ -367,7 +367,7 @@ function displayImgs() {
   for (let i = 1; i < CAROUSEL.NB_IMG + 1; i++) {
     // if (i != 1) continue;
     const img = document.createElement("img");
-    img.src = `static/img/${i}.jpg`;
+    img.src = `static/crea/img/${i}.png`;
     img.className = "img-carousel";
     img.id = `img-carousel-${i}`;
 
@@ -431,7 +431,7 @@ function handleClickImgCarousel() {
     });
     img.addEventListener("mouseup", (e) => {
       //if there's no click or it's longer than 300ms or the image is still moving from previous animation, do nothing
-      if (downDate == undefined || new Date() - downDate > MAX_TIME_OF_PRESSURE || img.getAnimations().length != 0)
+      if (downDate == undefined || new Date() - downDate > CAROUSEL.MAX_TIME_OF_PRESSURE || img.getAnimations().length != 0)
         return;
       isClicked = true;
       let deltaIndexStandardPos =
