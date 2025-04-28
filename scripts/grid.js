@@ -38,12 +38,12 @@ async function loadAndInjectSVG(name) {
 }
 
 export async function displayGrid() {
-  const response = await fetch("/static/dev/data.json");
+  const response = await fetch("/static/translate/dev-data.json");
   const data = await response.json();
 
   for (const item of data) {
     let div = document.createElement("div");
-    div.style.setProperty("--bg-url", `url("/static/dev/img/${item.id}-main.jpg")`);
+    div.style.setProperty("--bg-url", `url("/static/img/dev-${item.id}-main.jpg")`);
     div.className = "img-grid";
 
     let hover = document.createElement("div");

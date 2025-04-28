@@ -367,7 +367,7 @@ function displayImgs() {
   for (let i = 1; i < CAROUSEL.NB_IMG + 1; i++) {
     // if (i != 1) continue;
     const img = document.createElement("img");
-    img.src = `static/crea/img/${i}.png`;
+    img.src = `static/img/crea-${i}.png`;
     img.className = "img-carousel";
     img.id = `img-carousel-${i}`;
 
