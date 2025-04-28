@@ -1,3 +1,7 @@
+/** NEXT STEPS
+ * - modify shadow to move by their own in the exigeante animation
+ */
+
 /** Constants **/
 const words = [
   "développeuse web",
@@ -44,7 +48,7 @@ const delayBeforeDeleteAnimationBulb = TYPING.TIME.TYPING.DEFAULT * "créative".
 /** ********* **/
 
 const typingElement = document.getElementById("typing");
-const profile = document.getElementById("profile-picture");
+const profile = document.getElementById("profile-picture-container");
 const caretAndBulb = document.getElementById("caret-and-bulb");
 const light = document.getElementById("ampoule-light");
 
@@ -90,12 +94,25 @@ function handleWordsAnimation() {
     );
   } else if (letterIndex == currentWord.length) {
     switch (currentWord) {
+      case "curieuse":
+        restartAnimation(profile, `hideShadow ${TYPING.ANIMATION.WORD.DURATION.DEFAULT}s reverse forwards`);
+        restartAnimation(
+          profile.firstElementChild,
+          `colorPicture ${TYPING.ANIMATION.WORD.DURATION.DEFAULT}s reverse forwards`
+        );
+        profile.style.boxShadow = "var(--shadows)";
+
+        break;
       case "énergique":
         restartAnimation(profile, `shake ${TYPING.ANIMATION.WORD.DURATION.DEFAULT}s`);
         profile.style.transform = "rotate(var(--deg-after-shake))";
         break;
       case "exigeante":
         profile.style.transform = "rotate(0deg)";
+        break;
+      case "pédagogue":
+        restartAnimation(profile, `hideShadow ${TYPING.ANIMATION.WORD.DURATION.DEFAULT}s forwards`);
+        restartAnimation(profile.firstElementChild, `colorPicture ${TYPING.ANIMATION.WORD.DURATION.DEFAULT}s forwards`);
         break;
       default:
     }
