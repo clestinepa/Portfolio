@@ -8,7 +8,7 @@
   background: transparent;
   overflow: hidden;
   isolation: isolate;
-  opacity: 0.2;
+  opacity: 0.1;
   & span {
     mix-blend-mode: screen;
     offset-rotate: 0deg;

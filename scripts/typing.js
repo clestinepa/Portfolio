@@ -4,7 +4,7 @@
 
 /** Constants **/
 const words = [
-  "développeuse web",
+  "développeuse front-end",
   "UX/UI designeuse",
   "curieuse",
   "énergique",
