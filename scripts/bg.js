@@ -61,7 +61,7 @@ export function displayBg() {
     const span = document.createElement("span");
     const size = getRandom(BG.SPHERE.SIZE.MIN, BG.SPHERE.SIZE.MAX);
     const blur = getRandom(BG.SPHERE.BLUR.MIN, BG.SPHERE.BLUR.MAX);
-    const offsetShadow = size + blur;
+    const offsetShadow = size + blur; //shadow has to be away from the actual element to be seen completely
     const path = generateRandomEllipsePath(vminToPx(offsetShadow));
     const duration = getRandomInt(BG.SPHERE.ANIMATION.DURATION.MIN, BG.SPHERE.ANIMATION.DURATION.MAX);
     span.style.width = `${size}vmin`;
@@ -73,3 +73,9 @@ export function displayBg() {
     bgContainer.appendChild(span);
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("img, a, p, span, h1, h2").forEach((el) => {
+    el.setAttribute("draggable", "false");
+  });
+});

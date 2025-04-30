@@ -125,7 +125,7 @@ img {
     left: 0;
     transform: translate(0, -100%);
     /* interaction */
-    transition: transform 0.2s;
+    transition: transform 0.2s ease;
   }
   &:hover {
     box-shadow: 0 0 0.5em 0em var(--black-opacity);

@@ -375,7 +375,6 @@ function displayImgs() {
     let pos = CAROUSEL.STANDARD_POS[i - 1];
     applyStyleWithoutAnimation(img, pos);
     img.dataset.position = pos;
-    img.draggable = false;
 
     div.appendChild(img);
   }
@@ -431,7 +430,11 @@ function handleClickImgCarousel() {
     });
     img.addEventListener("mouseup", (e) => {
       //if there's no click or it's longer than 300ms or the image is still moving from previous animation, do nothing
-      if (downDate == undefined || new Date() - downDate > CAROUSEL.MAX_TIME_OF_PRESSURE || img.getAnimations().length != 0)
+      if (
+        downDate == undefined ||
+        new Date() - downDate > CAROUSEL.MAX_TIME_OF_PRESSURE ||
+        img.getAnimations().length != 0
+      )
         return;
       isClicked = true;
       let deltaIndexStandardPos =
@@ -452,7 +455,7 @@ function updatePathCarousel() {
   );
 }
 
-export function initCarousel() {
+export function displayCarousel() {
   carouselContainer.addEventListener("mousedown", handleStartMoving);
   carouselContainer.addEventListener("mousemove", handleMoving);
   carouselContainer.addEventListener("mouseup", finishMoving);

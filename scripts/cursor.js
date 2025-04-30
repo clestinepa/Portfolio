@@ -24,8 +24,7 @@ const CURSOR = {
 const cursor = document.getElementById("cursor");
 const cursorForm = document.getElementById("cursor-form");
 
-cursorForm.style.width = `${CURSOR.DEFAULT_SIZE}px`;
-cursorForm.style.height = `${CURSOR.DEFAULT_SIZE}px`;
+cursor.style.setProperty("--cursor-size", CURSOR.DEFAULT_SIZE + "px");
 
 var sparklesArr = [];
 
@@ -77,24 +76,43 @@ function removeSparkles() {
   requestAnimationFrame(removeSparkles);
 }
 
-removeSparkles(); // starts the recursive loop
+function handleCursorMoving(e) {
+  cursor.style.top = `${e.clientY}px`;
+  cursor.style.left = `${e.clientX}px`;
+  trailAnimation(e);
+}
+
+function handleCursorDown() {
+  cursorForm.style.animation = "";
+  cursor.style.setProperty("--cursor-size", CURSOR.PRESS_SIZE + "px");
+}
+
+function handleCursorUp() {
+  cursorForm.style.animation = "rotate 0.5s ease-out both";
+  cursor.style.setProperty("--cursor-size", CURSOR.DEFAULT_SIZE + "px");
+}
+
+function initCursorHover() {
+  const clickMeElements = document.getElementsByClassName("click-me");
+  for (let element of clickMeElements) {
+    element.addEventListener("mouseenter", () =>
+      cursorForm.style.setProperty("--cursor-size", CURSOR.PRESS_SIZE + "px")
+    );
+    element.addEventListener("mousedown", () => cursorForm.style.setProperty("--cursor-color", "var(--main-photo)"));
+    element.addEventListener("mouseleave", () => {
+      cursorForm.style.removeProperty("--cursor-size");
+      cursorForm.style.removeProperty("--cursor-color");
+    });
+    element.addEventListener("mouseup", () => {
+      cursorForm.style.removeProperty("--cursor-color");
+    });
+  }
+}
 
 export function initCursor() {
-  window.onmousemove = (e) => {
-    cursor.style.top = `${e.clientY}px`;
-    cursor.style.left = `${e.clientX}px`;
-    trailAnimation(e);
-  };
-
-  window.onmousedown = () => {
-    cursorForm.style.animation = "";
-    cursorForm.style.width = `${CURSOR.PRESS_SIZE}px`;
-    cursorForm.style.height = `${CURSOR.PRESS_SIZE}px`;
-  };
-
-  window.onmouseup = () => {
-    cursorForm.style.animation = "rotate 0.5s ease-out both";
-    cursorForm.style.width = `${CURSOR.DEFAULT_SIZE}px`;
-    cursorForm.style.height = `${CURSOR.DEFAULT_SIZE}px`;
-  };
+  window.addEventListener("mousedown", handleCursorDown);
+  window.addEventListener("mousemove", handleCursorMoving);
+  window.addEventListener("mouseup", handleCursorUp);
+  removeSparkles(); // starts the recursive loop
+  initCursorHover();
 }
