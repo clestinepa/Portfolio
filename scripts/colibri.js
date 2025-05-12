@@ -1,73 +1,84 @@
-import { getRandomInt } from "./global.js";
+import { FrameLoop, getRandomInt } from "./global.js";
 
 /** NEXT STEPS
  * - determine randomScared based of the mousePosition: closer => jump higher
- * - add flower around text
- * - recreate goAway effect
+ * - recreate goAway effect (determine where the colibri will go away)
  * - if mouse come closer to colibri during scared, keep a distance min between them
- *   (distance min=initial scared distance calculated)
+ *   (distance min = initial scared distance calculated)
  */
 
 /** Constants **/
 const COLIBRI = {
+  SECTION_VISIBLE: 3, //rank of the section where the colibri is visible
   //appearance
   SIZE: 70, //(in px) size of the colibri
   MARGIN_MOUSE: 10, //(in px) margin x between mouse and colibri
   RATIO_HEAD_POSITION: 3, //head position relative to the colibri top
   //scared
   SCARED: {
-    NB_FRAME: 50, //frame before come back
+    NB_FRAME: 30, //frame before come back
     JUMP: {
       MAX: 100, //(in px) distance max of a scared jump
       MIN: 70, //(in px) distance min of a scared jump
     },
   },
+  //hide
+  HIDE: {
+    TIMEOUT: 100, //(in ms) timeout before stop animation frame
+  },
   //movement
   T_INTERPOLATION: {
     follow: 0.1,
     dodge: 0.25,
-    goAway: 0.05,
     scared: 0.25,
+    hide: 0.05,
   },
   PRECISION_ACHIEVED: 10, //(in px) distance between colibri and mouse needed to considered goal achieved
 };
 /** ********* **/
 
 /** Class **/
-class Colibri {
+export class Colibri {
+  constructor() {}
+
+  //static attributes
+  static sectionVisibleId = document.getElementsByClassName("section").item(COLIBRI.SECTION_VISIBLE).id;
+  static #deltaYHead = COLIBRI.SIZE / COLIBRI.RATIO_HEAD_POSITION;
+
+  //public attributes
   isVisible = false;
   goal = { x: null, y: null };
   action = "follow";
   position = {
-    flip: false,
     x: 0,
-    y: window.innerHeight,
+    y: window.innerHeight * COLIBRI.SECTION_VISIBLE, //is not perfect because section can be higher then 100vh but it's enough
     angle: 0,
   };
-  counterFrameScared = 0;
-  animationFrame = null;
-  constructor() {}
 
-  set animationFrame(value) {
-    this.animationFrame = value;
-  }
+  //private attributes
+  #counterFrameScared = 0;
 
   get #t() {
     switch (this.action) {
-      case "goAway":
-        return COLIBRI.T_INTERPOLATION.goAway;
       case "dodge":
         return COLIBRI.T_INTERPOLATION.dodge;
       case "scared":
         return COLIBRI.T_INTERPOLATION.scared;
+      case "hide":
+        return COLIBRI.T_INTERPOLATION.hide;
       case "follow":
       default:
         return COLIBRI.T_INTERPOLATION.follow;
     }
   }
 
-  get #deltaYHead() {
-    return COLIBRI.SIZE / COLIBRI.RATIO_HEAD_POSITION;
+  get #positionGoal() {
+    //because we want the head of the colibri to be in the same x than the goal
+    //and we don't want to be to close from the cursor
+    return {
+      x: this.goal.x - COLIBRI.SIZE * (this.#isFlipped ? 0 : 1) - this.#marginMouse,
+      y: this.goal.y - Colibri.#deltaYHead,
+    };
   }
 
   get #center() {
@@ -75,19 +86,18 @@ class Colibri {
   }
 
   get #head() {
-    return { x: this.position.x + COLIBRI.SIZE / 2, y: this.position.y + this.#deltaYHead };
+    return { x: this.position.x + COLIBRI.SIZE / 2, y: this.position.y + Colibri.#deltaYHead };
   }
 
   /** do the distance head-goal is close enough ? */
   get #isGoalAchieved() {
-    //PRECISION_ACHIEVED is necessary because the interpolation makes
-    //the movement very slow near the goal
+    //PRECISION_ACHIEVED is necessary because the interpolation makes the movement very slow near the goal
     return this.#getDistanceTo(this.goal) < COLIBRI.SIZE / 2 + COLIBRI.MARGIN_MOUSE + COLIBRI.PRECISION_ACHIEVED;
   }
 
+  /** the point that the colibri is looking at */
   get #focus() {
     switch (this.action) {
-      case "goAway":
       case "hide":
         return this.goal;
       case "dodge":
@@ -98,20 +108,13 @@ class Colibri {
     }
   }
 
-  #setFlip() {
-    this.position.flip = this.#center.x > this.#focus.x;
-  }
-
-  #setAngle() {
-    this.position.angle = Math.atan2(this.#focus.y - this.#head.y, this.#focus.x - this.#head.x);
-    colibriElement.style.transform = `rotate(${colibri.position.angle}rad) scaleY(${
-      colibri.position.flip ? "-1" : "1"
-    })`;
+  get #isFlipped() {
+    return this.#center.x > this.#focus.x;
   }
 
   /**MARGIN_MOUSE or -MARGIN_MOUSE depending of the flip*/
-  get #mouseGap() {
-    return COLIBRI.MARGIN_MOUSE * (this.position.flip ? -1 : 1);
+  get #marginMouse() {
+    return COLIBRI.MARGIN_MOUSE * (this.#isFlipped ? -1 : 1);
   }
 
   #getDistanceTo(pos) {
@@ -121,13 +124,12 @@ class Colibri {
   #setGoal() {
     switch (this.action) {
       case "dodge":
-        this.goal = {
-          x: mousePosition.x - this.#mouseGap * 2,
-          y: mousePosition.y,
-        };
+        this.goal = { x: mousePosition.x - this.#marginMouse * 2, y: mousePosition.y };
         break;
       case "scared":
         //already define
+        break;
+      case "hide":
         break;
       case "follow":
       default:
@@ -136,6 +138,9 @@ class Colibri {
   }
 
   #setAction() {
+    if (this.isVisible == false) this.action = "hide";
+    else if (this.action == "hide") this.action = "follow";
+
     if (this.#getDistanceTo(mousePosition) < COLIBRI.SIZE / 2) this.action = "dodge";
     else if (this.#isGoalAchieved) {
       switch (this.action) {
@@ -143,69 +148,62 @@ class Colibri {
           this.action = "follow";
           break;
         case "scared":
-          this.counterFrameScared++;
-          if (this.counterFrameScared >= COLIBRI.SCARED.NB_FRAME) this.action = "follow";
+          this.#counterFrameScared++;
+          if (this.#counterFrameScared >= COLIBRI.SCARED.NB_FRAME) this.action = "follow";
           break;
         case "follow":
-          this.counterFrameScared = 0;
+          this.#counterFrameScared = 0;
       }
     }
-    colibriElement.dataset.action = colibri.action;
   }
 
-  get #estheticGoal() {
-    //because we want the head of the colibri to be in the same x than the goal
-    //and we don't want to be to close from the cursor
-    return {
-      x: this.goal.x - COLIBRI.SIZE * (this.position.flip ? 0 : 1) - this.#mouseGap,
-      y: this.goal.y - this.#deltaYHead,
-    };
-  }
-
-  #setPosition() {
+  #setPosition(t, positionGoal) {
     //we are in "back" situation => exponential interpolation
-    if (this.action == "follow" && this.counterFrameScared != 0) {
-      this.position.x = this.position.x + (this.#estheticGoal.x - this.position.x) * Math.pow(this.#t, 2);
-      this.position.y = this.position.y + (this.#estheticGoal.y - this.position.y) * Math.pow(this.#t, 2);
+    if (this.action == "follow" && this.#counterFrameScared != 0) {
+      this.position.x = this.position.x + (positionGoal.x - this.position.x) * Math.pow(t, 2);
+      this.position.y = this.position.y + (positionGoal.y - this.position.y) * Math.pow(t, 2);
     }
     //sinusoidal interpolation
     else {
-      this.position.x =
-        this.position.x + (this.#estheticGoal.x - this.position.x) * (0.5 - 0.5 * Math.cos(Math.PI * this.#t));
-      this.position.y =
-        this.position.y + (this.#estheticGoal.y - this.position.y) * (0.5 - 0.5 * Math.cos(Math.PI * this.#t));
+      this.position.x = this.position.x + (positionGoal.x - this.position.x) * (0.5 - 0.5 * Math.cos(Math.PI * t));
+      this.position.y = this.position.y + (positionGoal.y - this.position.y) * (0.5 - 0.5 * Math.cos(Math.PI * t));
     }
-    colibriElement.style.top = `${colibri.position.y}px`;
-    colibriElement.style.left = `${colibri.position.x}px`;
+
+    this.position.angle = Math.atan2(this.#focus.y - this.#head.y, this.#focus.x - this.#head.x);
   }
 
   handleMouseDown() {
     this.action = "scared";
-    const randomY = getRandomInt(COLIBRI.SCARED.JUMP.MIN, COLIBRI.SCARED.JUMP.MAX);
-    const randomX = getRandomInt(COLIBRI.SCARED.JUMP.MIN, COLIBRI.SCARED.JUMP.MAX);
+    //define goal once and not each frame to conserve bev=cause of the random
     this.goal = {
-      x: this.#head.x - randomX * (this.position.flip ? -1 : 1),
-      y: this.#head.y - randomY,
+      x: this.#head.x - getRandomInt(COLIBRI.SCARED.JUMP.MIN, COLIBRI.SCARED.JUMP.MAX) * (this.#isFlipped ? -1 : 1),
+      y: this.#head.y - getRandomInt(COLIBRI.SCARED.JUMP.MIN, COLIBRI.SCARED.JUMP.MAX),
     };
-    this.counterFrameScared = 0;
+    this.#counterFrameScared = 0;
   }
 
   handleFrame() {
     this.#setAction();
     this.#setGoal();
-    this.#setPosition();
-    this.#setFlip();
-    this.#setAngle();
+    const t = this.#t;
+    const positionGoal = this.#positionGoal;
+    this.#setPosition(t, positionGoal);
+
+    colibriElement.style.top = `${this.position.y}px`;
+    colibriElement.style.left = `${this.position.x}px`;
+    colibriElement.style.transform = `rotate(${this.position.angle}rad) scaleY(${this.#isFlipped ? "-1" : "1"})`;
   }
 
   changeVisibility() {
     this.isVisible = !this.isVisible;
     if (this.isVisible) {
       colibriElement.style.opacity = "1";
-      refColibri();
+      myColibriFrameLoop.start();
     } else {
       colibriElement.style.opacity = "0";
-      cancelAnimationFrame(this.animationFrame);
+      //define goal once and not each frame to conserve bev=cause of the random
+      this.goal = { x: window.innerWidth * Math.random(), y: window.scrollY };
+      myColibriFrameLoop.stop(COLIBRI.HIDE.TIMEOUT);
     }
   }
 }
@@ -224,33 +222,24 @@ const mousePosition = {
   y: 0,
   fixedX: 0,
   fixedY: 0,
-  lastMove: null,
 };
-export const colibri = new Colibri();
+export const myColibri = new Colibri();
 /** **** **/
 
 /** EventListener **/
 document.addEventListener("scroll", () => {
   mousePosition.x = mousePosition.fixedX + window.scrollX;
   mousePosition.y = mousePosition.fixedY + window.scrollY;
-  mousePosition.lastMove = Date.now();
 });
 document.addEventListener("mousemove", (e) => {
   mousePosition.fixedX = e.clientX;
   mousePosition.fixedY = e.clientY;
   mousePosition.x = mousePosition.fixedX + window.scrollX;
   mousePosition.y = mousePosition.fixedY + window.scrollY;
-  mousePosition.lastMove = Date.now();
 });
-document.addEventListener("mousedown", () => {
-  colibri.handleMouseDown();
-  mousePosition.lastMove = Date.now();
-});
+document.addEventListener("mousedown", () => myColibri.handleMouseDown());
 /** ************* **/
 
 /** RequestAnimationFrame **/
-export const refColibri = () => {
-  colibri.handleFrame();
-  colibri.animationFrame = requestAnimationFrame(refColibri);
-};
+export const myColibriFrameLoop = new FrameLoop(myColibri.handleFrame.bind(myColibri));
 /** ********************* **/

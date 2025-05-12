@@ -28,3 +28,47 @@ export function getRandomVariableCSSColor() {
   }
   return `var(--main-${theme})`;
 }
+
+export class FrameLoop {
+  frameId = null;
+  #startTimeoutId = null;
+  #stopTimeoutId = null;
+
+  /**
+   * @param {() => boolean | void} callback
+   */
+  constructor(callback) {
+    this.callback = callback;
+  }
+
+  #requestAnimation() {
+    const loop = () => {
+      const shouldContinue = this.callback();
+      if (shouldContinue === false) this.stop();
+      else this.frameId = requestAnimationFrame(loop);
+    };
+    loop();
+  }
+
+  #cancelAnimation() {
+    cancelAnimationFrame(this.frameId);
+    this.frameId = null;
+  }
+
+  #timeout(timeout, callback, timeoutId) {
+    if (timeoutId) clearTimeout(timeoutId);
+    if (timeout > 0) timeoutId = setTimeout(() => callback(), timeout);
+    else callback();
+    return timeoutId;
+  }
+
+  start(timeout = 0) {
+    if (this.frameId !== null) return;
+    this.#startTimeoutId = this.#timeout(timeout, this.#requestAnimation.bind(this), this.#startTimeoutId);
+  }
+
+  stop(timeout = 0) {
+    if (this.frameId == null) return;
+    this.#stopTimeoutId = this.#timeout(timeout, this.#cancelAnimation.bind(this), this.#stopTimeoutId);
+  }
+}

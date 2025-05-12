@@ -1,4 +1,4 @@
-import { getRandomInt, getRandomVariableCSSColor } from "./global.js";
+import { FrameLoop, getRandomInt, getRandomVariableCSSColor } from "./global.js";
 
 /** Constants **/
 const CURSOR = {
@@ -73,7 +73,6 @@ function removeSparkles() {
   }
 
   sparklesArr.length = moveIndex;
-  requestAnimationFrame(removeSparkles);
 }
 
 function handleCursorMoving(e) {
@@ -109,10 +108,12 @@ function initCursorHover() {
   }
 }
 
+const sparkleFrameLoop = new FrameLoop(removeSparkles);
+
 export function initCursor() {
   window.addEventListener("mousedown", handleCursorDown);
   window.addEventListener("mousemove", handleCursorMoving);
   window.addEventListener("mouseup", handleCursorUp);
-  removeSparkles(); // starts the recursive loop
+  sparkleFrameLoop.start(); // starts the recursive loop
   initCursorHover();
 }

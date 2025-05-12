@@ -1,4 +1,5 @@
-import { colibri } from "./colibri.js";
+import { Colibri, myColibri } from "./colibri.js";
+import { FrameLoop } from "./global.js";
 
 /** Constants **/
 const SCROLL = {
@@ -10,8 +11,9 @@ const SCROLL = {
 /** ********* **/
 
 let scrollTimeout;
-let userScrolling = false;
-let isAnimating = false;
+let startY;
+let distance;
+let startTime;
 
 function getClosestSection() {
   const sections = document.getElementsByClassName("section");
@@ -46,47 +48,46 @@ function getClosestSection() {
   return { visibleSections, section: closestSection, edge: closestEdge };
 }
 
-function smoothScrollTo(targetY) {
-  isAnimating = true;
-  const startY = window.scrollY;
-  const distance = targetY - startY;
-  const startTime = performance.now();
+function smoothScrollTo() {
+  const elapsedTime = performance.now() - startTime;
+  const progress = Math.min(elapsedTime / SCROLL.ANIMATION.DURATION, 1);
+  const easedProgress = 1 - (1 - progress) * (1 - progress);
 
-  function animationStep(currentTime) {
-    if (!isAnimating) return;
-    const elapsedTime = currentTime - startTime;
-    const progress = Math.min(elapsedTime / SCROLL.ANIMATION.DURATION, 1);
-    const easedProgress = 1 - (1 - progress) * (1 - progress);
-    userScrolling = false;
-    window.scrollTo(0, startY + distance * easedProgress);
+  if (progress >= 1 || distance === 0) return false;
 
-    if (progress < 1) requestAnimationFrame(animationStep);
-    else isAnimating = false;
+  window.scrollTo(0, startY + distance * easedProgress);
+}
+
+function defineParameters() {
+  const closest = getClosestSection();
+
+  if (closest.section) {
+    if (
+      (closest.section.id == Colibri.sectionVisibleId && !myColibri.isVisible) ||
+      (closest.section.id != Colibri.sectionVisibleId && myColibri.isVisible)
+    )
+      myColibri.changeVisibility();
+
+    startY = window.scrollY;
+    distance = closest.visibleSections.length <= 1 ? 0 : closest.edge - startY; // Don't scroll if only one section is visible
+    startTime = performance.now();
   }
-
-  requestAnimationFrame(animationStep);
 }
 
 function snapToClosestSection() {
-  const closest = getClosestSection();
-
-  if (closest.visibleSections.length <= 1) return; // Don't scroll if only one section is visible
-
-  if (closest.section) {
-    if ((closest.section.id == "about" && !colibri.isVisible) || (closest.section.id != "about" && colibri.isVisible))
-      colibri.changeVisibility();
-    smoothScrollTo(closest.edge);
-  }
+  defineParameters();
+  scrollFrameLoop.start();
 }
 
 function userIsScrolling() {
-  userScrolling = true;
+  if (scrollFrameLoop) scrollFrameLoop.stop();
 }
 function constrainedScrolling() {
   clearTimeout(scrollTimeout);
-  if (userScrolling && isAnimating) isAnimating = false;
   scrollTimeout = setTimeout(snapToClosestSection, SCROLL.ANIMATION.TIMEOUT);
 }
+
+const scrollFrameLoop = new FrameLoop(smoothScrollTo);
 
 export function initConstrainedScroll() {
   window.addEventListener("wheel", userIsScrolling);
