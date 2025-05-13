@@ -7,7 +7,7 @@
   & #carousel {
     user-select: none;
     height: 50vh;
-    width: 60vw;
+    width: 70vw;
     position: relative;
     --path: "";
     & .img-carousel {
