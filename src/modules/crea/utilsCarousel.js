@@ -104,6 +104,20 @@ export function getZIndex(pos) {
 
 /**
  * Get the index of the closest value in the standard position
+ * @param {number} pos the position of the carousel, in 0 and 1
+ * @returns {number} the id of the image in front of the carousel
+ */
+export function getItemIdInFront(pos) {
+  const positions = CAROUSEL.STANDARD_POS.slice(0, -1);
+  const ids = Array.from({ length: CarouselClass.DATA.length }, (_, i) => i + 1);
+
+  const index = positions.findIndex((p) => p === pos);
+  const rotatedIds = [...ids.slice(-index), ...ids.slice(0, -index)];
+  return rotatedIds[0];
+}
+
+/**
+ * Get the index of the closest value in the standard position
  * @param {number} pos the position of the image, in 0 and 1
  * @returns {number} the index of the closest value in standard position
  */

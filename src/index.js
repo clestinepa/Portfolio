@@ -6,15 +6,12 @@ import { displayAbout } from "./modules/about/about.js";
 import { displayCarousel } from "./modules/crea/carousel.js";
 import { displayGrid } from "./modules/dev/grid.js";
 
-import { scrambleEffect } from "../modules/crea/scramble.js";
-
 //presentation section
 typeEffect();
 //about section
 displayAbout();
 //design section
 displayCarousel();
-scrambleEffect();
 //dev section
 displayGrid();
 //global scripts, wait that everything else is setup

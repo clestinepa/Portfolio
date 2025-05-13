@@ -1,9 +1,11 @@
 import { ItemCarousel } from "./ItemCarousel.js";
+import { scrambleText } from "./scramble.js";
 import {
   CAROUSEL,
   getAngleOfMouse,
   getClosestIndexStandardPos,
   getConstrainedPos,
+  getItemIdInFront,
   getNextClosestIndexStandardPos,
   getRealPos,
 } from "./utilsCarousel.js";
@@ -18,7 +20,7 @@ export class CarouselClass {
   /** @type {number} */
   position = 0;
   /** @type {number} */
-  prevPosition = null;
+  prevPosition = 0;
   /** @type {ItemCarousel[]} */
   items = [];
 
@@ -131,6 +133,8 @@ export class CarouselClass {
     }
     this.isClicked = false;
     this.mouseDownAt = 0;
+    if (this.position !== this.prevPosition)
+      scrambleText(CarouselClass.DATA[getItemIdInFront(this.position) - 1].title);
     this.prevPosition = this.position;
   }
 
