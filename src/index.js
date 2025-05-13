@@ -1,11 +1,10 @@
-import { displayBg } from "../modules/shared/bg.js";
-import { initCursor } from "../modules/shared/cursor.js";
-import { initConstrainedScroll } from "../modules/shared/scroll.js";
-import { typeEffect } from "../modules/presentation/typing.js";
-import { displayAbout } from "../modules/about/about.js";
-import { displayCarousel } from "../modules/crea/carousel.js";
-import { displaySlide } from "../src/unused/slide.js";
-import { displayGrid } from "../modules/dev/grid.js";
+import { displayBg } from "./modules/common/bg.js";
+import { initCursor } from "./modules/common/cursor.js";
+import { initConstrainedScroll } from "./modules/common/scroll.js";
+import { typeEffect } from "./modules/presentation/typing.js";
+import { displayAbout } from "./modules/about/about.js";
+import { displayCarousel } from "./modules/crea/carousel.js";
+import { displayGrid } from "./modules/dev/grid.js";
 
 import { scrambleEffect } from "../modules/crea/scramble.js";
 
@@ -17,8 +16,7 @@ displayAbout();
 displayCarousel();
 scrambleEffect();
 //dev section
-// displaySlide();
-// displayGrid();
+displayGrid();
 //global scripts, wait that everything else is setup
 displayBg();
 initCursor();

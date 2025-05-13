@@ -1,0 +1,61 @@
+[
+  {
+    "id": 1,
+    "img": "about/about-1.png",
+    "text": [
+      "Depuis toute jeune, je suis fascinée par les ",
+      { "highlight": "mathématiques", "color": "green" },
+      ". J’aime la logique de cette discipline, sa rigueur, mais aussi sa façon de donner du sens à ce qui semble chaotique. Chercher des solutions, comprendre des mécanismes complexes, trouver de l’élégance dans la simplicité : c’est ce qui m’a poussée à intégrer une ",
+      { "highlight": "école d’ingénieur", "color": "orange" },
+      "."
+    ]
+  },
+  {
+    "id": 2,
+    "img": "about/about-2.png",
+    "text": [
+      "Lors de ma première année dans les cours préparatoires de l’INSA de Toulouse, j’ai découvert la ",
+      { "highlight": "programmation", "color": "blue" },
+      " et avec elle, une autre manière de jouer avec la logique. Très vite, j'ai été captivée par le pouvoir de construire des choses concrètes, avec cette même précision qu’exigent les mathématiques, mais en y ajoutant une dimension créative."
+    ]
+  },
+  {
+    "id": 3,
+    "img": "about/about-3.png",
+    "text": [
+      "La création a toujours été au cœur de ma vie. Du dessin à la couture, en passant par la peinture, la photographie, l’édition de vidéos ou encore l’invention de jeux et d’escape games, j’ai toujours eu besoin de ",
+      { "highlight": "donner forme", "color": "red" },
+      " à mes idées. Mon attrait pour le design est donc venu naturellement."
+    ]
+  },
+  {
+    "id": 4,
+    "text": [
+      "Je me suis alors spécialisée à la fois en ",
+      { "highlight": "développement front-end", "color": "blue" },
+      " et en ",
+      { "highlight": "UX/UI design", "color": "red" },
+      ", et je m’épanouis pleinement dans cette pratique. J’y retrouve ce que j’aime profondément : la rigueur de la logique, la liberté de la création, et la satisfaction de donner vie à des idées en construisant des expériences digitales uniques."
+    ]
+  },
+  {
+    "id": 5,
+    "text": [
+      "J’ai pu mettre à profit mes compétences en sortie d’école chez Sopra Steria pendant près de deux ans. Afin de voyager, j'ai quitté mon poste tout en continuant mes projets personnels. De retour de mon périple, je me lance en ",
+      { "highlight": "freelance", "color": "green" },
+      " pour concilier ma vie sportive et professionnelle."
+    ]
+  },
+  {
+    "id": 6,
+    "text": [
+      "Aujourd’hui, je suis prête à mettre ma ",
+      { "highlight": "passion", "color": "orange" },
+      ", mon ",
+      { "highlight": "énergie", "color": "blue" },
+      " et ma ",
+      { "highlight": "créativité", "color": "red" },
+      " au service de nouveaux projets, toujours avec la même envie : relever de nouveaux défis et à donner vie à vos idées les plus ambitieuses."
+    ]
+  }
+]

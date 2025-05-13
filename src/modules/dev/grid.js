@@ -26,7 +26,7 @@ const GRID = {
 const gridContainer = document.getElementById("grid-container");
 
 async function loadAndInjectSVG(name) {
-  const response = await fetch(`/static/logos/${name}.svg`);
+  const response = await fetch(`/public/logos/${name}.svg`);
   const svgText = await response.text();
 
   const wrapper = document.createElement("div");
@@ -38,22 +38,25 @@ async function loadAndInjectSVG(name) {
 }
 
 export async function displayGrid() {
-  const response = await fetch("/static/translate/dev-data.json");
+  const response = await fetch("/public/data/dev.json");
   const data = await response.json();
 
   for (const item of data) {
-    let div = document.createElement("div");
-    div.style.setProperty("--bg-url", `url("/static/img/dev-${item.id}-main.jpg")`);
-    div.className = "img-grid";
+    let itemGrid = document.createElement("div");
+    itemGrid.style.setProperty("--bg-url", `url("/public/img/${item.img ?? "profile.jpg"}")`);
+    itemGrid.className = "img-grid";
 
     let hover = document.createElement("div");
     hover.className = "img-grid-hover";
+    itemGrid.appendChild(hover);
 
     let title = document.createElement("h2");
     title.innerHTML = item.title;
+    hover.appendChild(title);
 
     let text = document.createElement("p");
     text.innerHTML = item.text;
+    hover.appendChild(text);
 
     let logos = document.createElement("div");
     logos.className = "logos";
@@ -61,15 +64,11 @@ export async function displayGrid() {
       const svg = await loadAndInjectSVG(logoName);
       logos.appendChild(svg);
     }
-
-    hover.appendChild(title);
-    hover.appendChild(text);
     hover.appendChild(logos);
-    div.appendChild(hover);
 
     let wrapper = document.createElement("div");
     wrapper.className = "grid-wrapper";
-    wrapper.appendChild(div);
+    wrapper.appendChild(itemGrid);
     gridContainer.appendChild(wrapper);
   }
 

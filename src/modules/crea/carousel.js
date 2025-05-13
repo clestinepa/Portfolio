@@ -358,30 +358,33 @@ function moveCarousel(delta, needAnimation) {
 }
 
 /* Initialization of the carousel  */
-function displayImgs() {
+async function displayImgs() {
   const div = document.createElement("div");
   div.id = "carousel";
   div.dataset.mouseDownAt = "0";
   div.dataset.prevPosition = "0";
 
-  for (let i = 1; i < CAROUSEL.NB_IMG + 1; i++) {
-    // if (i != 1) continue;
-    const img = document.createElement("img");
-    img.src = `static/img/crea-${i}.png`;
-    img.className = "img-carousel";
-    img.id = `img-carousel-${i}`;
+  const response = await fetch("/public/data/crea.json");
+  const data = await response.json();
 
-    //initial style
-    let pos = CAROUSEL.STANDARD_POS[i - 1];
+  for (const item of data) {
+    const img = document.createElement("img");
+    img.src = `public/img/${item.img ?? "profile.jpg"}`;
+    img.className = "img-carousel";
+    img.id = `img-carousel-${item.id}`;
+    img.draggable = false;
+
+    let pos = CAROUSEL.STANDARD_POS[item.id - 1];
     applyStyleWithoutAnimation(img, pos);
     img.dataset.position = pos;
 
     div.appendChild(img);
   }
+
   carouselContainer.appendChild(div);
 }
-displayImgs();
-const carousel = document.getElementById("carousel");
+
+let carousel;
 const listImgCarousel = document.getElementsByClassName("img-carousel");
 let isClicked = false;
 
@@ -455,7 +458,10 @@ function updatePathCarousel() {
   );
 }
 
-export function displayCarousel() {
+export async function displayCarousel() {
+  await displayImgs();
+  carousel = document.getElementById("carousel");
+
   carouselContainer.addEventListener("mousedown", handleStartMoving);
   carouselContainer.addEventListener("mousemove", handleMoving);
   carouselContainer.addEventListener("mouseup", finishMoving);
