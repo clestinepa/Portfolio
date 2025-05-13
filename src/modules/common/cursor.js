@@ -1,4 +1,4 @@
-import { FrameLoop, getRandomInt, getRandomVariableCSSColor } from "./global.js";
+import { FrameLoop, getRandomInt, getRandomVariableCSSColor } from "../../shared/utils.js";
 
 /** Constants **/
 const CURSOR = {

@@ -1,3 +1,10 @@
+@import "./modules/presentation/typing.css";
+@import "./modules/about/about.css";
+@import "./modules/crea/carousel.css";
+@import "./modules/dev/grid.css";
+@import "./modules/common/bg.css";
+@import "./modules/common/cursor.css";
+
 * {
   margin: 0;
   padding: 0;

@@ -1,4 +1,4 @@
-import { FrameLoop, getRandomInt } from "./global.js";
+import { FrameLoop, getRandomInt } from "../../shared/utils.js";
 
 /** NEXT STEPS
  * - determine randomScared based of the mousePosition: closer => jump higher

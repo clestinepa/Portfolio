@@ -1,4 +1,4 @@
-import { getRandom, getRandomInt, getRandomVariableCSSColor } from "./global.js";
+import { getRandom, getRandomInt, getRandomVariableCSSColor } from "../../shared/utils.js";
 
 /** Constants **/
 const BG = {
@@ -73,9 +73,3 @@ export function displayBg() {
     bgContainer.appendChild(span);
   }
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("img, a, p, span, h1, h2").forEach((el) => {
-    el.setAttribute("draggable", "false");
-  });
-});

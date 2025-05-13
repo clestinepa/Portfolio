@@ -1,5 +1,5 @@
 import { Colibri, myColibri } from "./colibri.js";
-import { FrameLoop } from "./global.js";
+import { FrameLoop } from "../../shared/utils.js";
 
 /** Constants **/
 const SCROLL = {
@@ -87,7 +87,9 @@ function constrainedScrolling() {
   scrollTimeout = setTimeout(snapToClosestSection, SCROLL.ANIMATION.TIMEOUT);
 }
 
+/** RequestAnimationFrame **/
 const scrollFrameLoop = new FrameLoop(smoothScrollTo);
+/** ********************* **/
 
 export function initConstrainedScroll() {
   window.addEventListener("wheel", userIsScrolling);
