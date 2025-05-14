@@ -6,19 +6,6 @@ import { displayAbout } from "./modules/about/about.js";
 import { displayCarousel } from "./modules/design/carousel.js";
 import { displayGrid } from "./modules/dev/grid.js";
 
-//presentation section
-typeEffect();
-//about section
-displayAbout();
-//design section
-displayCarousel();
-//dev section
-displayGrid();
-//global scripts, wait that everything else is setup
-displayBg();
-initCursor();
-initConstrainedScroll();
-
 async function addHighlightStroke() {
   const response = await fetch("public/img/highlightStroke.svg");
   const svg = await response.text();
@@ -29,4 +16,35 @@ async function addHighlightStroke() {
     container.getElementsByTagName("svg").item(0).setAttribute("class", "highlight-stroke");
   }
 }
-addHighlightStroke();
+function disableDrag() {
+  document.querySelectorAll("img, a, p, span, h1, h2").forEach((el) => {
+    el.setAttribute("draggable", "false");
+  });
+}
+
+async function initializeSite() {
+  //presentation section
+  typeEffect();
+  //about section
+  await displayAbout();
+  //design section
+  displayCarousel();
+  //dev section
+  await displayGrid();
+  //global scripts, wait that everything else is setup
+  await addHighlightStroke();
+  displayBg();
+  initCursor();
+  initConstrainedScroll();
+  disableDrag();
+}
+
+async function initWithLoader() {
+  await initializeSite();
+
+  document.querySelector("body").removeChild(document.getElementById("loader"))
+  document.querySelector("main").style.opacity = "1";
+}
+
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initWithLoader);
+else initWithLoader();

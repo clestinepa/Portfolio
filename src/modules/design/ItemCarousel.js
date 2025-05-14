@@ -44,7 +44,6 @@ export class ItemCarousel {
     this.element.src = `public/img/${item.img ?? "profile.jpg"}`;
     this.element.className = "img-carousel";
     this.element.id = `img-carousel-${item.id}`;
-    this.element.draggable = false;
 
     const initialPos = CAROUSEL.STANDARD_POS[this.id - 1];
     this.changeTo(initialPos);
