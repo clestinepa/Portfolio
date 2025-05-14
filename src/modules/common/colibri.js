@@ -241,5 +241,5 @@ document.addEventListener("mousedown", () => myColibri.handleMouseDown());
 /** ************* **/
 
 /** RequestAnimationFrame **/
-export const myColibriFrameLoop = new FrameLoop(myColibri.handleFrame.bind(myColibri));
+const myColibriFrameLoop = new FrameLoop(myColibri.handleFrame.bind(myColibri));
 /** ********************* **/

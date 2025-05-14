@@ -108,7 +108,9 @@ function initCursorHover() {
   }
 }
 
+/** RequestAnimationFrame **/
 const sparkleFrameLoop = new FrameLoop(removeSparkles);
+/** ********************* **/
 
 export function initCursor() {
   window.addEventListener("mousedown", handleCursorDown);

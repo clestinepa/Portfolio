@@ -2,45 +2,54 @@
   {
     "id": 1,
     "img": "design/design-1.png",
-    "title": "Myror, un logo d'entreprise"
+    "title": "Myror",
+    "description": "Un logo d'entreprise"
   },
   {
     "id": 2,
     "img": "design/design-2.png",
-    "title": "Clavardage, une identité graphique avec des mockups"
+    "title": "Clavardage",
+    "description": "Une identité graphique avec des mockups"
   },
   {
     "id": 3,
     "img": "design/design-3.png",
-    "title": "Unmelted Time, un logo d'entreprise"
+    "title": "Unmelted Time",
+    "description": "Un logo d'entreprise"
   },
   {
     "id": 4,
     "img": "design/design-4.png",
-    "title": "Le P'Skape, un escape game complet"
+    "title": "Le P'Skape",
+    "description": "Un escape game complet"
   },
   {
     "id": 5,
-   "title": "?????"
+    "title": "???",
+    "description": "?????"
   },
   {
     "id": 6,
     "img": "design/design-6.png",
-    "title": "Le Minimum Syndical, un design experimental"
+    "title": "Le Minimum Syndical",
+    "description": "Un design experimental"
   },
   {
     "id": 7,
     "img": "design/design-7.png",
-    "title": "Späye, un jeu avec son identité graphique"
+    "title": "Späye",
+    "description": "Un jeu avec son identité graphique"
   },
   {
     "id": 8,
     "img": "design/design-8.png",
-    "title": "Le FC Lestine, un logo et un compte Instagram"
+    "title": "FC Lestine",
+    "description": "Un logo et un compte Instagram"
   },
   {
     "id": 9,
     "img": "design/design-9.png",
-    "title": "Lost In The Sand, une identité et un dossier de sponsoring"
+    "title": "Lost In The Sand",
+    "description": "Une identité et un dossier de sponsoring"
   }
 ]

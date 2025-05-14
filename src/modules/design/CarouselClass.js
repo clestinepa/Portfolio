@@ -1,5 +1,5 @@
 import { ItemCarousel } from "./ItemCarousel.js";
-import { scrambleText } from "./scramble.js";
+import { scramble } from "./scramble.js";
 import {
   CAROUSEL,
   getAngleOfMouse,
@@ -42,6 +42,8 @@ export class CarouselClass {
     CarouselClass.container.addEventListener("mousemove", this.handleMouseMove.bind(this));
     CarouselClass.container.addEventListener("mouseup", this.handleMouseUpOrLeaving.bind(this));
     CarouselClass.container.addEventListener("mouseleave", this.handleMouseUpOrLeaving.bind(this));
+
+    scramble(CarouselClass.DATA[0]);
   }
 
   /**
@@ -133,8 +135,7 @@ export class CarouselClass {
     }
     this.isClicked = false;
     this.mouseDownAt = 0;
-    if (this.position !== this.prevPosition)
-      scrambleText(CarouselClass.DATA[getItemIdInFront(this.position) - 1].title);
+    if (this.position !== this.prevPosition) scramble(CarouselClass.DATA[getItemIdInFront(this.position) - 1]);
     this.prevPosition = this.position;
   }
 

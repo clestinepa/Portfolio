@@ -12,9 +12,8 @@
     --path: "";
     & .img-carousel {
       /* appearance */
-      width: 40vmin;
-      height: 40vmin;
-
+      width: 35vmin;
+      height: 35vmin;
       /* position */
       position: absolute;
       offset-path: var(--path);

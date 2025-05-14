@@ -19,12 +19,6 @@ displayBg();
 initCursor();
 initConstrainedScroll();
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("img, a, p, span, h1, h2").forEach((el) => {
-    el.setAttribute("draggable", "false");
-  });
-});
-
 async function addHighlightStroke() {
   const response = await fetch("public/img/highlightStroke.svg");
   const svg = await response.text();
