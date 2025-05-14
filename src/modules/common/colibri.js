@@ -214,6 +214,7 @@ const colibriElement = document.getElementById("colibri");
 colibriElement.style.width = `${COLIBRI.SIZE}px`;
 colibriElement.style.height = `${COLIBRI.SIZE}px`;
 colibriElement.style.position = "absolute";
+colibriElement.style.top = "0";
 colibriElement.style.zIndex = "999";
 colibriElement.style.opacity = "0";
 colibriElement.style.transition = "opacity 1s ease-in-out";
