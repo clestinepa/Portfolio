@@ -79,13 +79,13 @@ function snapToClosestSection() {
   scrollFrameLoop.start();
 }
 
-function userIsScrolling() {
-  if (scrollFrameLoop) scrollFrameLoop.stop();
-}
 function constrainedScrolling() {
   clearTimeout(scrollTimeout);
   scrollTimeout = setTimeout(snapToClosestSection, SCROLL.ANIMATION.TIMEOUT);
+  handleProgressBar();
+}
 
+function handleProgressBar() {
   const scrollTop = window.scrollY;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
   const scrollPercent = (scrollTop / docHeight) * 100;
@@ -98,8 +98,7 @@ const scrollFrameLoop = new FrameLoop(smoothScrollTo);
 /** ********************* **/
 
 export function initConstrainedScroll() {
-  window.addEventListener("wheel", userIsScrolling);
-  window.addEventListener("touchmove", userIsScrolling);
   window.addEventListener("scroll", constrainedScrolling);
   snapToClosestSection();
+  handleProgressBar();
 }
