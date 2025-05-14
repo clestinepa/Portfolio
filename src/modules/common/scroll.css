@@ -1,0 +1,15 @@
+#progress-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: var(--width-scroll);
+  background: var(--black-opacity);
+  z-index: 990;
+}
+
+#progress-bar {
+  width: 100%;
+  height: 0%;
+  background: var(--secondary);
+}
