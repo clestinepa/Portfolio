@@ -16,7 +16,7 @@ import { CarouselClass } from "./CarouselClass.js";
  * For esthetics, NB_IMG and standard position are defined.
  */
 
-const response = await fetch("/public/data/crea.json");
+const response = await fetch("/public/data/design.json");
 const data = await response.json();
 CarouselClass.DATA = data;
 

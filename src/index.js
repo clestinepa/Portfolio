@@ -3,7 +3,7 @@ import { initCursor } from "./modules/common/cursor.js";
 import { initConstrainedScroll } from "./modules/common/scroll.js";
 import { typeEffect } from "./modules/presentation/typing.js";
 import { displayAbout } from "./modules/about/about.js";
-import { displayCarousel } from "./modules/crea/carousel.js";
+import { displayCarousel } from "./modules/design/carousel.js";
 import { displayGrid } from "./modules/dev/grid.js";
 
 //presentation section

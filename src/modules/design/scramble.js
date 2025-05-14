@@ -45,7 +45,7 @@ function update() {
         char = SCRAMBLE.CHARACTERS[getRandomInt(0, SCRAMBLE.CHARACTERS.length - 1)];
         queue[i].char = char;
       }
-      output += `<span style="opacity:0.7">${char}</span>`;
+      output += `<span style="opacity:0.5">${char}</span>`;
     } else output += from;
   }
 
