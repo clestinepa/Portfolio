@@ -1,15 +1,49 @@
 #carousel-container {
-  display: inline-flex;
-  justify-content: center;
+  /* appearance */
   padding: 20vmin 0;
   width: 100%;
+  justify-content: center;
+  /* position */
+  display: inline-flex;
+  position: relative;
+  /* interaction */
   overflow: hidden;
-  & #carousel {
+  & #carousel-text {
+    /* appearance */
+    max-width: 35vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* position */
+    transform: translate(-50%);
+    position: absolute;
+    top: 34%;
+    left: 50%;
+    z-index: 25; /* based on the middle z-index of the carousel */
+    /* interaction */
     user-select: none;
+    & #carousel-description {
+      /* appearance */
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-gap: calc(0.5 * var(--border-radius));
+      margin-top: var(--border-radius);
+      align-items: center;
+      & p {
+        /* appearance */
+        text-align: left;
+      }
+    }
+  }
+  & #carousel {
+    --path: "";
+    /* appearance */
     height: 50vh;
     width: 70vw;
+    /* position */
     position: relative;
-    --path: "";
+    /* interaction */
+    user-select: none;
     & .img-carousel {
       /* appearance */
       width: 35vmin;

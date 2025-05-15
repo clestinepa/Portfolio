@@ -1,3 +1,4 @@
+import { hideDetails } from "./carousel.js";
 import { ItemCarousel } from "./ItemCarousel.js";
 import { scramble } from "./scramble.js";
 import {
@@ -135,7 +136,11 @@ export class CarouselClass {
     }
     this.isClicked = false;
     this.mouseDownAt = 0;
-    if (this.position !== this.prevPosition) scramble(CarouselClass.DATA[getItemIdInFront(this.position) - 1]);
+    //the position is changing
+    if (this.position !== this.prevPosition) {
+      scramble(CarouselClass.DATA[getItemIdInFront(this.position) - 1]);
+      hideDetails();
+    }
     this.prevPosition = this.position;
   }
 

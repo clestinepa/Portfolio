@@ -1,3 +1,5 @@
+import { snapToDesignDetail } from "../common/scroll.js";
+import { handleProgressBar } from "../common/progressBar.js";
 import { CarouselClass } from "./CarouselClass.js";
 
 /** NEXT STEPS
@@ -37,3 +39,15 @@ export function displayCarousel() {
   window.addEventListener("resize", updatePathCarousel);
   updatePathCarousel();
 }
+
+function showDetails() {
+  document.getElementById("design-detail").classList.remove("hide");
+  snapToDesignDetail();
+}
+
+export function hideDetails() {
+  document.getElementById("design-detail").classList.add("hide");
+  handleProgressBar();
+}
+
+document.getElementById("carousel-button").addEventListener("click", showDetails);

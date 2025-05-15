@@ -4,7 +4,7 @@ import { FrameLoop } from "../../shared/utils.js";
 /** Constants **/
 const SCROLL = {
   ANIMATION: {
-    DURATION: 1500, //(in ms) duration of the animation scroll
+    DURATION: 1000, //(in ms) duration of the animation scroll
     TIMEOUT: 1000, //(in ms) timeout of no scroll needed before start the animation scroll
   },
 };
@@ -84,10 +84,18 @@ function constrainedScrolling() {
   scrollTimeout = setTimeout(snapToClosestSection, SCROLL.ANIMATION.TIMEOUT);
 }
 
-
+export function snapToDesignDetail() {
+  startY = window.scrollY;
+  const detail = document.getElementById("design-detail");
+  const edge = detail.offsetTop + detail.offsetHeight - window.innerHeight;
+  distance = edge - startY;
+  startTime = performance.now();
+  scrollDetailFrameLoop.start();
+}
 
 /** RequestAnimationFrame **/
 const scrollFrameLoop = new FrameLoop(smoothScrollTo);
+const scrollDetailFrameLoop = new FrameLoop(smoothScrollTo);
 /** ********************* **/
 
 export function initConstrainedScroll() {
