@@ -5,6 +5,7 @@ import { typeEffect } from "./modules/presentation/typing.js";
 import { displayAbout } from "./modules/about/about.js";
 import { displayCarousel } from "./modules/design/carousel.js";
 import { displayGrid } from "./modules/dev/grid.js";
+import { initProgressBar } from "./modules/common/progressBar.js";
 
 async function addHighlightStroke() {
   const response = await fetch("public/img/highlightStroke.svg");
@@ -36,13 +37,14 @@ async function initializeSite() {
   displayBg();
   initCursor();
   initConstrainedScroll();
+  initProgressBar();
   disableDrag();
 }
 
 async function initWithLoader() {
   await initializeSite();
 
-  document.querySelector("body").removeChild(document.getElementById("loader"))
+  document.querySelector("body").removeChild(document.getElementById("loader"));
   document.querySelector("main").style.opacity = "1";
 }
 
