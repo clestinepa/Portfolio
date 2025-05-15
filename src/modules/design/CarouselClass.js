@@ -64,6 +64,10 @@ export class CarouselClass {
     else this.isClockwiseRotation = diffAngleBetweenCurrentAndNext > 0 ? false : true;
   }
 
+  get itemInFront() {
+    return CarouselClass.DATA[getItemIdInFront(this.position) - 1];
+  }
+
   /**
    * Add an animation to move the carousel up to the next position
    * @param {number} deltaIndex the delta to add to the current index position in STANDARD_POS
@@ -138,7 +142,7 @@ export class CarouselClass {
     this.mouseDownAt = 0;
     //the position is changing
     if (this.position !== this.prevPosition) {
-      scramble(CarouselClass.DATA[getItemIdInFront(this.position) - 1]);
+      scramble(this.itemInFront);
       hideDetails();
     }
     this.prevPosition = this.position;

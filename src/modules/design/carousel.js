@@ -21,6 +21,7 @@ import { CarouselClass } from "./CarouselClass.js";
 const response = await fetch("/public/data/design.json");
 const data = await response.json();
 CarouselClass.DATA = data;
+const myCarousel = new CarouselClass();
 
 /* Handle resize of the window : recalculate path of the images */
 function updatePathCarousel() {
@@ -34,18 +35,20 @@ function updatePathCarousel() {
 }
 
 export function displayCarousel() {
-  new CarouselClass();
   window.addEventListener("resize", updatePathCarousel);
   updatePathCarousel();
 }
 
+const detail = document.getElementById("design-detail");
+
 function showDetails() {
-  document.getElementById("design-detail").classList.remove("hide");
+  detail.classList.remove("hide");
+  detail.style.setProperty("--detail-url", `url("/public/img/${myCarousel.itemInFront.detailImg ?? "profile.jpg"}")`);
   snapToDesignDetail();
 }
 
 export function hideDetails() {
-  document.getElementById("design-detail").classList.add("hide");
+  detail.classList.add("hide");
   handleProgressBar();
 }
 

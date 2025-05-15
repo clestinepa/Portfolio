@@ -2,6 +2,7 @@
   {
     "id": 1,
     "img": "design/design-1.png",
+    "detailImg": "design/details/design-1.jpg",
     "title": "Myror",
     "description": "Un logo d'entreprise"
   },
@@ -14,6 +15,7 @@
   {
     "id": 3,
     "img": "design/design-3.png",
+    "detailImg": "design/details/design-3.jpg",
     "title": "Unmelted Time",
     "description": "Un logo d'entreprise"
   },

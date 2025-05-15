@@ -7,7 +7,6 @@
 }
 
 #design-detail {
-  --detail-url: url("/public/img/design/details/design-1.jpg");
   /* appearance */
   height: 100vh;
   margin: 0;
