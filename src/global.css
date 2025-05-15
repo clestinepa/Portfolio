@@ -3,7 +3,7 @@
 @import "./modules/design/design.css";
 @import "./modules/dev/dev.css";
 @import "./modules/common/cursor.css";
-@import "./modules/common/scroll.css";
+@import "./modules/common/progressBar.css";
 @import "./modules/common/bg.css";
 
 * {
@@ -137,7 +137,8 @@ img {
 .button-content {
   display: grid;
   grid-template-areas: "stack";
-  & * {
+  & .button-default,
+  & .button-hover {
     /* appearance */
     padding: var(--padding);
     text-align: center;
