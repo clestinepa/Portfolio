@@ -24,14 +24,14 @@ const COLIBRI = {
   },
   //hide
   HIDE: {
-    TIMEOUT: 100, //(in ms) timeout before stop animation frame
+    TIMEOUT: 1000, //(in ms) timeout before stop animation frame
   },
   //movement
   T_INTERPOLATION: {
-    follow: 0.1,
-    dodge: 0.25,
-    scared: 0.25,
-    hide: 0.05,
+    follow: 0.2,
+    dodge: 0.35,
+    scared: 0.35,
+    hide: 0.15,
   },
   PRECISION_ACHIEVED: 10, //(in px) distance between colibri and mouse needed to considered goal achieved
 };
@@ -211,20 +211,21 @@ export class Colibri {
 
 /** Init **/
 const colibriElement = document.getElementById("colibri");
+export const myColibri = new Colibri();
 colibriElement.style.width = `${COLIBRI.SIZE}px`;
 colibriElement.style.height = `${COLIBRI.SIZE}px`;
 colibriElement.style.position = "absolute";
-colibriElement.style.top = "0";
+colibriElement.style.top = `${myColibri.position.y}px`;
+colibriElement.style.left = `${myColibri.position.x}px`;
 colibriElement.style.zIndex = "999";
 colibriElement.style.opacity = "0";
-colibriElement.style.transition = "opacity 1s ease-in-out";
+colibriElement.style.transition = `opacity ${COLIBRI.HIDE.TIMEOUT}ms ease-in-out`;
 const mousePosition = {
   x: 0,
   y: 0,
   fixedX: 0,
   fixedY: 0,
 };
-export const myColibri = new Colibri();
 /** **** **/
 
 /** EventListener **/

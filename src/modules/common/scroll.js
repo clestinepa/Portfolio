@@ -90,6 +90,7 @@ export function snapToDesignDetail() {
   const edge = detail.offsetTop + detail.offsetHeight - window.innerHeight;
   distance = edge - startY;
   startTime = performance.now();
+  myColibri.changeVisibility(); //to trigger change now and not after constrainedScrolling automatically lunch because we scrolled
   scrollDetailFrameLoop.start();
 }
 

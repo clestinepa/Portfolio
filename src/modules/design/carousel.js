@@ -35,7 +35,6 @@ function updatePathCarousel() {
 
 export function displayCarousel() {
   new CarouselClass();
-
   window.addEventListener("resize", updatePathCarousel);
   updatePathCarousel();
 }
