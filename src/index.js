@@ -43,8 +43,7 @@ async function initializeSite() {
 
 async function initWithLoader() {
   await initializeSite();
-
-  document.querySelector("body").removeChild(document.getElementById("loader"));
+  document.querySelector("body").removeChild(document.getElementById("loader-wrapper"));
   document.querySelector("main").style.opacity = "1";
 }
 

@@ -20,8 +20,16 @@
       </div>
     </header>
 
-    <div id="loader">
-      <div class="spinner"></div>
+    <div id="loader-wrapper">
+      <dotlottie-player
+        id="loader"
+        src="public/animations/Loader.json"
+        background="transparent"
+        speed="1"
+        loop
+        autoplay
+      ></dotlottie-player>
+      <p>Initialisation du moteur créatif…</p>
     </div>
 
     <main style="opacity: 0; transition: opacity 0.5s ease">
