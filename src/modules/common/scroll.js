@@ -99,7 +99,18 @@ const scrollFrameLoop = new FrameLoop(smoothScrollTo);
 const scrollDetailFrameLoop = new FrameLoop(smoothScrollTo);
 /** ********************* **/
 
+/**
+ * Stop the scroll animation when the user is scrolling
+ * to ensure that the user actions are priority
+ */
+function userIsScrolling() {
+  scrollFrameLoop.stop()
+  scrollDetailFrameLoop.stop();
+}
+
 export function initConstrainedScroll() {
+  window.addEventListener("wheel", userIsScrolling);
+  window.addEventListener("touchmove", userIsScrolling);
   window.addEventListener("scroll", constrainedScrolling);
   snapToClosestSection();
 }
