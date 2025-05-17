@@ -1,19 +1,25 @@
 #background {
-  z-index: -999;
-  position: fixed;
+  /* appearance */
+  isolation: isolate;
   width: 100vw;
   height: 100vh;
+  background: transparent;
+  opacity: 0.1;
+  /* position */
+  position: fixed;
   top: 0;
   left: 0;
-  background: transparent;
+  z-index: -999;
+  /* interaction */
   overflow: hidden;
-  isolation: isolate;
-  opacity: 0.1;
   & span {
+    /* appearance */
     mix-blend-mode: screen;
-    offset-rotate: 0deg;
     border-radius: 50%;
+    /* position */
     position: absolute;
+    offset-rotate: 0deg;
+    /* interaction */
     animation: move;
     animation-timing-function: linear;
     animation-iteration-count: infinite;

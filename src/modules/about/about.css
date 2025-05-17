@@ -1,44 +1,57 @@
 #about-text {
+  /* appearance */
   display: flex;
   flex-direction: column;
   gap: calc(var(--border-radius) * 2);
   margin-top: calc(var(--border-radius) * 2);
 }
 .text-container {
+  /* position */
   position: relative;
   &.end {
+    /* appearance */
     margin-top: var(--border-radius);
   }
   &.odd {
+    /* appearance */
     padding-right: var(--gap);
     & .text-illustration {
+      /* position */
       right: -52px;
     }
   }
   &.even {
+    /* appearance */
     padding-left: var(--gap);
     & .text-illustration {
+      /* position */
       left: -52px;
     }
   }
   & p {
+    /* appearance */
     text-indent: var(--border-radius);
   }
   & .text-illustration {
+    /* appearance */
     opacity: 0.15;
-    z-index: -1;
+    /* position */
     position: absolute;
+    z-index: -1;
   }
 }
 
 #text-illustration-1 {
+  /* position */
   top: -48px;
 }
 
 #text-illustration-2 {
+  /* position */
   top: 8px;
 }
 
 #text-illustration-3 {
+  /* position */
   top: -41px;
 }
