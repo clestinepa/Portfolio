@@ -1,4 +1,4 @@
-import { FrameLoop, getRandomInt, getRandomVariableCSSColor } from "../../shared/utils.js";
+import { myFrameLoop, getRandomInt, getRandomVariableCSSColor } from "../../shared/utils.js";
 
 /** Constants **/
 const CURSOR = {
@@ -35,6 +35,7 @@ function trailAnimation(e) {
   elem = addAnimationProperties(elem);
 
   cursor.appendChild(elem);
+  myFrameLoop.start(removeSparkles); // starts the recursive loop if needed
   sparklesArr.push(elem);
 }
 
@@ -66,6 +67,8 @@ function removeSparkles() {
   let moveIndex = 0;
   let sparkle;
 
+  if (sparklesArr.length === 0) return { shouldContinue: false };
+
   for (let i = 0; i < sparklesArr.length; i++) {
     sparkle = sparklesArr[i];
     if (sparkle.diesAt <= Date.now()) cursor.removeChild(sparkle);
@@ -73,6 +76,7 @@ function removeSparkles() {
   }
 
   sparklesArr.length = moveIndex;
+  return { shouldContinue: true };
 }
 
 function handleCursorMoving(e) {
@@ -108,14 +112,9 @@ function initCursorHover() {
   }
 }
 
-/** RequestAnimationFrame **/
-const sparkleFrameLoop = new FrameLoop(removeSparkles);
-/** ********************* **/
-
 export function initCursor() {
   window.addEventListener("mousedown", handleCursorDown);
   window.addEventListener("mousemove", handleCursorMoving);
   window.addEventListener("mouseup", handleCursorUp);
-  sparkleFrameLoop.start(); // starts the recursive loop
   initCursorHover();
 }

@@ -1,5 +1,5 @@
+import { myFrameLoop } from "../../shared/utils.js";
 import { Colibri, myColibri } from "./colibri.js";
-import { FrameLoop } from "../../shared/utils.js";
 
 /** Constants **/
 const SCROLL = {
@@ -53,9 +53,10 @@ function smoothScrollTo() {
   const progress = Math.min(elapsedTime / SCROLL.ANIMATION.DURATION, 1);
   const easedProgress = 1 - (1 - progress) * (1 - progress);
 
-  if (progress >= 1 || distance === 0) return false;
+  if (progress >= 1 || distance === 0) return { shouldContinue: false };
 
   window.scrollTo(0, startY + distance * easedProgress);
+  return { shouldContinue: true };
 }
 
 function defineParameters() {
@@ -76,7 +77,7 @@ function defineParameters() {
 
 function snapToClosestSection() {
   defineParameters();
-  scrollFrameLoop.start();
+  myFrameLoop.start(smoothScrollTo);
 }
 
 function constrainedScrolling() {
@@ -91,21 +92,16 @@ export function snapToDesignDetail() {
   distance = edge - startY;
   startTime = performance.now();
   myColibri.changeVisibility(); //to trigger change now and not after constrainedScrolling automatically lunch because we scrolled
-  scrollDetailFrameLoop.start();
+  myFrameLoop.start(smoothScrollTo);
 }
-
-/** RequestAnimationFrame **/
-const scrollFrameLoop = new FrameLoop(smoothScrollTo);
-const scrollDetailFrameLoop = new FrameLoop(smoothScrollTo);
-/** ********************* **/
 
 /**
  * Stop the scroll animation when the user is scrolling
  * to ensure that the user actions are priority
  */
 function userIsScrolling() {
-  scrollFrameLoop.stop()
-  scrollDetailFrameLoop.stop();
+  myFrameLoop.stop(smoothScrollTo);
+  // myFrameLoop.stop(smoothScrollToDesign);
 }
 
 export function initConstrainedScroll() {

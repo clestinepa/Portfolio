@@ -1,4 +1,4 @@
-import { FrameLoop, getRandomInt } from "../../shared/utils.js";
+import { myFrameLoop, getRandomInt } from "../../shared/utils.js";
 
 /** Constants **/
 const SCRAMBLE = {
@@ -13,17 +13,15 @@ class Scramble {
   queue = [];
   counterFrame = 0;
   element;
-  loop;
 
   /**F
    * @param {Element} element
    */
   constructor(element) {
     this.element = element;
-    this.loop = new FrameLoop(this.update.bind(this));
   }
 
-  update() {
+  updateScramble() {
     let output = "";
     let complete = 0;
 
@@ -43,8 +41,10 @@ class Scramble {
 
     this.element.innerHTML = output;
 
-    if (complete >= this.queue.length) return false;
+    if (complete >= this.queue.length) return { shouldContinue: false };
     else this.counterFrame++;
+
+    return { shouldContinue: true };
   }
 
   scrambleText(newText) {
@@ -62,7 +62,7 @@ class Scramble {
       this.queue.push({ from, to, start, end, char: "" });
     }
 
-    this.loop.start();
+    myFrameLoop.start(this.updateScramble.bind(this));
   }
 }
 

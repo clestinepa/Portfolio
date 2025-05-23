@@ -29,46 +29,57 @@ export function getRandomVariableCSSColor() {
   return `var(--main-${theme})`;
 }
 
-export class FrameLoop {
+class FrameLoop {
   frameId = null;
-  #startTimeoutId = null;
-  #stopTimeoutId = null;
-
   /**
-   * @param {() => boolean | void} callback
+   * @type {(() => {shouldContinue: boolean, timeout: number|undefined})[]}
    */
-  constructor(callback) {
-    this.callback = callback;
-  }
+  callbacks = [];
+
+  constructor() {}
 
   #requestAnimation() {
     const loop = () => {
-      const shouldContinue = this.callback();
-      if (shouldContinue === false) this.stop();
-      else this.frameId = requestAnimationFrame(loop);
+      let shouldContinueLoop = true;
+      for (let callback of this.callbacks) {
+        const { shouldContinue, timeout } = callback();
+        if (!shouldContinue) shouldContinueLoop = this.stop(callback, timeout);
+      }
+      if (shouldContinueLoop) this.frameId = requestAnimationFrame(loop);
     };
     loop();
   }
 
-  #cancelAnimation() {
-    cancelAnimationFrame(this.frameId);
-    this.frameId = null;
+  #cancelAnimation(callbackToStop) {
+    this.callbacks.splice(this.callbacks.indexOf(callbackToStop), 1);
+    if (this.callbacks.length === 0) cancelAnimationFrame(this.frameId);
   }
 
-  #timeout(timeout, callback, timeoutId) {
-    if (timeoutId) clearTimeout(timeoutId);
-    if (timeout > 0) timeoutId = setTimeout(() => callback(), timeout);
+  #timeout(timeout, callback) {
+    if (timeout > 0) setTimeout(() => callback(), timeout);
     else callback();
-    return timeoutId;
   }
 
-  start(timeout = 0) {
-    if (this.frameId !== null) return;
-    this.#startTimeoutId = this.#timeout(timeout, this.#requestAnimation.bind(this), this.#startTimeoutId);
+  /**
+   * @param {() => {shouldContinue: boolean, timeout: number|undefined}} callbackToStart
+   */
+  start(callbackToStart) {
+    if (this.callbacks.indexOf(callbackToStart) !== -1) return;
+    this.callbacks.push(callbackToStart);
+    if (this.callbacks.length === 1) this.#requestAnimation();
   }
 
-  stop(timeout = 0) {
-    if (this.frameId == null) return;
-    this.#stopTimeoutId = this.#timeout(timeout, this.#cancelAnimation.bind(this), this.#stopTimeoutId);
+  /**
+   * @param {() => {shouldContinue: boolean, timeout: number|undefined}} callbackToStop
+   */
+  stop(callbackToStop, timeout = 0) {
+    if (this.callbacks.indexOf(callbackToStop) === -1) return;
+    this.#timeout(timeout, () => this.#cancelAnimation(callbackToStop));
+    if (this.callbacks.length === 0) return false;
+    return true;
   }
 }
+
+/** RequestAnimationFrame **/
+export const myFrameLoop = new FrameLoop();
+/** ********************* **/

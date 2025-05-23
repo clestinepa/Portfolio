@@ -1,4 +1,4 @@
-import { FrameLoop, getRandomInt } from "../../shared/utils.js";
+import { myFrameLoop, getRandomInt } from "../../shared/utils.js";
 
 /** NEXT STEPS
  * - determine randomScared based of the mousePosition: closer => jump higher
@@ -182,7 +182,7 @@ export class Colibri {
     this.#counterFrameScared = 0;
   }
 
-  handleFrame() {
+  frameColibri() {
     this.#setAction();
     this.#setGoal();
     const t = this.#t;
@@ -192,18 +192,21 @@ export class Colibri {
     colibriElement.style.top = `${this.position.y}px`;
     colibriElement.style.left = `${this.position.x}px`;
     colibriElement.style.transform = `rotate(${this.position.angle}rad) scaleY(${this.#isFlipped ? "-1" : "1"})`;
+
+    if (!this.isVisible) return { shouldContinue: false, timeout: COLIBRI.HIDE.TIMEOUT };
+    else return { shouldContinue: true };
   }
 
   changeVisibility() {
     this.isVisible = !this.isVisible;
     if (this.isVisible) {
       colibriElement.style.opacity = "1";
-      myColibriFrameLoop.start();
+      myFrameLoop.start(this.frameColibri.bind(this));
     } else {
       colibriElement.style.opacity = "0";
       //define goal once and not each frame to conserve bev=cause of the random
       this.goal = { x: window.innerWidth * Math.random(), y: window.scrollY };
-      myColibriFrameLoop.stop(COLIBRI.HIDE.TIMEOUT);
+      // myColibriFrameLoop.stop(COLIBRI.HIDE.TIMEOUT);
     }
   }
 }
@@ -241,7 +244,3 @@ document.addEventListener("mousemove", (e) => {
 });
 document.addEventListener("mousedown", () => myColibri.handleMouseDown());
 /** ************* **/
-
-/** RequestAnimationFrame **/
-const myColibriFrameLoop = new FrameLoop(myColibri.handleFrame.bind(myColibri));
-/** ********************* **/
