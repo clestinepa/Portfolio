@@ -1,57 +1,65 @@
 [
   {
     "id": 1,
-    "img": "design/design-1.png",
-    "detailImg": "design/details/design-1.jpg",
+    "img": "design/Myror.png",
+    "detailImg": "design/details/Myror.jpg",
     "title": "Myror",
-    "description": "Un logo d'entreprise"
+    "description": "Un nom et un logo d'entreprise"
   },
   {
     "id": 2,
-    "img": "design/design-2.png",
+    "img": "design/Clavardage.png",
+    "detailImg": "design/details/Clavardage.jpg",
     "title": "Clavardage",
     "description": "Une identité graphique avec des mockups"
   },
   {
     "id": 3,
-    "img": "design/design-3.png",
-    "detailImg": "design/details/design-3.jpg",
+    "img": "design/Unmelted Time.png",
+    "detailImg": "design/details/Unmelted Time.jpg",
     "title": "Unmelted Time",
     "description": "Un logo d'entreprise"
   },
   {
     "id": 4,
-    "img": "design/design-4.png",
-    "title": "Le P'Skape",
-    "description": "Un escape game complet"
+    "img": "design/AfterWork.png",
+    "detailImg": "design/details/AfterWork.jpg",
+    "title": "Python de la Fournaise",
+    "description": "Une affiche événementielle"
   },
   {
     "id": 5,
-    "title": "???",
-    "description": "?????"
+    "img": "design/InShape.png",
+    "detailImg": "design/details/InShape.jpg",
+    "title": "InShape",
+    "description": "Un logo d'application mobile"
   },
   {
     "id": 6,
-    "img": "design/design-6.png",
-    "title": "Le Minimum Syndical",
-    "description": "Un design experimental"
+    "img": "design/Späye.png",
+    "detailImg": "design/details/Späye.jpg",
+    "title": "Späye",
+    "description": "Un jeu avec son identité graphique et ses règles"
   },
   {
     "id": 7,
-    "img": "design/design-7.png",
-    "title": "Späye",
-    "description": "Un jeu avec son identité graphique"
+    "img": "design/FCL.png",
+    "detailImg": "design/details/FCL.jpg",
+    "title": "FC Lestine",
+    "description": "Une identité graphique et un compte Instagram"
   },
   {
     "id": 8,
-    "img": "design/design-8.png",
-    "title": "FC Lestine",
-    "description": "Un logo et un compte Instagram"
+    "img": "design/Lost In The Sand.png",
+    "detailImg": "design/details/Lost In The Sand.jpg",
+    "title": "Lost In The Sand",
+    "description": "Une identité graphique et un dossier de sponsoring"
   },
   {
     "id": 9,
-    "img": "design/design-9.png",
-    "title": "Lost In The Sand",
-    "description": "Une identité et un dossier de sponsoring"
+    "img": "design/Célestine Paillé.png",
+    "detailImg": "design/details/Célestine Paillé.jpg",
+    "title": "Célestine Paillé",
+    "description": "Une identité graphique et site internet"
   }
 ]
