@@ -64,10 +64,16 @@ function defineParameters() {
 
   if (closest.section) {
     if (
-      (closest.section.id == Colibri.sectionVisibleId && !myColibri.isVisible) ||
-      (closest.section.id != Colibri.sectionVisibleId && myColibri.isVisible)
+      closest.section.id == Colibri.sectionVisibleId &&
+      !closest.section.classList.contains("hide") &&
+      !myColibri.isVisible
     )
-      myColibri.changeVisibility();
+      myColibri.show();
+    else if (
+      (closest.section.id != Colibri.sectionVisibleId || closest.section.classList.contains("hide")) &&
+      myColibri.isVisible
+    )
+      myColibri.hide();
 
     startY = window.scrollY;
     distance = closest.visibleSections.length <= 1 ? 0 : closest.edge - startY; // Don't scroll if only one section is visible
@@ -91,7 +97,7 @@ export function snapToDesignDetail() {
   const edge = detail.offsetTop + detail.offsetHeight - window.innerHeight;
   distance = edge - startY;
   startTime = performance.now();
-  myColibri.changeVisibility(); //to trigger change now and not after constrainedScrolling automatically lunch because we scrolled
+  myColibri.show(); //to trigger now and not after constrainedScrolling automatically lunch because we scrolled
   myFrameLoop.start(smoothScrollTo);
 }
 

@@ -197,17 +197,17 @@ export class Colibri {
     else return { shouldContinue: true };
   }
 
-  changeVisibility() {
-    this.isVisible = !this.isVisible;
-    if (this.isVisible) {
-      colibriElement.style.opacity = "1";
-      myFrameLoop.start(this.frameColibri.bind(this));
-    } else {
-      colibriElement.style.opacity = "0";
-      //define goal once and not each frame to conserve bev=cause of the random
-      this.goal = { x: window.innerWidth * Math.random(), y: window.scrollY };
-      // myColibriFrameLoop.stop(COLIBRI.HIDE.TIMEOUT);
-    }
+  hide() {
+    this.isVisible = false;
+    colibriElement.style.opacity = "0";
+    //define goal once and not each frame to conserve bev=cause of the random
+    this.goal = { x: window.innerWidth * Math.random(), y: window.scrollY };
+  }
+
+  show() {
+    this.isVisible = true;
+    colibriElement.style.opacity = "1";
+    myFrameLoop.start(this.frameColibri.bind(this));
   }
 }
 /** ***** **/
