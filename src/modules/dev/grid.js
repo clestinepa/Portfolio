@@ -7,8 +7,8 @@ const GRID = {
     },
     FONT: {
       H2: {
-        MAX: 22, //(in px) maximum font-size of h2
-        MIN: 18, //(in px) minimum font-size of h2
+        MAX: 20, //(in px) maximum font-size of h2
+        MIN: 16, //(in px) minimum font-size of h2
       },
       P: {
         MAX: 16, //(in px) maximum font-size of p
@@ -42,21 +42,24 @@ export async function displayGrid() {
   const data = await response.json();
 
   for (const item of data) {
-    let itemGrid = document.createElement("div");
-    itemGrid.style.setProperty("--bg-url", `url("/public/img/${item.img ?? "profile.jpg"}")`);
-    itemGrid.className = "img-grid";
+    //img
+    let imgContainer = document.createElement("div");
+    imgContainer.className = "img-container";
+    let img = document.createElement("img");
+    img.src = `/public/img/${item.img ?? "profile.jpg"}`;
+    imgContainer.appendChild(img);
 
-    let hover = document.createElement("div");
-    hover.className = "img-grid-hover";
-    itemGrid.appendChild(hover);
+    //text
+    let textContainer = document.createElement("div");
+    textContainer.className = "text-container";
 
     let title = document.createElement("h2");
     title.innerHTML = item.title;
-    hover.appendChild(title);
+    textContainer.appendChild(title);
 
     let text = document.createElement("p");
     text.innerHTML = item.text;
-    hover.appendChild(text);
+    textContainer.appendChild(text);
 
     let logos = document.createElement("div");
     logos.className = "logos";
@@ -64,35 +67,16 @@ export async function displayGrid() {
       const svg = await loadAndInjectSVG(logoName);
       logos.appendChild(svg);
     }
-    hover.appendChild(logos);
+    textContainer.appendChild(logos);
 
+    //wrapper
     let wrapper = document.createElement("div");
-    wrapper.className = "grid-wrapper";
-    wrapper.appendChild(itemGrid);
+    wrapper.className = `img-text-wrapper ${item.id == data.length ? "end" : item.id % 2 ? "odd" : "even"}`;
+    wrapper.appendChild(imgContainer);
+    wrapper.appendChild(textContainer);
     gridContainer.appendChild(wrapper);
   }
 
   gridContainer.style.setProperty("--max-width-column", GRID.ITEM.WIDTH.MAX + "px");
   gridContainer.style.setProperty("--min-width-column", GRID.ITEM.WIDTH.MIN + "px");
-  resizeFont();
 }
-
-/**
- * Calculate the font size depending of the container width with an linear interpolation
- * @param {number} min minimum font size
- * @param {number} max maximum font size
- * @param {number} width width of the container
- * @returns the associated font size
- */
-function calcFontSize(min, max, width) {
-  let fontSize = min + (max - min) * ((width - GRID.ITEM.WIDTH.MIN) / (GRID.ITEM.WIDTH.MAX - GRID.ITEM.WIDTH.MIN));
-  return Math.max(min, Math.min(fontSize, max));
-}
-function resizeFont() {
-  const width = document.getElementsByClassName("img-grid").item(0).offsetWidth;
-  const fontSizeH2 = calcFontSize(GRID.ITEM.FONT.H2.MIN, GRID.ITEM.FONT.H2.MAX, width);
-  const fontSizeP = calcFontSize(GRID.ITEM.FONT.P.MIN, GRID.ITEM.FONT.P.MAX, width);
-  gridContainer.style.setProperty("--font-size-h2", fontSizeH2 + "px");
-  gridContainer.style.setProperty("--font-size-p", fontSizeP + "px");
-}
-window.addEventListener("resize", resizeFont);

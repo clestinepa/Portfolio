@@ -1,111 +1,47 @@
 #grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--min-width-column), 1fr));
-  grid-gap: var(--gap);
-  justify-content: center;
-}
-.grid-wrapper {
-  display: flex;
-  justify-content: center;
-}
-.img-grid {
-  /* appearance */
-  --gain-size: 10%;
-  --aspect-ratio: 45/32;
-  aspect-ratio: var(--aspect-ratio);
-  width: 100%;
-  max-width: var(--max-width-column);
-  /* position */
-  position: relative;
-  /* interaction */
-  --duration-transition: 0.3s;
-  &::before {
-    content: "";
-    /* appearance */
-    aspect-ratio: var(--aspect-ratio);
-    width: 100%;
-    border-radius: var(--border-radius);
-    background: center / cover no-repeat var(--bg-url);
-    /* position */
-    position: absolute;
-    top: 0;
-    left: 0;
-    /* interaction */
-    transition: all var(--duration-transition);
-  }
-  &:hover {
-    &::before {
-      /* appearance */
-      width: calc(100% + var(--gain-size));
-      /* position */
-      top: var(--gain-size);
-      left: calc(-0.5 * var(--gain-size));
-    }
-    & .img-grid-hover {
-      /* appearance */
-      aspect-ratio: var(--aspect-ratio);
-      transform: scale(1);
-      border-radius: var(--border-radius);
-      /* position */
-      bottom: 0;
-      right: 0;
-      /* interaction */
-      transition: all var(--duration-transition),
-        color calc(0.5 * var(--duration-transition)) calc(0.5 * var(--duration-transition));
-      & h2 {
-        color: var(--secondary);
-      }
-      & p {
-        color: var(--black);
-      }
-      & .tech-logo {
-        fill: var(--black);
-      }
-    }
-  }
-
-  &:active .img-grid-hover {
-    /* position */
-    transform: translate(0, calc(0.5 * var(--gain-size)));
-    /* interaction */
-    transition: 0s;
-  }
-}
-
-.img-grid-hover {
-  /* appearance */
-  aspect-ratio: 1/1;
-  box-sizing: border-box;
-  height: 100%;
-  padding: var(--font-size-p);
-  border-radius: 50%;
-  background: var(--white-opacity);
-  backdrop-filter: blur(var(--blur));
-  transform: scale(0.2);
   display: flex;
   flex-direction: column;
-  /* position */
-  position: absolute;
-  transform-origin: bottom right;
-  bottom: calc(-0.5 * var(--gain-size));
-  right: calc(-0.5 * var(--gain-size));
-  /* interaction */
-  transition: all var(--duration-transition), color calc(0.5 * var(--duration-transition));
+  justify-content: center;
+  gap: var(--gap);
+  margin-top: var(--gap);
+  & .img-text-wrapper {
+    --gap-wrapper: calc(var(--gap) * -0.5);
+    & .img-container {
+      --duration-transition: 0.3s;
+      /* appearance */
+      aspect-ratio: 45/32;
+      flex: 1 1 0;
+      box-shadow: var(--shadows-hidden);
+      /* interaction */
+      transition: all var(--duration-transition);
+      & img {
+        /* appearance */
+        filter: grayscale(0);
+        /* interaction */
+        transition: all var(--duration-transition);
+      }
+    }
+    & .text-container {
+      /* content */
+      /* padding: var(--font-size-p); */
+      display: flex;
+      flex-direction: column;
+      gap: calc(var(--border-radius) * 0.5);
+      /* appearance */
+      flex: 1 1 0;
+    }
+  }
+}
 
-  & * {
-    color: transparent;
+#grid-container .img-container:hover {
+  box-shadow: var(--shadows);
+  transform: scale(1.1);
+  & img {
+    filter: grayscale(1);
   }
-  & h2 {
-    font-size: var(--font-size-h2);
-    font-family: var(--font-title);
-    line-height: 125%;
-  }
-  & p {
-    font-size: var(--font-size-p);
-    overflow: hidden;
-    text-align: left;
-    flex: 1 1 0;
-  }
+}
+#grid-container .img-container:active {
+  transform: scale(1.08);
 }
 
 .logos {
@@ -113,9 +49,10 @@
   gap: calc(var(--font-size-p) / 2);
   & .tech-logo {
     border-radius: 0;
-    width: calc(var(--font-size-h2) * 1.2);
-    height: calc(var(--font-size-h2) * 1.2);
-    fill: transparent;
+    --size: calc(var(--font-size-h2) * 1.2);
+    width: var(--size);
+    height: var(--size);
+    font-size: var(--font-size-p);
     position: relative;
     & svg {
       width: 100%;

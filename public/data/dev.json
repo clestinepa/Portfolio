@@ -1,57 +1,63 @@
 [
   {
     "id": 1,
-    "img": "dev/dev-1-main.jpg",
+    "title": "Un défi amusant",
+    "text": "Découverte de l'IA",
+    "logos": ["html", "css", "js"]
+  },
+  {
+    "id": 2,
+    "img": "dev/Célestine Paillé.jpg",
     "title": "Un portfolio expérimental",
     "text": "Étant passionnée de développement web, j'ai créé un portfolio totalement personnalisé, pensé comme un terrain de jeu pour ma créativité.",
     "logos": ["html", "css", "js"]
   },
   {
-    "id": 2,
-    "img": "dev/dev-2-main.jpg",
+    "id": 3,
+    "img": "dev/FlyingGreen.jpg",
     "title": "Une plateforme ambitieuse",
     "text": "Lors de mon dernier emploi, j'ai travaillé sur une application complexe et de grande ampleur dans une équipe internationale.",
     "logos": ["react", "redux", "material-ui", "chart-js", "openlayers"]
   },
   {
-    "id": 3,
+    "id": 4,
     "title": "Une création concluante",
     "text": "Pour ma première expérience professionnelle, j'ai codé entièrement seule le front-end d'une application web.",
     "logos": ["react", "redux", "mapbox"]
   },
   {
-    "id": 4,
-    "img": "dev/dev-4-main.jpg",
+    "id": 5,
+    "img": "dev/Pygame.jpg",
     "title": "Un passe-temps stimulant",
     "text": "Férue de jeux de logique, j'aime réfléchir à la manière de les implémenter.",
     "logos": ["python"]
   },
   {
-    "id": 5,
-    "img": "dev/dev-5-main.jpg",
+    "id": 6,
+    "img": "dev/Time flies.jpg",
     "title": "Un projet pluridisciplinaire",
     "text": "Lors de mes études, j’ai contribué à un projet mêlant analyse de données et développement front-end, alliant technique et visualisation.",
     "logos": ["jupyter", "html", "css", "js"]
   },
   {
-    "id": 6,
-    "img": "dev/dev-6-main.jpg",
+    "id": 7,
+    "img": "dev/Sacred Robo.jpg",
     "title": "Une initiation formatrice",
     "text": "Par curiosité, je me suis initiée seule aux frameworks JavaScript, découvrant une nouvelle façon de concevoir des applications web.",
     "logos": ["svelte"]
   },
   {
-    "id": 7,
-    "img": "dev/dev-7-main.jpg",
+    "id": 8,
+    "img": "dev/Clavardage.jpg",
     "title": "Une découverte attirante",
     "text": "Pour mes études, j'ai pu développer de A à Z ma première application sur plusieurs mois, sans contrainte dans la création.",
     "logos": ["java"]
   },
   {
-    "id": 8,
-    "img": "dev/dev-8-main.jpg",
+    "id": 9,
+    "img": "dev/Morpion.jpg",
     "title": "Une première application",
-    "text": "En équipe, nous avons conçu un site web simple, idéal pour nous initier aux langages du web et à la collaboration.",
+    "text": "En équipe, nous avons conçu un site web simple, idéal pour nous initier aux langages du web.",
     "logos": ["html", "css", "js"]
   }
 ]
