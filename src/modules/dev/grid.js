@@ -1,26 +1,5 @@
 /** Constants **/
-const GRID = {
-  ITEM: {
-    WIDTH: {
-      MAX: 300, //(in px) maximum width of an item
-      MIN: 225, //(in px) minimum width of an item
-    },
-    FONT: {
-      H2: {
-        MAX: 20, //(in px) maximum font-size of h2
-        MIN: 16, //(in px) minimum font-size of h2
-      },
-      P: {
-        MAX: 16, //(in px) maximum font-size of p
-        MIN: 12, //(in px) minimum font-size of p
-      },
-      LOGO: {
-        MAX: 350, //(in px) maximum font-size of logo
-        MIN: 225, //(in px) minimum font-size of logo
-      },
-    },
-  },
-};
+const GRID = {};
 /** ********* **/
 
 const gridContainer = document.getElementById("grid-container");
@@ -76,7 +55,4 @@ export async function displayGrid() {
     wrapper.appendChild(textContainer);
     gridContainer.appendChild(wrapper);
   }
-
-  gridContainer.style.setProperty("--max-width-column", GRID.ITEM.WIDTH.MAX + "px");
-  gridContainer.style.setProperty("--min-width-column", GRID.ITEM.WIDTH.MIN + "px");
 }

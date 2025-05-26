@@ -215,6 +215,7 @@ img {
 
 /** TOOLTIP **/
 .tooltip {
+  --opacity-black: 0.8;
   &::before {
     content: attr(data-tooltip);
     /* content */
@@ -222,20 +223,20 @@ img {
     font-size: 1em;
     color: var(--white);
     /* appearance */
-    background: var(--black);
+    background: var(--black-opacity);
     width: max-content;
-    opacity: 0;
     border-radius: var(--border-radius-little);
     /* position */
     position: absolute;
     left: 50%;
-    transform: translate(-50%, -110%);
+    transform: translate(-50%, 0%) scale(0);
+    /* transform: translate(-50%, -110%) scale(1); */
     /* interaction */
-    transition: opacity 0.2s ease;
+    transition: all 0.2s ease;
   }
   &:hover::before {
-    /* appearance */
-    opacity: 0.8;
+    /* position */
+    transform: translate(-50%, -110%) scale(1);
   }
 }
 /** ******* **/
@@ -324,12 +325,15 @@ header {
   /* position */
   position: fixed;
   z-index: 990; /* just below colibri and cursor */
+
   & .container-header {
     /* content */
     padding: var(--border-radius);
     /* appearance */
     backdrop-filter: blur(var(--blur));
     border-radius: var(--border-radius-little);
+    /* interaction */
+    pointer-events: all;
   }
   & img {
     /* appearance */
