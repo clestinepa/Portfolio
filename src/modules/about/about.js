@@ -11,6 +11,7 @@ async function displayText() {
     textContainer.className = `text-container ${item.id == data.length ? "end" : item.id % 2 ? "odd" : "even"}`;
 
     let text = document.createElement("p");
+    text.classList.add("justify");
     for (const part of item.text) {
       if (typeof part === "string") {
         text.appendChild(document.createTextNode(part));

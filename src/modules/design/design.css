@@ -1,16 +1,18 @@
 @import "./carousel.css";
 
 #design {
+  /* content */
+  padding: 0;
   /* appearance */
   margin: 0;
-  padding: 0;
 }
 
 #design-detail {
+  /* content */
+  padding: 0;
   /* appearance */
   height: 100vh;
   margin: 0;
-  padding: 0;
   min-height: 0;
   background: center / contain no-repeat var(--detail-url);
 }

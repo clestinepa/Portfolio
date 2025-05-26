@@ -1,19 +1,21 @@
 #carousel-container {
-  /* appearance */
+  /* content */
   padding: 20vmin 0;
-  width: 100%;
   justify-content: center;
+  /* appearance */
+  width: 100%;
   /* position */
   display: inline-flex;
   position: relative;
   /* interaction */
   overflow: hidden;
   & #carousel-text {
-    /* appearance */
-    max-width: 35vw;
+    /* content */
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* appearance */
+    max-width: 35vw;
     /* position */
     transform: translate(-50%, -50%);
     position: absolute;
@@ -23,16 +25,13 @@
     /* interaction */
     user-select: none;
     & #carousel-description {
-      /* appearance */
+      /* content */
       display: grid;
       grid-template-columns: auto auto;
       grid-gap: calc(0.5 * var(--border-radius));
-      margin-top: var(--border-radius);
       align-items: center;
-      & p {
-        /* appearance */
-        text-align: left;
-      }
+      /* appearance */
+      margin-top: var(--border-radius);
     }
   }
   & #carousel {

@@ -93,8 +93,11 @@ h2 {
   font-size: var(--font-size-h2);
 }
 p {
-  text-align: justify;
   font-size: var(--font-size-p);
+}
+p.justify {
+  text-align: justify;
+  text-indent: var(--border-radius);
 }
 .button * {
   font-family: var(--font-title);
@@ -105,14 +108,15 @@ p {
 
 /** LOADER **/
 #loader-wrapper {
-  /* appearance */
-  height: 100vh;
-  width: 100vw;
+  /* content */
   display: flex;
   flex-direction: column;
   gap: var(--border-radius);
   justify-content: center;
   align-items: center;
+  /* appearance */
+  height: 100vh;
+  width: 100vw;
   background-color: var(--white);
   /* position */
   position: fixed;
@@ -120,11 +124,14 @@ p {
   left: 0;
   z-index: 9999;
   & #loader {
+    /* appearance */
     height: 30vmin;
     width: 30vmin;
   }
   & p {
+    /* content */
     font-family: var(--font-title);
+    /* interaction */
     animation: blink 2000ms infinite;
   }
 }
@@ -132,17 +139,18 @@ p {
 
 /** IMG **/
 img {
-  /* appearance */
+  /* content */
   object-fit: cover;
   object-position: 100% center;
+  /* appearance */
   border-radius: var(--border-radius);
 }
 /** IMG **/
 
 /** BUTTONS **/
 .button {
-  /* appearance */
   --padding: 0.4rem 0.8rem 0.25rem 0.8rem;
+  /* appearance */
   border-radius: var(--border-radius);
   border: 2px solid var(--main);
   min-width: fit-content;
@@ -169,26 +177,27 @@ img {
   }
 }
 .button-content {
-  /* appearance */
+  /* content */
   display: grid;
   grid-template-areas: "stack";
   & .button-default,
   & .button-hover {
-    /* appearance */
+    /* content */
     padding: var(--padding);
     text-align: center;
     /* position */
     grid-area: stack;
   }
   & .button-default {
-    /* appearance */
+    /* content */
     color: var(--main);
     white-space: nowrap;
   }
   & .button-hover {
+    /* content */
+    color: var(--white);
     /* appearance */
     background: var(--main);
-    color: var(--white);
     /* position */
     transform: translateY(-102%);
     /* interaction */
@@ -201,10 +210,12 @@ img {
 .tooltip {
   &::before {
     content: attr(data-tooltip);
+    /* content */
+    padding: 0.15em 0.6em 0.3em 0.6em;
+    font-size: 1em;
+    color: var(--white);
     /* appearance */
     background: var(--black);
-    color: var(--white);
-    padding: 0.15rem 0.6rem 0.3rem 0.6rem;
     width: max-content;
     opacity: 0;
     border-radius: var(--border-radius-little);
@@ -225,9 +236,10 @@ img {
 /** HIGHLIGHTS **/
 .highlight-container {
   --opacity-highlight: 0.4;
+  /* content */
+  white-space: nowrap;
   /* appearance */
   width: fit-content;
-  white-space: nowrap;
   /* position */
   position: relative;
   &.main .highlight-stroke {
@@ -283,29 +295,32 @@ span .highlight-stroke {
 
 /** SECTIONS **/
 .section {
+  /* content */
+  padding: var(--padding-v) 0;
   /* appearance */
   min-height: 100vh;
   margin: 0 var(--margin-h);
-  padding: var(--padding-v) 0;
   box-sizing: border-box;
 }
 /** ******** **/
 
 /** HEADER **/
 header {
-  /* appearance */
-  box-sizing: border-box;
+  /* content */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
   padding-right: var(--width-scroll);
+  /* appearance */
+  box-sizing: border-box;
+  width: 100%;
   /* position */
   position: fixed;
   z-index: 990; /* just below colibri and cursor */
   & .container-header {
-    /* appearance */
+    /* content */
     padding: var(--border-radius);
+    /* appearance */
     backdrop-filter: blur(var(--blur));
     border-radius: var(--border-radius-little);
   }

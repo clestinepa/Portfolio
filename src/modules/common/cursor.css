@@ -8,8 +8,9 @@
   /* interaction */
   pointer-events: none;
   & #cursor-form {
-    /* appearance */
+    /* content */
     fill: var(--cursor-color);
+    /* appearance */
     width: var(--cursor-size);
     height: var(--cursor-size);
     /* position */
