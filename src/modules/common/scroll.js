@@ -64,30 +64,24 @@ function smoothScrollTo() {
   return { shouldContinue: true };
 }
 
-function defineParameters() {
-  const closest = getClosestSection();
-
-  if (closest.section) {
-    if (
-      closest.section.id == Colibri.sectionVisibleId &&
-      !closest.section.classList.contains("hide") &&
-      !myColibri.isVisible
-    )
-      myColibri.show();
-    else if (
-      (closest.section.id != Colibri.sectionVisibleId || closest.section.classList.contains("hide")) &&
-      myColibri.isVisible
-    )
-      myColibri.hide();
-
-    startY = window.scrollY;
-    distance = closest.visibleSections.length <= 1 ? 0 : closest.edge - startY; // Don't scroll if only one section is visible
-    startTime = performance.now();
+function changeVisibilityColibri(section) {
+  if (section.id == Colibri.sectionVisibleId && !section.classList.contains("hide") && !myColibri.isVisible) {
+    myColibri.show();
+  } else if ((section.id != Colibri.sectionVisibleId || section.classList.contains("hide")) && myColibri.isVisible) {
+    myColibri.hide();
   }
 }
 
 function snapToClosestSection() {
-  defineParameters();
+  const closest = getClosestSection();
+
+  if (closest.section) {
+    changeVisibilityColibri(closest.section);
+    startY = window.scrollY;
+    distance = closest.visibleSections.length <= 1 ? 0 : closest.edge - startY; // Don't scroll if only one section is visible
+    startTime = performance.now();
+  }
+
   myFrameLoop.start(smoothScrollTo);
 }
 
@@ -102,7 +96,7 @@ export function snapToDesignDetail() {
   const edge = detail.offsetTop + detail.offsetHeight - window.innerHeight;
   distance = edge - startY;
   startTime = performance.now();
-  myColibri.show(); //to trigger now and not after constrainedScrolling automatically lunch because we scrolled
+  myColibri.show(); //to trigger now and not after constrainedScrolling
   myFrameLoop.start(smoothScrollTo);
 }
 
@@ -112,7 +106,6 @@ export function snapToDesignDetail() {
  */
 function userIsScrolling() {
   myFrameLoop.stop(smoothScrollTo);
-  // myFrameLoop.stop(smoothScrollToDesign);
 }
 
 export function initConstrainedScroll() {

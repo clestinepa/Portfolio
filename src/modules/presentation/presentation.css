@@ -3,6 +3,7 @@
 #presentation {
   /* appearance */
   max-height: 100vh;
+  align-content: center;
   & .img-container {
     /* appearance */
     width: var(--width-picture-profile);

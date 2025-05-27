@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "Un défi amusant",
-    "text": "Découverte de l'IA",
+    "text": "A la recherche de nouvelles connaissances, je me suis lancée dans l'implémentation d'une IA capable de jouer à un jeu de tour par tour.",
     "logos": ["html", "css", "js"]
   },
   {

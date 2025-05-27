@@ -1,7 +1,7 @@
 import { displayBg } from "./modules/common/bg.js";
 import { initCursor } from "./modules/common/cursor.js";
 import { initConstrainedScroll } from "./modules/common/scroll.js";
-import { typeEffect } from "./modules/presentation/typing.js";
+import { observerTyping } from "./modules/presentation/typing.js";
 import { displayAbout } from "./modules/about/about.js";
 import { displayCarousel } from "./modules/design/carousel.js";
 import { displayGrid } from "./modules/dev/grid.js";
@@ -34,7 +34,7 @@ function disableDrag() {
 
 async function initializeSite() {
   //presentation section
-  typeEffect();
+  observerTyping.observe(document.getElementById("presentation-content"));
   //about section
   await displayAbout();
   //design section

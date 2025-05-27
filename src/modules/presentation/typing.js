@@ -56,6 +56,7 @@ const light = document.getElementById("ampoule-light");
 let wordIndex = 0;
 let letterIndex = words[wordIndex].length;
 let isDeleting = false;
+let timeoutId = null;
 
 /**
  * Restart an specific animation of an element
@@ -102,7 +103,6 @@ function handleWordsAnimation() {
           `colorPicture ${TYPING.ANIMATION.WORD.DURATION.DEFAULT}s reverse forwards`
         );
         profile.style.boxShadow = "var(--shadows)";
-
         break;
       case "énergique":
         restartAnimation(profile, `shake ${TYPING.ANIMATION.WORD.DURATION.DEFAULT}s`);
@@ -135,7 +135,7 @@ function getTimeBeforeNextEffect() {
   return time;
 }
 
-export function typeEffect() {
+function typeEffect() {
   const currentWord = words[wordIndex];
 
   handleCaretAnimation();
@@ -148,5 +148,41 @@ export function typeEffect() {
     typingElement.textContent = currentWord.substring(0, letterIndex++);
   }
 
-  setTimeout(typeEffect, time);
+  timeoutId = setTimeout(typeEffect, time);
 }
+
+function startTypeEffect() {
+  if (timeoutId !== null) return;
+  typeEffect();
+}
+
+function stopTypeEffect() {
+  if (timeoutId === null) return;
+  clearTimeout(timeoutId);
+  wordIndex = 0;
+  letterIndex = words[wordIndex].length;
+  isDeleting = false;
+  timeoutId = null;
+  //restart animations
+  typingElement.textContent = words[wordIndex];
+  profile.style.transform = "rotate(0deg)";
+  profile.style.boxShadow = "var(--shadows-hidden)";
+  restartAnimation(profile, "none");
+  restartAnimation(profile.firstElementChild, "none");
+}
+
+export const observerTyping = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        startTypeEffect();
+      } else {
+        stopTypeEffect();
+      }
+    });
+  },
+  {
+    root: null,
+    threshold: 0,
+  }
+);
