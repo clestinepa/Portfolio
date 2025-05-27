@@ -1,3 +1,8 @@
+/** NEXT STEPS
+ * - do I put a infinite slide in the img to show severals pictures of each picture ? 
+ * - find an way to go to detail : github/website/explanation/...
+ */
+
 /** Constants **/
 const GRID = {};
 /** ********* **/

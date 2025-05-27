@@ -7,6 +7,15 @@ import { displayCarousel } from "./modules/design/carousel.js";
 import { displayGrid } from "./modules/dev/grid.js";
 import { initProgressBar } from "./modules/common/progressBar.js";
 
+/** NEXT STEPS
+ * - check to improve performance
+ * - add contact section
+ * - think about a way to show mail every time
+ * - add light/dark mode
+ * - add translate mode
+ * - add CV to download
+ */
+
 async function addHighlightStroke() {
   const response = await fetch("public/img/highlightStroke.svg");
   const svg = await response.text();

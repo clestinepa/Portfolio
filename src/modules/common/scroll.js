@@ -1,6 +1,11 @@
 import { myFrameLoop } from "../../shared/utils.js";
 import { Colibri, myColibri } from "./colibri.js";
 
+/** NEXT STEPS
+ * - improve UI : add assets that appears and/or move with scroll
+ * - do I show each element with an animation scroll ?
+ */
+
 /** Constants **/
 const SCROLL = {
   ANIMATION: {

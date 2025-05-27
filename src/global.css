@@ -325,7 +325,8 @@ header {
   /* position */
   position: fixed;
   z-index: 990; /* just below colibri and cursor */
-
+  /* interaction */
+  pointer-events: none;
   & .container-header {
     /* content */
     padding: var(--border-radius);

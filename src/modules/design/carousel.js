@@ -8,6 +8,7 @@ import { CarouselClass } from "./CarouselClass.js";
  * - handle the power of the movement : if the mouse is fast, go in further standard position (and even do complete circle)
  * - add a slow infinite automatic rotation, stop it when the mouse hover a photo
  * - maybe when the animation is running but mouse down, save the fact that we try to move and when the animation is done, if mouse still down and moving, then apply usual change of mouse move
+ * - find an way to go to more detail (affiche, dossier, ...)
  */
 
 /** Description of the logic :

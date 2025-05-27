@@ -1,5 +1,6 @@
 /** NEXT STEPS
  * - modify shadow to move by their own in the exigeante animation
+ * - find an animation for positive
  */
 
 /** Constants **/
