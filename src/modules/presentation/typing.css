@@ -1,7 +1,7 @@
 #profile-picture-container {
   --deg-after-shake: 1.5deg;
   transform-origin: center center;
-  transition: transform 0.25s ease-out;
+  transition: transform var(--duration-transition) ease-out;
 }
 
 #container-caret {

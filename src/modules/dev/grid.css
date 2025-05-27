@@ -7,7 +7,6 @@
   & .img-text-wrapper {
     --gap-wrapper: calc(var(--gap) * -0.5);
     & .img-container {
-      --duration-transition: 0.3s;
       /* appearance */
       aspect-ratio: 45/32;
       flex: 1 1 0;

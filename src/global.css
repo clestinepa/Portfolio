@@ -64,6 +64,7 @@
     calc(var(--border-radius) * 1.5) calc(var(--border-radius) * 1.5) 0px 0px var(--main-design);
   --shadows-hidden: 0px 0px 0px 0px var(--main-photo), 0px 0px 0px 0px var(--main-montage),
     0px 0px 0px 0px var(--main-dev), 0px 0px 0px 0px var(--main-design);
+  --duration-transition: 0.2s;
   /* ******** */
 }
 
@@ -172,7 +173,7 @@ img {
     background: var(--main);
     box-shadow: 0 0 0.5em 0em var(--black-opacity);
     /* interaction */
-    transition: background 0.2s 0s ease;
+    transition: background var(--duration-transition) 0s ease;
     & .button-hover {
       /* position */
       transform: translateY(0%);
@@ -208,7 +209,7 @@ img {
     /* position */
     transform: translateY(-102%);
     /* interaction */
-    transition: transform 0.2s ease;
+    transition: transform var(--duration-transition) ease;
   }
 }
 /** ******* **/
@@ -230,9 +231,8 @@ img {
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0%) scale(0);
-    /* transform: translate(-50%, -110%) scale(1); */
     /* interaction */
-    transition: all 0.2s ease;
+    transition: all var(--duration-transition) ease;
   }
   &:hover::before {
     /* position */

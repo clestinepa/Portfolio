@@ -23,7 +23,7 @@ export async function displayGrid() {
   for (const item of data) {
     //img
     let imgContainer = document.createElement("div");
-    imgContainer.className = "img-container";
+    imgContainer.className = "img-container click-me";
     let img = document.createElement("img");
     img.src = `/public/img/${item.img ?? "profile.jpg"}`;
     imgContainer.appendChild(img);

@@ -1,5 +1,11 @@
 #cursor {
+  --default-size: 15px;
+  --press-size: 20px;
+  --default-rotation: 90deg;
+  --hover-rotation: 45deg;
   --cursor-color: var(--secondary);
+  --cursor-size: var(--default-size);
+  --cursor-rotation: var(--default-rotation);
   /* position */
   position: fixed;
   top: 0;
@@ -15,9 +21,10 @@
     height: var(--cursor-size);
     /* position */
     transform-origin: top left;
-    transform: translate(-50%, -50%);
+    transform: rotate(var(--cursor-rotation)) translate(-50%, -50%);
     /* interaction */
-    transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+    transition: width var(--duration-transition) ease-in-out, height var(--duration-transition) ease-in-out,
+      transform var(--duration-transition) ease-in-out;
   }
   & .sparkle {
     /* appearance */
@@ -32,7 +39,7 @@
 
 @keyframes rotate {
   0% {
-    transform: rotate(90deg) translate(-50%, -50%);
+    transform: rotate(var(--cursor-rotation)) translate(-50%, -50%);
   }
   33% {
     transform: rotate(360deg) translate(-50%, -50%);
@@ -41,7 +48,7 @@
     transform: rotate(0deg) translate(-50%, -50%);
   }
   100% {
-    transform: rotate(90deg) translate(-50%, -50%);
+    transform: rotate(var(--cursor-rotation)) translate(-50%, -50%);
   }
 }
 

@@ -2,8 +2,6 @@ import { myFrameLoop, getRandomInt, getRandomVariableCSSColor } from "../../shar
 
 /** Constants **/
 const CURSOR = {
-  DEFAULT_SIZE: 15, //(in px) size of the cursor in default state
-  PRESS_SIZE: 20, //(in px) size of the cursor in press state
   SPARKLE: {
     SIZE: {
       MAX: 6, //(in px) maximum size of a sparkle
@@ -18,13 +16,14 @@ const CURSOR = {
       DURATION: 1000, //(in ms) duration of the sparkle animation
     },
   },
+  ANIMATION: {
+    DURATION: 0.5, //(in s) duration of the mouseup animation
+  },
 };
 /** ********* **/
 
 const cursor = document.getElementById("cursor");
 const cursorForm = document.getElementById("cursor-form");
-
-cursor.style.setProperty("--cursor-size", CURSOR.DEFAULT_SIZE + "px");
 
 var sparklesArr = [];
 
@@ -87,24 +86,26 @@ function handleCursorMoving(e) {
 
 function handleCursorDown() {
   cursorForm.style.animation = "";
-  cursor.style.setProperty("--cursor-size", CURSOR.PRESS_SIZE + "px");
+  cursor.style.setProperty("--cursor-size", "var(--press-size)");
 }
 
 function handleCursorUp() {
-  cursorForm.style.animation = "rotate 0.5s ease-out both";
-  cursor.style.setProperty("--cursor-size", CURSOR.DEFAULT_SIZE + "px");
+  cursorForm.style.animation = `rotate ${CURSOR.ANIMATION.DURATION}s ease-out both`;
+  cursor.style.setProperty("--cursor-size", "var(--default-size)");
 }
 
 function initCursorHover() {
   const clickMeElements = document.getElementsByClassName("click-me");
   for (let element of clickMeElements) {
-    element.addEventListener("mouseenter", () =>
-      cursorForm.style.setProperty("--cursor-size", CURSOR.PRESS_SIZE + "px")
-    );
+    element.addEventListener("mouseenter", () => {
+      cursorForm.style.setProperty("--cursor-size", "var(--press-size)");
+      cursorForm.style.setProperty("--cursor-rotation", "var(--hover-rotation)");
+    });
     element.addEventListener("mousedown", () => cursorForm.style.setProperty("--cursor-color", "var(--main-photo)"));
     element.addEventListener("mouseleave", () => {
       cursorForm.style.removeProperty("--cursor-size");
       cursorForm.style.removeProperty("--cursor-color");
+      cursorForm.style.removeProperty("--cursor-rotation");
     });
     element.addEventListener("mouseup", () => {
       cursorForm.style.removeProperty("--cursor-color");
