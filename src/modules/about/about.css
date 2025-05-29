@@ -31,7 +31,7 @@
   }
   & .text-illustration {
     /* appearance */
-    opacity: 0.15;
+    opacity: var(--opacity);
     /* position */
     position: absolute;
     z-index: -1;

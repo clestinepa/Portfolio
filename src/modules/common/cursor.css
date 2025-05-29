@@ -29,7 +29,7 @@
   & .sparkle {
     /* appearance */
     border-radius: 50%;
-    opacity: 0.2;
+    opacity: var(--opacity);
     /* position */
     position: fixed;
     transform: translate(-50%, -50%);

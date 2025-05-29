@@ -5,6 +5,8 @@
   padding: var(--padding-v) var(--margin-h);
   /* appearance */
   margin: 0;
+  /* interaction */
+  overflow: hidden;
 }
 #contact-card-wrapper {
   /* content */
@@ -55,7 +57,23 @@
   z-index: -2;
 }
 
-/* content */
-/* appearance */
-/* position */
-/* interaction */
+.contact-particles {
+  /* appearance */
+  opacity: calc(var(--opacity) * 2);
+  /* position */
+  position: absolute;
+  transform-origin: center;
+  z-index: -10;
+  /* interaction */
+  pointer-events: none;
+}
+
+@keyframes moveParticle {
+  0% {
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    transform: translate(var(--x), var(--y));
+    opacity: 0;
+  }
+}

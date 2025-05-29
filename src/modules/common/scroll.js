@@ -6,6 +6,8 @@ import { myCursor } from "./cursor.js";
  * - improve UI : add assets that appears and/or move with scroll
  * - improve UI Progress Bar: like a liquid moving with infinite waves
  * - do I show each element with an animation scroll ?
+ * - menu to scroll to section
+ * - section save pour que quand je recharge la page, je suis au bon endroit (pcq là vu que les scripts ajoutent des éléments, la taille augmente)
  */
 
 /** Constants **/

@@ -4,7 +4,7 @@
   width: 100vw;
   height: 100vh;
   background: transparent;
-  opacity: 0.1;
+  opacity: calc(var(--opacity) * 0.5);
   /* position */
   position: fixed;
   top: 0;

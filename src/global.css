@@ -56,6 +56,7 @@
   --margin-h: 20vw;
   --gap: 5vw;
   --blur: 10px;
+  --opacity: 0.2;
   --width-picture-profile: 25vw;
   --width-logo: 50px;
   --width-scroll: calc(var(--border-radius) * 0.5);

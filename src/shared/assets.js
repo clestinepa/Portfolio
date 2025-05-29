@@ -22,7 +22,7 @@ export let dataAbout = [];
 export let dataDesign = [];
 /** @type {{"id": number, "img": string, "title": string, "text": string, "logos": string[]}[]} */
 export let dataDev = [];
-/** @type {string[]} */
+/** @type {{[key: string]: string}[]} */
 export let svgLogos = [];
 
 export async function loadAllAssets() {
