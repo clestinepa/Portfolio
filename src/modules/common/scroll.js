@@ -1,8 +1,10 @@
 import { myFrameLoop } from "../../shared/utils.js";
 import { Colibri, myColibri } from "../design/colibri.js";
+import { myCursor } from "./cursor.js";
 
 /** NEXT STEPS
  * - improve UI : add assets that appears and/or move with scroll
+ * - improve UI Progress Bar: like a liquid moving with infinite waves
  * - do I show each element with an animation scroll ?
  */
 
@@ -86,19 +88,22 @@ function snapToClosestSection() {
   myFrameLoop.start(smoothScrollTo);
 }
 
-function constrainedScrolling() {
-  clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(snapToClosestSection, SCROLL.ANIMATION.TIMEOUT);
-}
-
 export function snapToDesignDetail() {
   startY = window.scrollY;
   const detail = document.getElementById("design-detail");
   const edge = detail.offsetTop + detail.offsetHeight - window.innerHeight;
   distance = edge - startY;
   startTime = performance.now();
-  myColibri.show(); //to trigger now and not after constrainedScrolling
+  myColibri.instance.show(); //to trigger now and not after constrainedScrolling
   myFrameLoop.start(smoothScrollTo);
+}
+
+export function handleProgressBar() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollPercent = (scrollTop / docHeight) * 100;
+
+  document.getElementById("progress-bar").style.height = scrollPercent + "%";
 }
 
 /**
@@ -107,6 +112,14 @@ export function snapToDesignDetail() {
  */
 function userIsScrolling() {
   myFrameLoop.stop(smoothScrollTo);
+}
+
+function handleScroll() {
+  myCursor.position.x = myCursor.position.fixedX + window.scrollX;
+  myCursor.position.y = myCursor.position.fixedY + window.scrollY;
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(snapToClosestSection, SCROLL.ANIMATION.TIMEOUT);
+  handleProgressBar();
 }
 
 export function disableScroll() {
@@ -138,10 +151,11 @@ function preventScrollKeys(e) {
 export const myScroll = {
   init: () => {
     snapToClosestSection();
+    handleProgressBar();
     /** EventListener **/
     document.addEventListener("wheel", userIsScrolling);
     document.addEventListener("touchmove", userIsScrolling);
-    document.addEventListener("scroll", constrainedScrolling);
+    document.addEventListener("scroll", handleScroll);
     /** ************* **/
   },
 };

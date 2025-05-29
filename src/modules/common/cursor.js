@@ -1,4 +1,5 @@
 import { myFrameLoop, getRandomInt, getRandomVariableCSSColor } from "../../shared/utils.js";
+import { myColibri } from "../design/colibri.js";
 
 /** Constants **/
 const CURSOR = {
@@ -79,14 +80,19 @@ function removeSparkles() {
 }
 
 function handleCursorMoving(e) {
-  cursor.style.top = `${e.clientY}px`;
-  cursor.style.left = `${e.clientX}px`;
+  myCursor.position.fixedX = e.clientX;
+  myCursor.position.fixedY = e.clientY;
+  myCursor.position.x = myCursor.position.fixedX + window.scrollX;
+  myCursor.position.y = myCursor.position.fixedY + window.scrollY;
+  cursor.style.top = `${myCursor.position.fixedY}px`;
+  cursor.style.left = `${myCursor.position.fixedX}px`;
   trailAnimation(e);
 }
 
 function handleCursorDown() {
   cursorForm.style.animation = "";
   cursor.style.setProperty("--cursor-size", "var(--press-size)");
+  myColibri.instance.handleMouseDown();
 }
 
 function handleCursorUp() {
@@ -114,6 +120,12 @@ function initCursorHover() {
 }
 
 export const myCursor = {
+  position: {
+    x: 0,
+    y: 0,
+    fixedX: 0,
+    fixedY: 0,
+  },
   init: () => {
     initCursorHover();
     /** EventListener **/

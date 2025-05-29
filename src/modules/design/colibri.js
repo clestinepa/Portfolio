@@ -1,7 +1,8 @@
 import { myFrameLoop, getRandomInt } from "../../shared/utils.js";
+import { myCursor } from "../common/cursor.js";
 
 /** NEXT STEPS
- * - determine randomScared based of the mousePosition: closer => jump higher
+ * - determine randomScared based of the myCursor.position: closer => jump higher
  * - recreate goAway effect (determine where the colibri will go away)
  * - if mouse come closer to colibri during scared, keep a distance min between them
  *   (distance min = initial scared distance calculated)
@@ -104,7 +105,7 @@ export class Colibri {
       case "scared":
       case "follow":
       default:
-        return mousePosition;
+        return myCursor.position;
     }
   }
 
@@ -124,7 +125,7 @@ export class Colibri {
   #setGoal() {
     switch (this.action) {
       case "dodge":
-        this.goal = { x: mousePosition.x - this.#marginMouse * 2, y: mousePosition.y };
+        this.goal = { x: myCursor.position.x - this.#marginMouse * 2, y: myCursor.position.y };
         break;
       case "scared":
         //already define
@@ -133,7 +134,7 @@ export class Colibri {
         break;
       case "follow":
       default:
-        this.goal = mousePosition;
+        this.goal = myCursor.position;
     }
   }
 
@@ -141,7 +142,7 @@ export class Colibri {
     if (this.isVisible == false) this.action = "hide";
     else if (this.action == "hide") this.action = "follow";
 
-    if (this.#getDistanceTo(mousePosition) < COLIBRI.SIZE / 2) this.action = "dodge";
+    if (this.#getDistanceTo(myCursor.position) < COLIBRI.SIZE / 2) this.action = "dodge";
     else if (this.#isGoalAchieved) {
       switch (this.action) {
         case "dodge":
@@ -213,12 +214,6 @@ export class Colibri {
 /** ***** **/
 
 const colibriElement = document.getElementById("colibri");
-const mousePosition = {
-  x: 0,
-  y: 0,
-  fixedX: 0,
-  fixedY: 0,
-};
 
 export const myColibri = {
   /** @type {Colibri|null} */
@@ -234,19 +229,5 @@ export const myColibri = {
     colibriElement.style.opacity = "0";
     colibriElement.style.pointerEvents = "none";
     colibriElement.style.transition = `opacity ${COLIBRI.HIDE.TIMEOUT}ms ease-in-out`;
-
-    /** EventListener **/
-    document.addEventListener("scroll", () => {
-      mousePosition.x = mousePosition.fixedX + window.scrollX;
-      mousePosition.y = mousePosition.fixedY + window.scrollY;
-    });
-    document.addEventListener("mousemove", (e) => {
-      mousePosition.fixedX = e.clientX;
-      mousePosition.fixedY = e.clientY;
-      mousePosition.x = mousePosition.fixedX + window.scrollX;
-      mousePosition.y = mousePosition.fixedY + window.scrollY;
-    });
-    document.addEventListener("mousedown", myColibri.instance.handleMouseDown.bind(myColibri.instance));
-    /** ************* **/
   },
 };

@@ -1,6 +1,5 @@
 import { myColibri } from "./colibri.js";
-import { handleProgressBar } from "../common/progressBar.js";
-import { disableScroll, enableScroll, snapToDesignDetail } from "../common/scroll.js";
+import { disableScroll, enableScroll, handleProgressBar, snapToDesignDetail } from "../common/scroll.js";
 import { myCarousel } from "./carousel.js";
 
 const detail = document.getElementById("design-detail");
@@ -48,6 +47,7 @@ function closeOverlay() {
 export const myDesignSection = {
   init: () => {
     myColibri.init();
+    myCarousel.init();
     /** EventListener **/
     document.getElementById("carousel-button").addEventListener("click", showDetails);
     document.getElementById("detail-more").addEventListener("click", openOverlay);

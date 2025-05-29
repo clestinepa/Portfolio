@@ -1,7 +1,6 @@
 import { svgHighlightStroke } from "../../shared/assets.js";
 import { myBg } from "./bg.js";
 import { myCursor } from "./cursor.js";
-import { myProgressBar } from "./progressBar.js";
 import { myScroll } from "./scroll.js";
 
 function addHighlightStroke() {
@@ -23,7 +22,6 @@ export const myCommonElements = {
     myCursor.init();
     myBg.init();
     myScroll.init();
-    myProgressBar.init();
     addHighlightStroke();
     disableDrag();
   },
