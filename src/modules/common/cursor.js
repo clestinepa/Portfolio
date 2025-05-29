@@ -113,9 +113,13 @@ function initCursorHover() {
   }
 }
 
-export function initCursor() {
-  window.addEventListener("mousedown", handleCursorDown);
-  window.addEventListener("mousemove", handleCursorMoving);
-  window.addEventListener("mouseup", handleCursorUp);
-  initCursorHover();
-}
+export const myCursor = {
+  init: () => {
+    initCursorHover();
+    /** EventListener **/
+    document.addEventListener("mousedown", handleCursorDown);
+    document.addEventListener("mousemove", handleCursorMoving);
+    document.addEventListener("mouseup", handleCursorUp);
+    /** ************* **/
+  },
+};

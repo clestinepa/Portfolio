@@ -171,7 +171,7 @@ function stopTypeEffect() {
   restartAnimation(profile.firstElementChild, "none");
 }
 
-export const observerTyping = new IntersectionObserver(
+const observerTyping = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -186,3 +186,9 @@ export const observerTyping = new IntersectionObserver(
     threshold: 0,
   }
 );
+
+export const myPresentationSection = {
+  init: () => {
+    observerTyping.observe(document.getElementById("presentation-content"));
+  },
+};

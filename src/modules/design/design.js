@@ -1,4 +1,4 @@
-import { myColibri } from "../common/colibri.js";
+import { myColibri } from "./colibri.js";
 import { handleProgressBar } from "../common/progressBar.js";
 import { disableScroll, enableScroll, snapToDesignDetail } from "../common/scroll.js";
 import { myCarousel } from "./carousel.js";
@@ -9,12 +9,13 @@ const main = document.getElementById("main");
 const header = document.getElementById("header");
 
 function showDetails() {
+  const itemInFront = myCarousel.instance.itemInFront;
   detail.classList.remove("hide");
-  detail.style.setProperty("--detail-url", `url("/public/img/${myCarousel.itemInFront.detailImg ?? "profile.jpg"}")`);
-  if (myCarousel.itemInFront.more) {
+  detail.style.setProperty("--detail-url", `url("/public/img/${itemInFront.detailImg ?? "profile.jpg"}")`);
+  if (itemInFront.more) {
     document.getElementById("detail-more").style.display = "inline-grid";
-    document.getElementById("detail-more-text").innerHTML = myCarousel.itemInFront.moreText;
-    const src = `/public/img/${myCarousel.itemInFront.more}`;
+    document.getElementById("detail-more-text").innerHTML = itemInFront.moreText;
+    const src = `/public/img/${itemInFront.more}`;
     overlay.style.setProperty("--more-url", `url("${src}")`);
     document.getElementById("overlay-download").href = src;
   }
@@ -27,14 +28,12 @@ export function hideDetails() {
   handleProgressBar();
 }
 
-document.getElementById("carousel-button").addEventListener("click", showDetails);
-
 function openOverlay() {
   overlay.style.display = "flex";
   main.classList.add("overlay-open");
   header.classList.add("overlay-open");
   disableScroll();
-  myColibri.hide();
+  myColibri.instance.hide();
 }
 
 function closeOverlay() {
@@ -43,8 +42,16 @@ function closeOverlay() {
   main.classList.remove("overlay-open");
   header.classList.remove("overlay-open");
   enableScroll();
-  myColibri.show();
+  myColibri.instance.show();
 }
 
-document.getElementById("detail-more").addEventListener("click", openOverlay);
-document.getElementById("overlay-close").addEventListener("click", closeOverlay);
+export const myDesignSection = {
+  init: () => {
+    myColibri.init();
+    /** EventListener **/
+    document.getElementById("carousel-button").addEventListener("click", showDetails);
+    document.getElementById("detail-more").addEventListener("click", openOverlay);
+    document.getElementById("overlay-close").addEventListener("click", closeOverlay);
+    /** ************* **/
+  },
+};

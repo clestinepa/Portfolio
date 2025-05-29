@@ -1,12 +1,10 @@
-import { displayBg } from "./modules/common/bg.js";
-import { initCursor } from "./modules/common/cursor.js";
-import { initConstrainedScroll } from "./modules/common/scroll.js";
-import { initProgressBar } from "./modules/common/progressBar.js";
-import { observerTyping } from "./modules/presentation/typing.js";
-import { displayAbout } from "./modules/about/about.js";
-import { displayCarousel } from "./modules/design/carousel.js";
-import { displayGrid } from "./modules/dev/grid.js";
-import { initContactCard } from "./modules/contact/card.js";
+import { loadAllAssets } from "./shared/assets.js";
+import { myPresentationSection } from "./modules/presentation/typing.js";
+import { myAboutSection } from "./modules/about/about.js";
+import { myDesignSection } from "./modules/design/design.js";
+import { myDevSection } from "./modules/dev/grid.js";
+import { myContactSection } from "./modules/contact/contact.js";
+import { myCommonElements } from "./modules/common/common.js";
 
 /** NEXT STEPS
  * - check to improve performance
@@ -17,46 +15,27 @@ import { initContactCard } from "./modules/contact/card.js";
  * - add CV to download
  */
 
-async function addHighlightStroke() {
-  const response = await fetch("public/img/highlightStroke.svg");
-  const svg = await response.text();
-  const containers = document.getElementsByClassName("highlight-container");
-  for (const container of containers) {
-    container.innerHTML += svg;
-    container.getElementsByTagName("svg").item(0).setAttribute("preserveAspectRatio", "none");
-    container.getElementsByTagName("svg").item(0).setAttribute("class", "highlight-stroke");
-  }
-}
-function disableDrag() {
-  document.querySelectorAll("img, a, p, span, h1, h2").forEach((el) => {
-    el.setAttribute("draggable", "false");
-  });
-}
-
 async function initializeSite() {
-  //presentation section
-  observerTyping.observe(document.getElementById("presentation-content"));
-  //about section
-  await displayAbout();
-  //design section
-  displayCarousel();
-  //dev section
-  await displayGrid();
-  //contact section
-  initContactCard();
+  //load assets
+  await loadAllAssets();
+
+  //sections
+  myPresentationSection.init();
+  myAboutSection.init();
+  myDesignSection.init();
+  myDevSection.init();
+  myContactSection.init();
+
   //global scripts, wait that everything else is setup
-  await addHighlightStroke();
-  displayBg();
-  initCursor();
-  initConstrainedScroll();
-  initProgressBar();
-  disableDrag();
+  myCommonElements.init();
 }
 
 async function initWithLoader() {
+  console.time("Init website");
   await initializeSite();
   document.querySelector("body").removeChild(document.getElementById("loader-wrapper"));
   document.querySelector("main").style.opacity = "1";
+  console.timeEnd("Init website");
 }
 
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initWithLoader);

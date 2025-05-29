@@ -212,36 +212,41 @@ export class Colibri {
 }
 /** ***** **/
 
-/** Init **/
 const colibriElement = document.getElementById("colibri");
-export const myColibri = new Colibri();
-colibriElement.style.width = `${COLIBRI.SIZE}px`;
-colibriElement.style.height = `${COLIBRI.SIZE}px`;
-colibriElement.style.position = "absolute";
-colibriElement.style.top = `${myColibri.position.y}px`;
-colibriElement.style.left = `${myColibri.position.x}px`;
-colibriElement.style.zIndex = "var(--zIndex-colibri)";
-colibriElement.style.opacity = "0";
-colibriElement.style.pointerEvents = "none";
-colibriElement.style.transition = `opacity ${COLIBRI.HIDE.TIMEOUT}ms ease-in-out`;
 const mousePosition = {
   x: 0,
   y: 0,
   fixedX: 0,
   fixedY: 0,
 };
-/** **** **/
 
-/** EventListener **/
-document.addEventListener("scroll", () => {
-  mousePosition.x = mousePosition.fixedX + window.scrollX;
-  mousePosition.y = mousePosition.fixedY + window.scrollY;
-});
-document.addEventListener("mousemove", (e) => {
-  mousePosition.fixedX = e.clientX;
-  mousePosition.fixedY = e.clientY;
-  mousePosition.x = mousePosition.fixedX + window.scrollX;
-  mousePosition.y = mousePosition.fixedY + window.scrollY;
-});
-document.addEventListener("mousedown", () => myColibri.handleMouseDown());
-/** ************* **/
+export const myColibri = {
+  /** @type {Colibri|null} */
+  instance: null,
+  init: () => {
+    myColibri.instance = new Colibri();
+    colibriElement.style.width = `${COLIBRI.SIZE}px`;
+    colibriElement.style.height = `${COLIBRI.SIZE}px`;
+    colibriElement.style.position = "absolute";
+    colibriElement.style.top = `${myColibri.instance.position.y}px`;
+    colibriElement.style.left = `${myColibri.instance.position.x}px`;
+    colibriElement.style.zIndex = "var(--zIndex-colibri)";
+    colibriElement.style.opacity = "0";
+    colibriElement.style.pointerEvents = "none";
+    colibriElement.style.transition = `opacity ${COLIBRI.HIDE.TIMEOUT}ms ease-in-out`;
+
+    /** EventListener **/
+    document.addEventListener("scroll", () => {
+      mousePosition.x = mousePosition.fixedX + window.scrollX;
+      mousePosition.y = mousePosition.fixedY + window.scrollY;
+    });
+    document.addEventListener("mousemove", (e) => {
+      mousePosition.fixedX = e.clientX;
+      mousePosition.fixedY = e.clientY;
+      mousePosition.x = mousePosition.fixedX + window.scrollX;
+      mousePosition.y = mousePosition.fixedY + window.scrollY;
+    });
+    document.addEventListener("mousedown", myColibri.instance.handleMouseDown.bind(myColibri.instance));
+    /** ************* **/
+  },
+};

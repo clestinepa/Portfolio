@@ -56,7 +56,7 @@ function generateRandomEllipsePath(offsetX) {
   } ${centerY} A ${rx} ${ry} 0 ${large} ${direction} ${centerX - rx} ${centerY}`;
 }
 
-export function displayBg() {
+function displayBg() {
   for (let i = 0; i < BG.NB_SPHERES; i++) {
     const span = document.createElement("span");
     const size = getRandom(BG.SPHERE.SIZE.MIN, BG.SPHERE.SIZE.MAX);
@@ -73,3 +73,9 @@ export function displayBg() {
     bgContainer.appendChild(span);
   }
 }
+
+export const myBg = {
+  init: () => {
+    displayBg();
+  },
+};

@@ -10,7 +10,11 @@ export function handleProgressBar() {
   document.getElementById("progress-bar").style.height = scrollPercent + "%";
 }
 
-export function initProgressBar() {
-  window.addEventListener("scroll", handleProgressBar);
-  handleProgressBar();
-}
+export const myProgressBar = {
+  init: () => {
+    handleProgressBar();
+    /** EventListener **/
+    document.addEventListener("scroll", handleProgressBar);
+    /** ************* **/
+  },
+};

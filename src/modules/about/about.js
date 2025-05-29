@@ -1,3 +1,5 @@
+import { dataAbout } from "../../shared/assets.js";
+
 /** NEXT STEPS
  * - improve UI : add assets for each p
  * - do I add infinite animation in the assets ?
@@ -7,13 +9,10 @@
 const ABOUT = {};
 /** ********* **/
 
-async function displayText() {
-  const response = await fetch("/public/data/about.json");
-  const data = await response.json();
-
-  for (const item of data) {
+function displayText() {
+  for (const item of dataAbout) {
     let textContainer = document.createElement("div");
-    textContainer.className = `text-container ${item.id == data.length ? "end" : item.id % 2 ? "odd" : "even"}`;
+    textContainer.className = `text-container ${item.id == dataAbout.length ? "end" : item.id % 2 ? "odd" : "even"}`;
 
     let text = document.createElement("p");
     text.classList.add("justify");
@@ -41,6 +40,8 @@ async function displayText() {
   }
 }
 
-export async function displayAbout() {
-  await displayText();
-}
+export const myAboutSection = {
+  init: () => {
+    displayText();
+  },
+};

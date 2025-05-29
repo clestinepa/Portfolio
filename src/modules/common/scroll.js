@@ -1,5 +1,5 @@
 import { myFrameLoop } from "../../shared/utils.js";
-import { Colibri, myColibri } from "./colibri.js";
+import { Colibri, myColibri } from "../design/colibri.js";
 
 /** NEXT STEPS
  * - improve UI : add assets that appears and/or move with scroll
@@ -65,10 +65,11 @@ function smoothScrollTo() {
 }
 
 function changeVisibilityColibri(section) {
-  if (section.id == Colibri.sectionVisibleId && !section.classList.contains("hide") && !myColibri.isVisible) {
-    myColibri.show();
-  } else if ((section.id != Colibri.sectionVisibleId || section.classList.contains("hide")) && myColibri.isVisible) {
-    myColibri.hide();
+  const colibri = myColibri.instance;
+  if (section.id == Colibri.sectionVisibleId && !section.classList.contains("hide") && !colibri.isVisible) {
+    colibri.show();
+  } else if ((section.id != Colibri.sectionVisibleId || section.classList.contains("hide")) && colibri.isVisible) {
+    colibri.hide();
   }
 }
 
@@ -108,13 +109,6 @@ function userIsScrolling() {
   myFrameLoop.stop(smoothScrollTo);
 }
 
-export function initConstrainedScroll() {
-  window.addEventListener("wheel", userIsScrolling);
-  window.addEventListener("touchmove", userIsScrolling);
-  window.addEventListener("scroll", constrainedScrolling);
-  snapToClosestSection();
-}
-
 export function disableScroll() {
   window.addEventListener("wheel", preventDefault, { passive: false });
   window.addEventListener("touchmove", preventDefault, { passive: false });
@@ -140,3 +134,14 @@ function preventScrollKeys(e) {
     e.preventDefault();
   }
 }
+
+export const myScroll = {
+  init: () => {
+    snapToClosestSection();
+    /** EventListener **/
+    document.addEventListener("wheel", userIsScrolling);
+    document.addEventListener("touchmove", userIsScrolling);
+    document.addEventListener("scroll", constrainedScrolling);
+    /** ************* **/
+  },
+};

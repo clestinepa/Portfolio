@@ -1,5 +1,6 @@
+import { dataDev, svgLogos } from "../../shared/assets.js";
 /** NEXT STEPS
- * - do I put a infinite slide in the img to show severals pictures of each picture ? 
+ * - do I put a infinite slide in the img to show severals pictures of each picture ?
  * - find an way to go to detail : github/website/explanation/...
  */
 
@@ -9,23 +10,8 @@ const GRID = {};
 
 const gridContainer = document.getElementById("grid-container");
 
-async function loadAndInjectSVG(name) {
-  const response = await fetch(`/public/logos/${name}.svg`);
-  const svgText = await response.text();
-
-  const wrapper = document.createElement("div");
-  wrapper.innerHTML = svgText;
-  wrapper.setAttribute("data-tooltip", name.replace("-", " "));
-  wrapper.classList = "tech-logo tooltip";
-
-  return wrapper;
-}
-
-export async function displayGrid() {
-  const response = await fetch("/public/data/dev.json");
-  const data = await response.json();
-
-  for (const item of data) {
+function displayGrid() {
+  for (const item of dataDev) {
     //img
     let imgContainer = document.createElement("div");
     imgContainer.className = "img-container click-me";
@@ -48,16 +34,25 @@ export async function displayGrid() {
     let logos = document.createElement("div");
     logos.className = "logos";
     for (const logoName of item.logos) {
-      const svg = await loadAndInjectSVG(logoName);
-      logos.appendChild(svg);
+      const wrapperSvg = document.createElement("div");
+      wrapperSvg.innerHTML = svgLogos[logoName];
+      wrapperSvg.setAttribute("data-tooltip", logoName.replace("-", " "));
+      wrapperSvg.classList = "tech-logo tooltip";
+      logos.appendChild(wrapperSvg);
     }
     textContainer.appendChild(logos);
 
     //wrapper
     let wrapper = document.createElement("div");
-    wrapper.className = `img-text-wrapper ${item.id == data.length ? "end" : item.id % 2 ? "odd" : "even"}`;
+    wrapper.className = `img-text-wrapper ${item.id == dataDev.length ? "end" : item.id % 2 ? "odd" : "even"}`;
     wrapper.appendChild(imgContainer);
     wrapper.appendChild(textContainer);
     gridContainer.appendChild(wrapper);
   }
 }
+
+export const myDevSection = {
+  init: () => {
+    displayGrid();
+  },
+};

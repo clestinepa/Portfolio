@@ -11,6 +11,10 @@ function rotateContactCard(event) {
   card.style.setProperty("--rotateY", -1 * offsetY + "deg");
 }
 
-export function initContactCard() {
-  contact.addEventListener("mousemove", rotateContactCard);
-}
+export const myContactSection = {
+  init: () => {
+    /** EventListener **/
+    contact.addEventListener("mousemove", rotateContactCard);
+    /** ************* **/
+  },
+};

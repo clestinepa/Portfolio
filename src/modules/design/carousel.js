@@ -1,3 +1,4 @@
+import { dataDesign } from "../../shared/assets.js";
 import { CarouselClass } from "./CarouselClass.js";
 
 /** NEXT STEPS
@@ -17,11 +18,6 @@ import { CarouselClass } from "./CarouselClass.js";
  * For esthetics, NB_IMG and standard position are defined.
  */
 
-const response = await fetch("/public/data/design.json");
-const data = await response.json();
-CarouselClass.DATA = data;
-export const myCarousel = new CarouselClass();
-
 /* Handle resize of the window : recalculate path of the images */
 function updatePathCarousel() {
   const carousel = document.getElementById("carousel");
@@ -33,7 +29,15 @@ function updatePathCarousel() {
   );
 }
 
-export function displayCarousel() {
-  window.addEventListener("resize", updatePathCarousel);
-  updatePathCarousel();
-}
+export const myCarousel = {
+  /** @type {CarouselClass|null} */
+  instance: null,
+  init: () => {
+    CarouselClass.DATA = dataDesign;
+    myCarousel.instance = new CarouselClass();
+    updatePathCarousel();
+    /** EventListener **/
+    window.addEventListener("resize", updatePathCarousel);
+    /** ************* **/
+  },
+};
