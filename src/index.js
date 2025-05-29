@@ -1,11 +1,12 @@
 import { displayBg } from "./modules/common/bg.js";
 import { initCursor } from "./modules/common/cursor.js";
 import { initConstrainedScroll } from "./modules/common/scroll.js";
+import { initProgressBar } from "./modules/common/progressBar.js";
 import { observerTyping } from "./modules/presentation/typing.js";
 import { displayAbout } from "./modules/about/about.js";
 import { displayCarousel } from "./modules/design/carousel.js";
 import { displayGrid } from "./modules/dev/grid.js";
-import { initProgressBar } from "./modules/common/progressBar.js";
+import { initContactCard } from "./modules/contact/card.js";
 
 /** NEXT STEPS
  * - check to improve performance
@@ -41,6 +42,8 @@ async function initializeSite() {
   displayCarousel();
   //dev section
   await displayGrid();
+  //contact section
+  initContactCard();
   //global scripts, wait that everything else is setup
   await addHighlightStroke();
   displayBg();

@@ -1,0 +1,61 @@
+#contact {
+  /* content */
+  display: flex;
+  flex-direction: column;
+  padding: var(--padding-v) var(--margin-h);
+  /* appearance */
+  margin: 0;
+}
+#contact-card-wrapper {
+  /* content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* appearance */
+  flex: 1 1 0;
+}
+
+#contact-card {
+  --shadow-z: calc(-2 * var(--border-radius));
+  /* content */
+  padding: var(--gap);
+  /* appearance */
+  background: var(--white-opacity);
+  border-radius: var(--border-radius);
+  /* position */
+  position: relative;
+  transform-style: preserve-3d;
+  transform: perspective(9999px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
+}
+
+#contact-card::before,
+#contact-card::after {
+  content: "";
+  /* appearance */
+  border-radius: inherit;
+  /* position */
+  position: absolute;
+  transform: translateZ(var(--shadow-z));
+}
+
+#contact-card::before {
+  /* appearance */
+  inset: var(--border-radius);
+  background: var(--black-opacity);
+  filter: blur(var(--blur));
+  /* position */
+  z-index: -1;
+}
+
+#contact-card::after {
+  /* appearance */
+  inset: calc(-1 * var(--border-radius));
+  background: linear-gradient(45deg, var(--main-photo), var(--main-dev));
+  /* position */
+  z-index: -2;
+}
+
+/* content */
+/* appearance */
+/* position */
+/* interaction */
