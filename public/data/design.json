@@ -24,6 +24,8 @@
     "id": 4,
     "img": "design/AfterWork.png",
     "detailImg": "design/details/AfterWork.jpg",
+    "more": "design/details/AfterWork-more.jpg",
+    "moreText": "L'affiche",
     "title": "Python de la Fournaise",
     "description": "Une affiche événementielle"
   },
@@ -38,6 +40,8 @@
     "id": 6,
     "img": "design/Späye.png",
     "detailImg": "design/details/Späye.jpg",
+    "more": "design/details/Späye-more.jpg",
+    "moreText": "Les règles",
     "title": "Späye",
     "description": "Un jeu avec son identité graphique et ses règles"
   },
@@ -52,6 +56,8 @@
     "id": 8,
     "img": "design/Lost In The Sand.png",
     "detailImg": "design/details/Lost In The Sand.jpg",
+    "more": "design/details/Lost In The Sand-more.jpg",
+    "moreText": "Le dossier",
     "title": "Lost In The Sand",
     "description": "Une identité graphique et un dossier de sponsoring"
   },

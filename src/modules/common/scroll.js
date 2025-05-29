@@ -114,3 +114,29 @@ export function initConstrainedScroll() {
   window.addEventListener("scroll", constrainedScrolling);
   snapToClosestSection();
 }
+
+export function disableScroll() {
+  window.addEventListener("wheel", preventDefault, { passive: false });
+  window.addEventListener("touchmove", preventDefault, { passive: false });
+  window.addEventListener("scroll", preventDefault, { passive: false });
+  window.addEventListener("keydown", preventScrollKeys);
+}
+
+export function enableScroll() {
+  window.removeEventListener("wheel", preventDefault);
+  window.removeEventListener("touchmove", preventDefault);
+  window.removeEventListener("scroll", preventDefault);
+  window.removeEventListener("keydown", preventScrollKeys);
+}
+
+function preventDefault(e) {
+  e.preventDefault();
+}
+
+function preventScrollKeys(e) {
+  //Arrows, space, PageUp/Down
+  const keys = [32, 33, 34, 35, 36, 37, 38, 39, 40];
+  if (keys.includes(e.keyCode)) {
+    e.preventDefault();
+  }
+}

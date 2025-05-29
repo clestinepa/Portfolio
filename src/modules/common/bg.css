@@ -9,7 +9,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: -999;
+  z-index: calc(-1 * var(--zIndex-cursor));
   /* interaction */
   overflow: hidden;
   & span {

@@ -1,9 +1,11 @@
 @import "./typing.css";
 
 #presentation {
+  /* content */
+  display: flex;
+  justify-content: center;
   /* appearance */
   max-height: 100vh;
-  align-content: center;
   & .img-container {
     /* appearance */
     width: var(--width-picture-profile);

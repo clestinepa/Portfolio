@@ -5,7 +5,7 @@
   height: 100%;
   width: var(--width-scroll);
   background: var(--black-opacity);
-  z-index: 990;
+  z-index: var(--zIndex-header);
 }
 
 #progress-bar {

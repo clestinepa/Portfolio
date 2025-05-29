@@ -1,5 +1,3 @@
-import { snapToDesignDetail } from "../common/scroll.js";
-import { handleProgressBar } from "../common/progressBar.js";
 import { CarouselClass } from "./CarouselClass.js";
 
 /** NEXT STEPS
@@ -22,7 +20,7 @@ import { CarouselClass } from "./CarouselClass.js";
 const response = await fetch("/public/data/design.json");
 const data = await response.json();
 CarouselClass.DATA = data;
-const myCarousel = new CarouselClass();
+export const myCarousel = new CarouselClass();
 
 /* Handle resize of the window : recalculate path of the images */
 function updatePathCarousel() {
@@ -39,18 +37,3 @@ export function displayCarousel() {
   window.addEventListener("resize", updatePathCarousel);
   updatePathCarousel();
 }
-
-const detail = document.getElementById("design-detail");
-
-function showDetails() {
-  detail.classList.remove("hide");
-  detail.style.setProperty("--detail-url", `url("/public/img/${myCarousel.itemInFront.detailImg ?? "profile.jpg"}")`);
-  snapToDesignDetail();
-}
-
-export function hideDetails() {
-  detail.classList.add("hide");
-  handleProgressBar();
-}
-
-document.getElementById("carousel-button").addEventListener("click", showDetails);

@@ -1,4 +1,4 @@
-import { hideDetails } from "./carousel.js";
+import { hideDetails } from "./design.js";
 import { ItemCarousel } from "./ItemCarousel.js";
 import { scramble } from "./scramble.js";
 import {

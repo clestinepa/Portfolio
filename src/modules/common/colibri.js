@@ -220,8 +220,9 @@ colibriElement.style.height = `${COLIBRI.SIZE}px`;
 colibriElement.style.position = "absolute";
 colibriElement.style.top = `${myColibri.position.y}px`;
 colibriElement.style.left = `${myColibri.position.x}px`;
-colibriElement.style.zIndex = "999";
+colibriElement.style.zIndex = "var(--zIndex-colibri)";
 colibriElement.style.opacity = "0";
+colibriElement.style.pointerEvents = "none";
 colibriElement.style.transition = `opacity ${COLIBRI.HIDE.TIMEOUT}ms ease-in-out`;
 const mousePosition = {
   x: 0,

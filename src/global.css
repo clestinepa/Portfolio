@@ -65,6 +65,9 @@
   --shadows-hidden: 0px 0px 0px 0px var(--main-photo), 0px 0px 0px 0px var(--main-montage),
     0px 0px 0px 0px var(--main-dev), 0px 0px 0px 0px var(--main-design);
   --duration-transition: 0.2s;
+  --zIndex-cursor: 999;
+  --zIndex-colibri: 995;
+  --zIndex-header: 990;
   /* ******** */
 }
 
@@ -130,7 +133,7 @@ p.justify {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9999;
+  z-index: calc(var(--zIndex-cursor) + 1);
   & #loader {
     /* appearance */
     height: 30vmin;
@@ -157,20 +160,21 @@ img {
 
 /** BUTTONS **/
 .button {
+  --color-button: var(--main);
   --padding: 0.4rem 0.8rem 0.25rem 0.8rem;
   /* appearance */
   border-radius: var(--border-radius);
-  border: 2px solid var(--main);
+  border: 2px solid var(--color-button);
   min-width: fit-content;
+  backdrop-filter: blur(var(--blur));
   /* position */
   position: relative;
   display: inline-grid;
   /* interaction */
   overflow: hidden;
-  cursor: none;
   &:hover {
     /* appearance */
-    background: var(--main);
+    background: var(--color-button);
     box-shadow: 0 0 0.5em 0em var(--black-opacity);
     /* interaction */
     transition: background var(--duration-transition) 0s ease;
@@ -198,19 +202,22 @@ img {
   }
   & .button-default {
     /* content */
-    color: var(--main);
+    color: var(--color-button);
     white-space: nowrap;
   }
   & .button-hover {
     /* content */
     color: var(--white);
     /* appearance */
-    background: var(--main);
+    background: var(--color-button);
     /* position */
     transform: translateY(-102%);
     /* interaction */
     transition: transform var(--duration-transition) ease;
   }
+}
+.click-me {
+  cursor: none;
 }
 /** ******* **/
 
@@ -324,7 +331,7 @@ header {
   width: 100%;
   /* position */
   position: fixed;
-  z-index: 990; /* just below colibri and cursor */
+  z-index: var(--zIndex-header); /* just below colibri and cursor */
   /* interaction */
   pointer-events: none;
   & .container-header {
@@ -387,3 +394,36 @@ header {
   }
 }
 /** ***** *** **** **/
+
+/** OVERLAY **/
+#overlay {
+  --opacity-black: 0.9;
+  /* content */
+  display: none;
+  align-items: flex-start;
+  justify-content: end;
+  gap: var(--border-radius);
+  padding: var(--border-radius) calc(var(--border-radius) * 2);
+  /* appearance */
+  background: center / contain no-repeat var(--more-url), var(--black-opacity);
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  /* position */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: calc(var(--zIndex-colibri) + 1);
+}
+#overlay-close {
+  /* content */
+  font-size: var(--font-size-h1);
+  color: var(--white);
+  /* appearance */
+  background: none;
+  border: none;
+}
+.overlay-open {
+  pointer-events: none !important;
+}
+/** ******* **/

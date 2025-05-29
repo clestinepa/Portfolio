@@ -9,15 +9,23 @@
 
 #design-detail {
   /* content */
-  padding: 0;
+  display: flex;
+  justify-content: end;
+  align-items: flex-end;
+  padding: var(--gap);
   /* appearance */
   height: 100vh;
   margin: 0;
   min-height: 0;
   background: center / contain no-repeat var(--detail-url);
+  & .button {
+    --color-button: var(--main-dev);
+  }
 }
 
 #design-detail.hide {
+  /* content */
+  padding: 0;
   /* appearance */
   height: 0px;
 }
