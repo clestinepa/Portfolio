@@ -20,7 +20,11 @@
 #contact-card {
   --shadow-z: calc(-2 * var(--border-radius));
   /* content */
-  padding: var(--gap);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--border-radius);
+  padding: calc(2.5 * var(--border-radius));
   /* appearance */
   background: var(--white-opacity);
   border-radius: var(--border-radius);
@@ -28,6 +32,10 @@
   position: relative;
   transform-style: preserve-3d;
   transform: perspective(9999px) rotateY(var(--rotateX)) rotateX(var(--rotateY));
+  & h2 {
+    /* appearance */
+    margin-bottom: var(--border-radius);
+  }
 }
 
 #contact-card::before,
@@ -66,6 +74,27 @@
   z-index: -10;
   /* interaction */
   pointer-events: none;
+}
+
+#contact-infos {
+  /* content */
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--border-radius);
+}
+.contact-info {
+  /* content */
+  display: flex;
+  align-items: center;
+  gap: calc(0.5 * var(--border-radius));
+  & img {
+    /* appearance */
+    border-radius: 0;
+    width: var(--font-size-h1);
+  }
+  &:hover p {
+    color: var(--main);
+  }
 }
 
 @keyframes moveParticle {

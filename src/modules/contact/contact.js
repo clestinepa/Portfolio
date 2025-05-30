@@ -1,6 +1,10 @@
 import { svgLogos } from "../../shared/assets.js";
 import { getRandom, getRandomInt, getRandomVariableCSSColor } from "../../shared/utils.js";
 
+/** NEXT STEPS
+ * - add other particles
+ */
+
 /** Constants **/
 const CONTACT = {
   POWER_ROTATION: 20, //multiplier for the rotation of the card
