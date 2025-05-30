@@ -18,9 +18,9 @@ const logos = [
 export let svgHighlightStroke = "";
 /** @type {{"id": number, "text": ({"highlight": string, "color": string}|string)[]}[]} */
 export let dataAbout = [];
-/** @type {{"id": number, "img": string, "detailImg": string, "more": string|undefined, "moreText": string|undefined, "title": string, "description": string}[]} */
+/** @type {{"id": number, "img": string, "detailImg": string, "more":{"img": string, "text": string}|undefined, "title": string, "description": string}[]} */
 export let dataDesign = [];
-/** @type {{"id": number, "img": string, "title": string, "text": string, "logos": string[]}[]} */
+/** @type {{"id": number, "img": string, "title": string, "text": string, "logos": string[], "buttons": {"link": string, "text": string}[]}[]} */
 export let dataDev = [];
 /** @type {{[key: string]: string}[]} */
 export let svgLogos = [];

@@ -14,10 +14,16 @@ function displayGrid() {
   for (const item of dataDev) {
     //img
     let imgContainer = document.createElement("div");
-    imgContainer.className = "img-container click-me";
+    imgContainer.className = "img-container";
     let img = document.createElement("img");
     img.src = `/public/img/${item.img ?? "profile.jpg"}`;
     imgContainer.appendChild(img);
+    let buttons = document.createElement("div");
+    buttons.id = "buttons-dev";
+    for (const button of item.buttons) {
+      buttons.innerHTML += `<a class="button click-me" id="carousel-button" target="_blank" href="${button.link}"><span class="button-content"><span class="button-default">${button.text}</span><span class="button-hover">Découvrir</span></span></a>`;
+    }
+    imgContainer.appendChild(buttons);
 
     //text
     let textContainer = document.createElement("div");
@@ -44,7 +50,7 @@ function displayGrid() {
 
     //wrapper
     let wrapper = document.createElement("div");
-    wrapper.className = `img-text-wrapper ${item.id == dataDev.length ? "end" : item.id % 2 ? "odd" : "even"}`;
+    wrapper.className = `img-text-wrapper ${item.id % 2 ? "odd" : "even"}`;
     wrapper.appendChild(imgContainer);
     wrapper.appendChild(textContainer);
     gridContainer.appendChild(wrapper);

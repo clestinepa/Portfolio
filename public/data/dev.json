@@ -3,61 +3,69 @@
     "id": 1,
     "title": "Un défi amusant",
     "text": "A la recherche de nouvelles connaissances, je me suis lancée dans l'implémentation d'une IA capable de jouer à un jeu de tour par tour.",
-    "logos": ["html", "css", "js"]
+    "logos": ["html", "css", "js"],
+    "buttons": [
+      { "link": "https://clestinepa.github.io/Polytopia-Experimentation/", "text": "Site" },
+      { "link": "https://github.com/clestinepa/Polytopia-Experimentation", "text": "Code source" }
+    ]
   },
   {
     "id": 2,
     "img": "dev/Célestine Paillé.jpg",
     "title": "Un portfolio expérimental",
     "text": "Étant passionnée de développement web, j'ai créé un portfolio totalement personnalisé, pensé comme un terrain de jeu pour ma créativité.",
-    "logos": ["html", "css", "js"]
+    "logos": ["html", "css", "js"],
+    "buttons": [{ "link": "https://github.com/clestinepa/Portfolio", "text": "Code source" }]
   },
   {
     "id": 3,
     "img": "dev/FlyingGreen.jpg",
     "title": "Une plateforme ambitieuse",
     "text": "Lors de mon dernier emploi, j'ai travaillé sur une application complexe et de grande ampleur dans une équipe internationale.",
-    "logos": ["react", "redux", "material-ui", "chart-js", "openlayers"]
+    "logos": ["react", "redux", "material-ui", "chart-js", "openlayers"],
+    "buttons": [{ "link": "https://flying-green.eurocontrol.int/", "text": "Site" }]
   },
   {
     "id": 4,
-    "title": "Une création concluante",
-    "text": "Pour ma première expérience professionnelle, j'ai codé entièrement seule le front-end d'une application web.",
-    "logos": ["react", "redux", "mapbox"]
-  },
-  {
-    "id": 5,
     "img": "dev/Pygame.jpg",
     "title": "Un passe-temps stimulant",
     "text": "Férue de jeux de logique, j'aime réfléchir à la manière de les implémenter.",
-    "logos": ["python"]
+    "logos": ["python"],
+    "buttons": [{ "link": "https://github.com/clestinepa/Python-Games", "text": "Code source" }]
   },
   {
-    "id": 6,
+    "id": 5,
     "img": "dev/Time flies.jpg",
     "title": "Un projet pluridisciplinaire",
     "text": "Lors de mes études, j’ai contribué à un projet mêlant analyse de données et développement front-end, alliant technique et visualisation.",
-    "logos": ["jupyter", "html", "css", "js"]
+    "logos": ["jupyter", "html", "css", "js"],
+    "buttons": [{ "link": "https://github.com/clestinepa/TAD-Project", "text": "Code source" }]
   },
   {
-    "id": 7,
+    "id": 6,
     "img": "dev/Sacred Robo.jpg",
     "title": "Une initiation formatrice",
     "text": "Par curiosité, je me suis initiée seule aux frameworks JavaScript, découvrant une nouvelle façon de concevoir des applications web.",
-    "logos": ["svelte"]
+    "logos": ["svelte"],
+    "buttons": [{ "link": "https://github.com/clestinepa/Sacred-Robo", "text": "Code source" }]
   },
   {
-    "id": 8,
+    "id": 7,
     "img": "dev/Clavardage.jpg",
     "title": "Une découverte attirante",
     "text": "Pour mes études, j'ai pu développer de A à Z ma première application sur plusieurs mois, sans contrainte dans la création.",
-    "logos": ["java"]
+    "logos": ["java"],
+    "buttons": [{ "link": "https://github.com/clestinepa/clavardage", "text": "Code source" }]
   },
   {
-    "id": 9,
+    "id": 8,
     "img": "dev/Morpion.jpg",
     "title": "Une première application",
     "text": "En équipe, nous avons conçu un site web simple, idéal pour nous initier aux langages du web.",
-    "logos": ["html", "css", "js"]
+    "logos": ["html", "css", "js"],
+    "buttons": [
+      { "link": "https://rmonier.github.io/morpion-insa/", "text": "Site" },
+      { "link": "https://github.com/clestinepa/morpion-insa", "text": "Code source" }
+    ]
   }
 ]

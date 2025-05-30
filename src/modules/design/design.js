@@ -13,8 +13,8 @@ function showDetails() {
   detail.style.setProperty("--detail-url", `url("/public/img/${itemInFront.detailImg ?? "profile.jpg"}")`);
   if (itemInFront.more) {
     document.getElementById("detail-more").style.display = "inline-grid";
-    document.getElementById("detail-more-text").innerHTML = itemInFront.moreText;
-    const src = `/public/img/${itemInFront.more}`;
+    document.getElementById("detail-more-text").innerHTML = itemInFront.more.text;
+    const src = `/public/img/${itemInFront.more.img}`;
     overlay.style.setProperty("--more-url", `url("${src}")`);
     document.getElementById("overlay-download").href = src;
   }
