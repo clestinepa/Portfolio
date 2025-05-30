@@ -26,20 +26,20 @@ export let dataDev = [];
 export let svgLogos = [];
 
 export async function loadAllAssets() {
-  const responseHighlightStroke = await fetch("/public/img/highlightStroke.svg");
+  const responseHighlightStroke = await fetch("public/img/highlightStroke.svg");
   svgHighlightStroke = await responseHighlightStroke.text();
 
-  const responseAbout = await fetch("/public/data/about.json");
+  const responseAbout = await fetch("public/data/about.json");
   dataAbout = await responseAbout.json();
 
-  const responseDesign = await fetch("/public/data/design.json");
+  const responseDesign = await fetch("public/data/design.json");
   dataDesign = await responseDesign.json();
 
-  const responseDev = await fetch("/public/data/dev.json");
+  const responseDev = await fetch("public/data/dev.json");
   dataDev = await responseDev.json();
 
   for (const logoName of logos) {
-    const responseSvg = await fetch(`/public/logos/${logoName}.svg`);
+    const responseSvg = await fetch(`public/logos/${logoName}.svg`);
     svgLogos[logoName] = await responseSvg.text();
   }
 }
