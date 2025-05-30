@@ -13,7 +13,7 @@ import {
 
 export class CarouselClass {
   static container = document.getElementById("carousel-container");
-  /** @type {{"id": number, "img": string, "detailImg": string, "more":{"img": string, "text": string}|undefined, "title": string, "description": string}[]} */
+  /** @type {{"id": number, "img": string, "detailImg": string, "more":{"img": string, "text": string, "link": stringF}|undefined, "title": string, "description": string}[]} */
   static DATA = [];
 
   /** @type {Element} */

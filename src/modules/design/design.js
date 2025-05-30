@@ -14,9 +14,8 @@ function showDetails() {
   if (itemInFront.more) {
     document.getElementById("detail-more").style.display = "inline-grid";
     document.getElementById("detail-more-text").innerHTML = itemInFront.more.text;
-    const src = `/public/img/${itemInFront.more.img}`;
-    overlay.style.setProperty("--more-url", `url("${src}")`);
-    document.getElementById("overlay-download").href = src;
+    overlay.style.setProperty("--more-url", `url("/public/img/${itemInFront.more.img}")`);
+    document.getElementById("overlay-download").href = itemInFront.more.link;
   }
   snapToDesignDetail();
 }
