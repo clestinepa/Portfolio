@@ -7,6 +7,13 @@
 @import "./modules/common/progressBar.css";
 @import "./modules/common/bg.css";
 
+@font-face {
+  font-family: "Baloo";
+  src: url("../public/fonts/Baloo.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -86,8 +93,8 @@ body::-webkit-scrollbar {
 
 /** FONT **/
 * {
-  --font-title: Baloo, Tahoma, Geneva, Verdana, sans-serif;
-  --font-corps: Poppins, Tahoma, Geneva, Verdana, sans-serif;
+  --font-title: "Baloo";
+  --font-corps: "Poppins";
   color: var(--black);
   font-family: var(--font-corps);
 }
