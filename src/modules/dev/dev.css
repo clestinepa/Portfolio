@@ -80,7 +80,7 @@
   padding: var(--border-radius);
   flex-wrap: wrap;
   /* appearance */
-  max-width: 100%;
+  width: 100%;
   /* position */
   position: absolute;
   bottom: 0%;
