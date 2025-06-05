@@ -24,11 +24,7 @@
     "id": 4,
     "img": "design/AfterWork.png",
     "detailImg": "design/details/AfterWork.jpg",
-    "more": {
-      "img": "design/details/more/AfterWork.jpg",
-      "text": "L'affiche",
-      "link": "public/pdf/Affiche AfterWork Python de la Fournaise.pdf"
-    },
+    "more": { "text": "L'affiche", "link": "public/pdf/Affiche AfterWork Python de la Fournaise.pdf" },
     "title": "Python de la Fournaise",
     "description": "Une affiche événementielle"
   },
@@ -43,7 +39,7 @@
     "id": 6,
     "img": "design/Späye.png",
     "detailImg": "design/details/Späye.jpg",
-    "more": { "img": "design/details/more/Späye.jpg", "text": "Les règles", "link": "public/pdf/Règles du Späye.pdf" },
+    "more": { "text": "Les règles", "link": "public/pdf/Règles du Späye.pdf" },
     "title": "Späye",
     "description": "Un jeu avec son identité graphique et ses règles"
   },
@@ -58,11 +54,7 @@
     "id": 8,
     "img": "design/Lost In The Sand.png",
     "detailImg": "design/details/Lost In The Sand.jpg",
-    "more": {
-      "img": "design/details/more/Lost In The Sand.jpg",
-      "text": "Le dossier",
-      "link": "public/pdf/LOST IN THE SAND - Dossier de sponsoring.pdf"
-    },
+    "more": { "text": "Le dossier", "link": "public/pdf/LOST IN THE SAND - Dossier de sponsoring.pdf" },
     "title": "Lost In The Sand",
     "description": "Une identité graphique et un dossier de sponsoring"
   },
