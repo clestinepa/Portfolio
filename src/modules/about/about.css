@@ -43,14 +43,16 @@
 }
 
 @media (max-width: 768px) {
-  .text-container-bout {
-    &.odd {
-      /* content */
-      padding-right: 0;
-    }
-    &.even {
-      /* content */
-      padding-left: 0;
+  #about-text {
+    .text-container-about {
+      &.odd {
+        /* content */
+        padding-right: 0;
+      }
+      &.even {
+        /* content */
+        padding-left: 0;
+      }
     }
   }
 }

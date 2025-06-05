@@ -152,6 +152,9 @@ header {
   html {
     cursor: auto;
   }
+  .section {
+    --margin-h: 10vw;
+  }
   header {
     padding-right: 0;
   }
