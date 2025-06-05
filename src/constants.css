@@ -1,0 +1,30 @@
+:root {
+  --border-radius: 16px;
+  --border-radius-little: 0.4rem;
+  --padding-v: 10vh;
+  --margin-h: 20vw;
+  --gap: 5vmin;
+
+  --blur: 10px;
+  --opacity: 0.2;
+
+  --width-picture-profile: 25vw;
+  --width-logo: 50px;
+  --width-scroll: calc(var(--border-radius) * 0.5);
+
+  --shadows: calc(var(--border-radius) * -0.5) calc(var(--border-radius) * 0.5) 0px 0px var(--main-photo),
+    calc(var(--border-radius) * 0.5) var(--border-radius) 0px 0px var(--main-montage),
+    var(--border-radius) calc(var(--border-radius) * -0.5) 0px 0px var(--main-dev),
+    calc(var(--border-radius) * 1.5) calc(var(--border-radius) * 1.5) 0px 0px var(--main-design);
+  --shadows-hidden: 0px 0px 0px 0px var(--main-photo), 0px 0px 0px 0px var(--main-montage),
+    0px 0px 0px 0px var(--main-dev), 0px 0px 0px 0px var(--main-design);
+
+  --duration-transition: 0.2s;
+  
+  --zIndex-cursor: 999;
+  --zIndex-colibri: 995;
+  --zIndex-header: 990;
+
+  --font-title: "Baloo";
+  --font-corps: "Poppins";
+}

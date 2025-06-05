@@ -45,7 +45,10 @@ function closeOverlay() {
 
 export const myDesignSection = {
   init: () => {
-    myColibri.init();
+    //only if we are on desktop mode
+    if (window.innerWidth > 768) {
+      myColibri.init();
+    }
     myCarousel.init();
     /** EventListener **/
     document.getElementById("carousel-button").addEventListener("click", showDetails);

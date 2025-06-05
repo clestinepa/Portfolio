@@ -66,8 +66,11 @@ function initParticles() {
 export const myContactSection = {
   init: () => {
     initParticles();
-    /** EventListener **/
-    contact.addEventListener("mousemove", rotateContactCard);
-    /** ************* **/
+    //only if we are on desktop mode
+    if (window.innerWidth > 768) {
+      /** EventListener **/
+      contact.addEventListener("mousemove", rotateContactCard);
+      /** ************* **/
+    }
   },
 };

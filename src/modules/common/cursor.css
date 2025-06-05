@@ -6,6 +6,8 @@
   --cursor-color: var(--secondary);
   --cursor-size: var(--default-size);
   --cursor-rotation: var(--default-rotation);
+  /* appearance */
+  display: none;
   /* position */
   position: fixed;
   top: 0;

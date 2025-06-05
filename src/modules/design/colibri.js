@@ -220,14 +220,11 @@ export const myColibri = {
   instance: null,
   init: () => {
     myColibri.instance = new Colibri();
+    colibriElement.style.display ="block";
     colibriElement.style.width = `${COLIBRI.SIZE}px`;
     colibriElement.style.height = `${COLIBRI.SIZE}px`;
-    colibriElement.style.position = "absolute";
     colibriElement.style.top = `${myColibri.instance.position.y}px`;
     colibriElement.style.left = `${myColibri.instance.position.x}px`;
-    colibriElement.style.zIndex = "var(--zIndex-colibri)";
-    colibriElement.style.opacity = "0";
-    colibriElement.style.pointerEvents = "none";
     colibriElement.style.transition = `opacity ${COLIBRI.HIDE.TIMEOUT}ms ease-in-out`;
   },
 };

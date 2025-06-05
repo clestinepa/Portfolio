@@ -96,7 +96,7 @@ export function snapToDesignDetail() {
   const edge = detail.offsetTop + detail.offsetHeight - window.innerHeight;
   distance = edge - startY;
   startTime = performance.now();
-  myColibri.instance.show(); //to trigger now and not after constrainedScrolling
+  if (myColibri.instance) myColibri.instance.show(); //to trigger now and not after constrainedScrolling
   myFrameLoop.start(smoothScrollTo);
 }
 

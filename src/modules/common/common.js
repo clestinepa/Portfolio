@@ -19,9 +19,12 @@ function disableDrag() {
 
 export const myCommonElements = {
   init: () => {
-    myCursor.init();
-    myBg.init();
-    myScroll.init();
+    //only if we are on desktop mode
+    if (window.innerWidth > 768) {
+      myCursor.init();
+      myBg.init();
+      myScroll.init();
+    }
     addHighlightStroke();
     disableDrag();
   },

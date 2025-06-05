@@ -25,15 +25,11 @@
   }
 }
 
-@media only screen and (max-width: 850px) {
-  #presentation {
-    flex-direction: column;
+@media (max-width: 768px) {
+  #presentation-content {
     & .img-container {
+      /* appearance */
       width: calc(var(--width-picture-profile) * 2);
-    }
-    & .text-container {
-      margin-top: calc(var(--gap) * -1);
-      margin-left: 0;
     }
   }
 }

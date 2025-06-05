@@ -19,7 +19,7 @@ function displayGrid() {
     img.src = `/public/img/${item.img ?? "profile.jpg"}`;
     imgContainer.appendChild(img);
     let buttons = document.createElement("div");
-    buttons.id = "buttons-dev";
+    buttons.className = "buttons-dev";
     for (const button of item.buttons) {
       buttons.innerHTML += `<a class="button click-me" id="carousel-button" target="_blank" href="${button.link}"><span class="button-content"><span class="button-default">${button.text}</span><span class="button-hover">Découvrir</span></span></a>`;
     }

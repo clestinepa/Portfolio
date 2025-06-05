@@ -1,0 +1,60 @@
+.button {
+  --color-button: var(--main);
+  --padding: 0.4rem 0.8rem 0.25rem 0.8rem;
+  /* appearance */
+  border-radius: var(--border-radius);
+  border: 2px solid var(--color-button);
+  min-width: fit-content;
+  backdrop-filter: blur(var(--blur));
+  /* position */
+  position: relative;
+  display: inline-grid;
+  /* interaction */
+  overflow: hidden;
+  &:hover {
+    /* appearance */
+    background-color: var(--color-button);
+    box-shadow: 0 0 0.5em 0em var(--black-opacity);
+    /* interaction */
+    transition: background-color var(--duration-transition) 0s ease;
+    & .button-hover {
+      /* position */
+      transform: translateY(0%);
+    }
+  }
+  &:active .button-hover {
+    /* appearance */
+    box-shadow: inset 0 0 0.5em 0em var(--black-opacity);
+  }
+}
+.button-content {
+  /* content */
+  display: grid;
+  grid-template-areas: "stack";
+  & .button-default,
+  & .button-hover {
+    /* content */
+    padding: var(--padding);
+    text-align: center;
+    /* position */
+    grid-area: stack;
+  }
+  & .button-default {
+    /* content */
+    color: var(--color-button);
+    white-space: nowrap;
+  }
+  & .button-hover {
+    /* content */
+    color: var(--white);
+    /* appearance */
+    background: var(--color-button);
+    /* position */
+    transform: translateY(-102%);
+    /* interaction */
+    transition: transform var(--duration-transition) ease;
+  }
+}
+.click-me {
+  cursor: none;
+}

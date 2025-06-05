@@ -55,3 +55,20 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  #carousel-description {
+    /* content */
+    grid-template-columns: auto !important;
+    & .button {
+      /* appearance */
+      width: fit-content;
+      /* position */
+      justify-self: center;
+    }
+    & p {
+      /* content */
+      text-align: center;
+    }
+  }
+}

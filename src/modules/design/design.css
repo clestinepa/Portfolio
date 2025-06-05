@@ -1,4 +1,13 @@
 @import "./carousel.css";
+@import "./overlay.css";
+
+#colibri {
+  display: none;
+  position: absolute;
+  z-index: var(--zIndex-colibri);
+  opacity: 0;
+  pointer-events: none;
+}
 
 #design {
   /* content */

@@ -127,6 +127,7 @@ export const myCursor = {
     fixedY: 0,
   },
   init: () => {
+    cursor.style.display = "block";
     initCursorHover();
     /** EventListener **/
     document.addEventListener("mousedown", handleCursorDown);

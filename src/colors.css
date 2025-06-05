@@ -1,0 +1,36 @@
+:root {
+  --opacity-black: 0.2;
+  --opacity-white: 0.4;
+  --main-design: #e63946;
+  --main-dev: #3cd4b9;
+  --main-dev-opacity: rgba(60, 212, 185, var(--opacity-black));
+  --main-photo: #a0e8af;
+  --main-montage: #ff9f1c;
+  --secondary-design: var(--main-montage);
+  --secondary-dev: var(--main-design);
+  --secondary-photo: var(--main-dev);
+  --secondary-montage: var(--main-photo);
+  --black-design: #011713;
+  --black-design-opacity: rgba(1, 23, 19, var(--opacity-black));
+  --black-dev: #170e01;
+  --black-dev-opacity: rgba(23, 14, 1, var(--opacity-black));
+  --black-photo: #170103;
+  --black-photo-opacity: rgba(23, 1, 3, var(--opacity-black));
+  --black-montage: #011706;
+  --black-montage-opacity: rgba(1, 23, 6, var(--opacity-black));
+  --white-design: #f7fef9;
+  --white-design-opacity: rgba(247, 254, 249, var(--opacity-white));
+  --white-dev: #fef7f8;
+  --white-dev-opacity: rgba(254, 247, 248, var(--opacity-white));
+  --white-photo: #fefbf7;
+  --white-photo-opacity: rgba(254, 251, 247, var(--opacity-white));
+  --white-montage: #f7fefc;
+  --white-montage-opacity: rgba(247, 254, 252, var(--opacity-white));
+
+  --main: var(--main-design);
+  --secondary: var(--secondary-design);
+  --black: var(--black-design);
+  --black-opacity: var(--black-design-opacity);
+  --white: var(--white-design);
+  --white-opacity: var(--white-design-opacity);
+}

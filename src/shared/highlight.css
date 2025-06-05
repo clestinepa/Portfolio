@@ -1,0 +1,57 @@
+.highlight-container {
+  --opacity-highlight: 0.4;
+  /* content */
+  white-space: nowrap;
+  /* appearance */
+  width: fit-content;
+  /* position */
+  position: relative;
+  &.main .highlight-stroke {
+    color: var(--main);
+  }
+  &.main .highlight-stroke {
+    color: var(--main);
+  }
+  &.secondary .highlight-stroke {
+    color: var(--secondary);
+  }
+  &.orange .highlight-stroke {
+    color: var(--main-montage);
+  }
+  &.blue .highlight-stroke {
+    color: var(--main-dev);
+  }
+  &.green .highlight-stroke {
+    --opacity-highlight: 0.6;
+    color: var(--main-photo);
+  }
+  &.red .highlight-stroke {
+    color: var(--main-design);
+  }
+}
+.highlight-stroke {
+  /* position */
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  transform-origin: center;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  & path {
+    /* appearance */
+    color: inherit;
+    opacity: var(--opacity-highlight);
+  }
+}
+
+h1 .highlight-stroke {
+  --opacity-highlight: 0.75;
+  /* appearance */
+  width: calc(100% + calc(var(--border-radius) * 2));
+  height: 85%;
+}
+span .highlight-stroke {
+  /* appearance */
+  width: calc(100% + calc(var(--border-radius) * 0.25));
+  height: 40%;
+}
