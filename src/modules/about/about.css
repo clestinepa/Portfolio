@@ -5,7 +5,7 @@
   gap: calc(var(--border-radius) * 2);
   /* appearance */
   margin-top: calc(var(--border-radius) * 2);
-  & .text-container {
+  & .text-container-about {
     /* position */
     position: relative;
     &.end {
@@ -17,7 +17,8 @@
       padding-right: var(--gap);
       & .text-illustration {
         /* position */
-        right: -52px;
+        transform: translate(50%, -50%);
+        right: 0;
       }
     }
     &.even {
@@ -25,45 +26,31 @@
       padding-left: var(--gap);
       & .text-illustration {
         /* position */
-        left: -52px;
+        transform: translate(-50%, -50%);
+        left: 0;
       }
     }
     & .text-illustration {
       /* appearance */
-      opacity: var(--opacity);
+      height: 130%;
+      max-height: 175px;
       /* position */
+      top: 50%;
       position: absolute;
       z-index: -1;
     }
   }
 }
 
-#text-illustration-1 {
-  /* position */
-  top: -48px;
-}
-
-#text-illustration-2 {
-  /* position */
-  top: 8px;
-}
-
-#text-illustration-3 {
-  /* position */
-  top: -41px;
-}
-
 @media (max-width: 768px) {
-  #about-text {
-    .text-container {
-      &.odd {
-        /* content */
-        padding-right: 0;
-      }
-      &.even {
-        /* content */
-        padding-left: 0;
-      }
+  .text-container-bout {
+    &.odd {
+      /* content */
+      padding-right: 0;
+    }
+    &.even {
+      /* content */
+      padding-left: 0;
     }
   }
 }

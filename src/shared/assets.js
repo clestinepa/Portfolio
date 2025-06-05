@@ -16,9 +16,9 @@ const logos = [
 ];
 
 export let svgHighlightStroke = "";
-/** @type {{"id": number, "text": ({"highlight": string, "color": string}|string)[]}[]} */
-export let dataAbout = [];
-/** @type {{"id": number, "img": string, "detailImg": string, "more":{"img": string, "text": string, "link": string}|undefined, "title": string, "description": string}[]} */
+
+
+/** @type {{"id": number, "img": string, "detailImg": string, "more":{"text": string, "link": string}|undefined, "title": string, "description": string}[]} */
 export let dataDesign = [];
 /** @type {{"id": number, "img": string, "title": string, "text": string, "logos": string[], "buttons": {"link": string, "text": string}[]}[]} */
 export let dataDev = [];
@@ -26,20 +26,18 @@ export let dataDev = [];
 export let svgLogos = [];
 
 export async function loadAllAssets() {
-  const responseHighlightStroke = await fetch("public/img/highlightStroke.svg");
-  svgHighlightStroke = await responseHighlightStroke.text();
+  const [svgHighlight, design, dev] = await Promise.all([
+    fetch("/public/img/highlightStroke.svg").then((r) => r.text()),
+    fetch("/public/data/design.json").then((r) => r.json()),
+    fetch("/public/data/dev.json").then((r) => r.json()),
+  ]);
+  svgHighlightStroke = svgHighlight;
+  dataDesign = design;
+  dataDev = dev;
 
-  const responseAbout = await fetch("public/data/about.json");
-  dataAbout = await responseAbout.json();
-
-  const responseDesign = await fetch("public/data/design.json");
-  dataDesign = await responseDesign.json();
-
-  const responseDev = await fetch("public/data/dev.json");
-  dataDev = await responseDev.json();
-
-  for (const logoName of logos) {
-    const responseSvg = await fetch(`public/logos/${logoName}.svg`);
-    svgLogos[logoName] = await responseSvg.text();
-  }
+  const logoPromises = logos.map(async (logoName) => {
+    const response = await fetch(`public/logos/${logoName}.svg`);
+    svgLogos[logoName] = await response.text();
+  });
+  await Promise.all(logoPromises);
 }
