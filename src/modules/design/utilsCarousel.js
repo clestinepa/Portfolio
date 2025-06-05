@@ -213,5 +213,5 @@ export function getAnimateKeyFrames(start, end) {
  * @returns {KeyframeAnimationOptions} the options of the animation
  */
 export function getAnimateOptions(duration) {
-  return { duration: duration, fill: "forwards", easing: "linear" };
+  return { duration: duration, easing: "linear" };
 }

@@ -54,11 +54,12 @@ export class ItemCarousel {
     this.element.addEventListener("mouseup", this.handleMouseUp.bind(this));
   }
 
-  removeAllAnimations() {
-    this.element.getAnimations().forEach((anim) => {
-      anim.commitStyles();
-      anim.cancel();
-    });
+  commitStyles() {
+    this.element.style.filter = `blur(${this.blur}px)`;
+    this.element.style.opacity = `${this.opacity}`;
+    this.element.style.transform = `scale(${this.scale})`;
+    this.element.style.zIndex = this.zIndex;
+    this.element.style.offsetDistance = `${this.position * 100}%`;
   }
 
   /**
@@ -72,11 +73,22 @@ export class ItemCarousel {
     this.scale = getScale(nextPos);
     this.zIndex = getZIndex(nextPos);
     this.position = nextPos;
-    this.element.style.filter = `blur(${this.blur}px)`;
-    this.element.style.opacity = `${this.opacity}`;
-    this.element.style.transform = `scale(${this.scale})`;
-    this.element.style.zIndex = this.zIndex;
-    this.element.style.offsetDistance = `${this.position * 100}%`;
+    const anim = this.element.animate(
+      [
+        {
+          filter: `blur(${this.blur}px)`,
+          opacity: `${this.opacity}`,
+          transform: `scale(${this.scale})`,
+          zIndex: this.zIndex,
+          offsetDistance: `${this.position * 100}%`,
+        },
+      ],
+      { duration: 0 }
+    );
+    anim.onfinish = () => {
+      this.commitStyles();
+      anim.cancel();
+    };
   }
 
   /**
@@ -102,9 +114,15 @@ export class ItemCarousel {
       pos: nextPos,
     };
 
-    if ((nextPos < this.position && !isClockwiseRotation) || (nextPos > this.position && isClockwiseRotation)) {
-      const sizeStep1 = isClockwiseRotation ? this.position : 1 - this.position;
-      const sizeStep2 = isClockwiseRotation ? 1 - nextPos : nextPos;
+    this.blur = end.blur;
+    this.opacity = end.opacity;
+    this.scale = end.scale;
+    this.zIndex = end.zIndex;
+    this.position = end.pos;
+
+    if ((end.pos < start.pos && !isClockwiseRotation) || (end.pos > start.pos && isClockwiseRotation)) {
+      const sizeStep1 = isClockwiseRotation ? start.pos : 1 - start.pos;
+      const sizeStep2 = isClockwiseRotation ? 1 - end.pos : end.pos;
       const posStep1 = isClockwiseRotation ? 0 : 1;
 
       const step1Duration = (sizeStep1 / (sizeStep1 + sizeStep2)) * CAROUSEL.ANIMATION.DURATION;
@@ -118,8 +136,11 @@ export class ItemCarousel {
         zIndex: getZIndex(posStep1),
         pos: posStep1,
       };
-      this.element.animate(getAnimateKeyFrames(start, step1), getAnimateOptions(step1Duration)).onfinish = () => {
+      const firstAnim = this.element.animate(getAnimateKeyFrames(start, step1), getAnimateOptions(step1Duration));
+      firstAnim.onfinish = () => {
         // 2. Cross 0% or 100% without visual change
+        this.commitStyles();
+        firstAnim.cancel();
         let posAfterCrossing = isClockwiseRotation ? 1 : 0;
         const afterCrossing = {
           blur: getBlur(posAfterCrossing),
@@ -129,20 +150,26 @@ export class ItemCarousel {
           pos: posAfterCrossing,
         };
         // 3. Animate from 0% or 100% to real position
-        this.element.animate(getAnimateKeyFrames(afterCrossing, end), getAnimateOptions(step2Duration)).onfinish =
-          this.removeAllAnimations.bind(this);
+        const secondAnim = this.element.animate(
+          getAnimateKeyFrames(afterCrossing, end),
+          getAnimateOptions(step2Duration)
+        );
+        secondAnim.onfinish = () => {
+          this.commitStyles();
+          secondAnim.cancel();
+        };
       };
     } else {
       //usual animation
-      this.element.animate(getAnimateKeyFrames(start, end), getAnimateOptions(CAROUSEL.ANIMATION.DURATION)).onfinish =
-        this.removeAllAnimations.bind(this);
+      const anim = this.element.animate(
+        getAnimateKeyFrames(start, end),
+        getAnimateOptions(CAROUSEL.ANIMATION.DURATION)
+      );
+      anim.onfinish = () => {
+        this.commitStyles();
+        anim.cancel();
+      };
     }
-
-    this.blur = end.blur;
-    this.opacity = end.opacity;
-    this.scale = end.scale;
-    this.zIndex = end.zIndex;
-    this.position = end.pos;
   }
 
   handleMouseDown() {
