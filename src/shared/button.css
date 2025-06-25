@@ -55,6 +55,3 @@
     transition: transform var(--duration-transition) ease;
   }
 }
-.click-me {
-  cursor: none;
-}

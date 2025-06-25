@@ -1,11 +1,4 @@
 #cursor {
-  --default-size: 15px;
-  --press-size: 20px;
-  --default-rotation: 90deg;
-  --hover-rotation: 45deg;
-  --cursor-color: var(--secondary);
-  --cursor-size: var(--default-size);
-  --cursor-rotation: var(--default-rotation);
   /* appearance */
   display: none;
   /* position */
@@ -15,19 +8,6 @@
   z-index: var(--zIndex-cursor);
   /* interaction */
   pointer-events: none;
-  & #cursor-form {
-    /* content */
-    fill: var(--cursor-color);
-    /* appearance */
-    width: var(--cursor-size);
-    height: var(--cursor-size);
-    /* position */
-    transform-origin: top left;
-    transform: rotate(var(--cursor-rotation)) translate(-50%, -50%);
-    /* interaction */
-    transition: width var(--duration-transition) ease-in-out, height var(--duration-transition) ease-in-out,
-      transform var(--duration-transition) ease-in-out;
-  }
   & .sparkle {
     /* appearance */
     border-radius: 50%;
@@ -36,21 +16,6 @@
     position: fixed;
     transform: translate(-50%, -50%);
     z-index: -1;
-  }
-}
-
-@keyframes rotate {
-  0% {
-    transform: rotate(var(--cursor-rotation)) translate(-50%, -50%);
-  }
-  33% {
-    transform: rotate(360deg) translate(-50%, -50%);
-  }
-  66% {
-    transform: rotate(0deg) translate(-50%, -50%);
-  }
-  100% {
-    transform: rotate(var(--cursor-rotation)) translate(-50%, -50%);
   }
 }
 

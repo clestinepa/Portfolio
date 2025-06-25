@@ -42,7 +42,7 @@ export class ItemCarousel {
 
     const item = CarouselClass.DATA[this.id - 1];
     this.element.src = `public/img/${item.img ?? "profile.jpg"}`;
-    this.element.className = "img-carousel";
+    this.element.className = "img-carousel grab-me";
     this.element.id = `img-carousel-${item.id}`;
 
     const initialPos = CAROUSEL.STANDARD_POS[this.id - 1];

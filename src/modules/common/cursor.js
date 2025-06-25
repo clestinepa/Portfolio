@@ -24,7 +24,6 @@ const CURSOR = {
 /** ********* **/
 
 const cursor = document.getElementById("cursor");
-const cursorForm = document.getElementById("cursor-form");
 
 var sparklesArr = [];
 
@@ -90,34 +89,9 @@ function handleCursorMoving(e) {
 }
 
 function handleCursorDown() {
-  cursorForm.style.animation = "";
-  cursor.style.setProperty("--cursor-size", "var(--press-size)");
   myColibri.instance.handleMouseDown();
 }
 
-function handleCursorUp() {
-  cursorForm.style.animation = `rotate ${CURSOR.ANIMATION.DURATION}s ease-out both`;
-  cursor.style.setProperty("--cursor-size", "var(--default-size)");
-}
-
-function initCursorHover() {
-  const clickMeElements = document.getElementsByClassName("click-me");
-  for (let element of clickMeElements) {
-    element.addEventListener("mouseenter", () => {
-      cursorForm.style.setProperty("--cursor-size", "var(--press-size)");
-      cursorForm.style.setProperty("--cursor-rotation", "var(--hover-rotation)");
-    });
-    element.addEventListener("mousedown", () => cursorForm.style.setProperty("--cursor-color", "var(--main-photo)"));
-    element.addEventListener("mouseleave", () => {
-      cursorForm.style.removeProperty("--cursor-size");
-      cursorForm.style.removeProperty("--cursor-color");
-      cursorForm.style.removeProperty("--cursor-rotation");
-    });
-    element.addEventListener("mouseup", () => {
-      cursorForm.style.removeProperty("--cursor-color");
-    });
-  }
-}
 
 export const myCursor = {
   position: {
@@ -128,11 +102,9 @@ export const myCursor = {
   },
   init: () => {
     cursor.style.display = "block";
-    initCursorHover();
     /** EventListener **/
     document.addEventListener("mousedown", handleCursorDown);
     document.addEventListener("mousemove", handleCursorMoving);
-    document.addEventListener("mouseup", handleCursorUp);
     /** ************* **/
   },
 };
