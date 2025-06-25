@@ -35,6 +35,7 @@ export const myCarousel = {
   init: () => {
     CarouselClass.DATA = dataDesign;
     myCarousel.instance = new CarouselClass();
+    showDetails();
     updatePathCarousel();
     /** EventListener **/
     window.addEventListener("resize", updatePathCarousel);

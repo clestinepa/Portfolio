@@ -1,4 +1,4 @@
-import { hideDetails } from "./design.js";
+import { showDetails } from "./design.js";
 import { ItemCarousel } from "./ItemCarousel.js";
 import { scramble } from "./scramble.js";
 import {
@@ -144,7 +144,7 @@ export class CarouselClass {
     //the position is changing
     if (this.position !== this.prevPosition) {
       scramble(this.itemInFront);
-      hideDetails();
+      showDetails();
     }
     this.prevPosition = this.position;
   }

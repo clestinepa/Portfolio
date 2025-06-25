@@ -91,13 +91,14 @@ function snapToClosestSection() {
 }
 
 export function snapToDesignDetail() {
-  startY = window.scrollY;
   const detail = document.getElementById("design-detail");
   const edge = detail.offsetTop + detail.offsetHeight - window.innerHeight;
-  distance = edge - startY;
-  startTime = performance.now();
-  if (myColibri.instance) myColibri.instance.show(); //to trigger now and not after constrainedScrolling
-  myFrameLoop.start(smoothScrollTo);
+  window.scrollTo({
+    top: edge,
+    left: 0,
+    behavior: "smooth",
+  });
+  if (myColibri.instance) myColibri.instance.show();
 }
 
 export function handleProgressBar() {
