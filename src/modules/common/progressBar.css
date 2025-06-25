@@ -1,26 +1,52 @@
 body::-webkit-scrollbar {
+  /* appearance */
   width: 0;
 }
 
-#progress-container {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: var(--width-scroll);
-  background: var(--black-opacity);
-  z-index: var(--zIndex-header);
-}
-
 #progress-bar {
+  --size-scroll: calc(var(--border-radius) * 0.5);
+  --scroll-percent: 0%;
+  --opacity-black: 0.1;
+  /* appearance */
   width: 100%;
-  height: 0%;
-  background: var(--secondary);
+  height: var(--size-scroll);
+  background: var(--black-opacity);
+  backdrop-filter: blur(var(--blur));
+  /* position */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  /* interaction */
+  z-index: var(--zIndex-header);
+  &::after {
+    content: "";
+    /* appearance */
+    /* opacity: 0.8; */
+    display: block;
+    height: 100%;
+    width: calc(var(--size-scroll) / 2 + var(--scroll-percent));
+    background: linear-gradient(165deg, var(--main) 0%, var(--secondary) 50%, var(--main) 100%);
+    background-size: 200% 100%;
+    animation: gradient 10s infinite;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  }
 }
 
 @media (max-width: 768px) {
   #progress-container {
     /* appearance */
     display: none;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 200% 0%;
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
   }
 }

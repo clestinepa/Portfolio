@@ -4,7 +4,7 @@ import { myCursor } from "./cursor.js";
 
 /** NEXT STEPS
  * - improve UI : add assets that appears and/or move with scroll
- * - improve UI Progress Bar: like a liquid moving with infinite waves
+ * - improve Progress Bar: can drag and drop with effective scroll applicable
  * - do I show each element with an animation scroll ?
  * - menu to scroll to section
  * - section save pour que quand je recharge la page, je suis au bon endroit (pcq là vu que les scripts ajoutent des éléments, la taille augmente)
@@ -18,6 +18,8 @@ const SCROLL = {
   },
 };
 /** ********* **/
+
+const progressBar = document.getElementById("progress-bar");
 
 let scrollTimeout;
 let startY;
@@ -101,12 +103,26 @@ export function snapToDesignDetail() {
   if (myColibri.instance) myColibri.instance.show();
 }
 
-export function handleProgressBar() {
+function handleProgressBar() {
   const scrollTop = window.scrollY;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
   const scrollPercent = (scrollTop / docHeight) * 100;
 
-  document.getElementById("progress-bar").style.height = scrollPercent + "%";
+  progressBar.style.setProperty("--scroll-percent", `${scrollPercent}%`);
+}
+
+/**
+ * @param {MouseEvent} e
+ */
+function clickProgressBar(e) {
+  const scrollPercent = e.clientX / window.innerWidth;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollTop = docHeight * scrollPercent;
+  window.scrollTo({
+    top: scrollTop,
+    left: 0,
+    behavior: "smooth",
+  });
 }
 
 /**
@@ -133,6 +149,7 @@ export const myScroll = {
     document.addEventListener("wheel", userIsScrolling);
     document.addEventListener("touchmove", userIsScrolling);
     document.addEventListener("scroll", handleScroll);
+    progressBar.addEventListener("click", clickProgressBar);
     /** ************* **/
   },
 };

@@ -1,5 +1,6 @@
 import { dataDesign } from "../../shared/assets.js";
 import { CarouselClass } from "./CarouselClass.js";
+import { showDetails } from "./design.js";
 
 /** NEXT STEPS
  * - fix when first move during mousedown, the carousel move more than needed
