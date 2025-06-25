@@ -1,3 +1,13 @@
 @import "./button.css";
 @import "./highlight.css";
 @import "./imgAndText.css";
+
+.click-me {
+  cursor: pointer;
+}
+.grab-me {
+  cursor: grab;
+}
+.grab-me:active {
+  cursor: grabbing;
+}

@@ -147,16 +147,6 @@ header {
 }
 /** ******** **/
 
-.click-me {
-  cursor: pointer;
-}
-.grab-me {
-  cursor: grab;
-}
-.grab-me:active {
-  cursor: grabbing;
-}
-
 @media (max-width: 768px) {
   html {
     cursor: auto;

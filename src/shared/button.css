@@ -1,5 +1,6 @@
 .button {
   --color-button: var(--main);
+  --big-bounce: 1.05;
   --padding: 0.4rem 0.8rem 0.25rem 0.8rem;
   /* appearance */
   border-radius: var(--border-radius);
@@ -11,12 +12,15 @@
   display: inline-grid;
   /* interaction */
   overflow: hidden;
+  animation: bounce 4s infinite;
   &:hover {
     /* appearance */
     background-color: var(--color-button);
     box-shadow: 0 0 0.5em 0em var(--black-opacity);
+    transform: scale(var(--big-bounce));
     /* interaction */
-    transition: background-color var(--duration-transition) 0s ease;
+    transition: background-color var(--duration-transition) 0s ease, transform var(--duration-transition) 0s ease;
+    animation: none;
     & .button-hover {
       /* position */
       transform: translateY(0%);
@@ -53,5 +57,23 @@
     transform: translateY(-102%);
     /* interaction */
     transition: transform var(--duration-transition) ease;
+  }
+}
+
+@keyframes bounce {
+  75% {
+    transform: scale(1);
+  }
+  80% {
+    transform: scale(var(--big-bounce));
+  }
+  85% {
+    transform: scale(0.99);
+  }
+  90% {
+    transform: scale(1.01);
+  }
+  100% {
+    transform: scale(1);
   }
 }
