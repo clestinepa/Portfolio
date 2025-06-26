@@ -75,7 +75,7 @@ function changeVisibilityColibri(section) {
   if (section.id == Colibri.sectionVisibleId && !section.classList.contains("hide") && !colibri.isVisible) {
     colibri.show();
   } else if ((section.id != Colibri.sectionVisibleId || section.classList.contains("hide")) && colibri.isVisible) {
-    colibri.hide();
+    colibri.hide(section);
   }
 }
 

@@ -198,11 +198,17 @@ export class Colibri {
     else return { shouldContinue: true };
   }
 
-  hide() {
+  hide(sectionWhereHidden) {
+    const children = Array.from(sectionWhereHidden.parentElement.children);
+    const indexSection = children.indexOf(sectionWhereHidden);
+
     this.isVisible = false;
     colibriElement.style.opacity = "0";
-    //define goal once and not each frame to conserve bev=cause of the random
-    this.goal = { x: window.innerWidth * Math.random(), y: window.scrollY };
+    //define goal once and not each frame because of the random
+    this.goal = {
+      x: window.innerWidth * Math.random(),
+      y: indexSection > COLIBRI.SECTION_VISIBLE ? window.scrollY : window.scrollY + window.innerHeight,
+    };
   }
 
   show() {
@@ -220,7 +226,7 @@ export const myColibri = {
   instance: null,
   init: () => {
     myColibri.instance = new Colibri();
-    colibriElement.style.display ="block";
+    colibriElement.style.display = "block";
     colibriElement.style.width = `${COLIBRI.SIZE}px`;
     colibriElement.style.height = `${COLIBRI.SIZE}px`;
     colibriElement.style.top = `${myColibri.instance.position.y}px`;
