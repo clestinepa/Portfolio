@@ -1,4 +1,4 @@
-#design {
+#design, #design-detail {
   --height-carousel: 50vh;
   --width-carousel: 70vw;
   --padding-carousel: 20vmin;
@@ -64,33 +64,6 @@
       offset-anchor: center;
     }
   }
-}
-
-#buttons-carousel {
-  /* content */
-  display: flex;
-  gap: var(--width-carousel);
-  justify-content: center;
-  /* appearance */
-  width: 100%;
-  /* position */
-  position: absolute;
-  top: calc(var(--height-carousel-container) - var(--size-img-carousel) / 2);
-  left: 0;
-  z-index: 50; /* based on the top z-index of the carousel */
-}
-.button-carousel {
-  /* content */
-  text-align: center;
-  align-content: center;
-  color: var(--color-button);
-  /* appearance */
-  width: calc(var(--border-radius) * 2);
-  height: calc(var(--border-radius) * 2);
-}
-.button-carousel:hover {
-  /* content */
-  color: var(--white);
 }
 
 @media (max-width: 768px) {

@@ -45,8 +45,8 @@ export class CarouselClass {
     CarouselClass.container.addEventListener("mouseup", this.handleMouseUpOrLeaving.bind(this));
     CarouselClass.container.addEventListener("mouseleave", this.handleMouseUpOrLeaving.bind(this));
 
-    document.getElementById("prev").addEventListener("click", this.prev.bind(this));
-    document.getElementById("next").addEventListener("click", this.next.bind(this));
+    document.querySelectorAll("prev").forEach((prev) => prev.addEventListener("click", this.prev.bind(this)));
+    document.querySelectorAll("next").forEach((next) => next.addEventListener("click", this.next.bind(this)));
 
     scramble(CarouselClass.DATA[0]);
   }

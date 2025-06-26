@@ -29,14 +29,42 @@
   margin: 0;
   min-height: 0;
   background: center / contain no-repeat var(--detail-url);
+  transition: background 1s;
   & .button {
     --color-button: var(--main-dev);
   }
 }
 
-#design-detail.hide {
+.buttons-carousel {
   /* content */
-  padding: 0;
+  display: flex;
+  gap: var(--width-carousel);
+  justify-content: center;
   /* appearance */
-  height: 0px;
+  width: 100%;
+  /* position */
+  position: absolute;
+  left: 0;
+  z-index: 50; /* based on the top z-index of the carousel */
+}
+#design .buttons-carousel {
+  /* position */
+  top: calc(var(--height-carousel-container) - var(--size-img-carousel) / 2);
+}
+#design-detail .buttons-carousel {
+  /* position */
+  top: calc(50vh - var(--border-radius));
+}
+.button-carousel {
+  /* content */
+  text-align: center;
+  align-content: center;
+  color: var(--color-button);
+  /* appearance */
+  width: calc(var(--border-radius) * 2);
+  height: calc(var(--border-radius) * 2);
+}
+.button-carousel:hover {
+  /* content */
+  color: var(--white);
 }
