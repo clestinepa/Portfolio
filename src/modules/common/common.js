@@ -12,7 +12,7 @@ function addHighlightStroke() {
   }
 }
 function disableDrag() {
-  document.querySelectorAll("img, a, p, span, h1, h2").forEach((el) => {
+  document.querySelectorAll("img, div, a, p, span, h1, h2").forEach((el) => {
     el.setAttribute("draggable", "false");
   });
 }

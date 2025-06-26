@@ -56,7 +56,7 @@ p.justify {
   text-align: justify;
   text-indent: var(--border-radius);
 }
-.button * {
+.button, .button * {
   font-family: var(--font-title);
   text-transform: uppercase;
   font-size: var(--font-size-p);

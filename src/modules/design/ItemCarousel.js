@@ -114,12 +114,6 @@ export class ItemCarousel {
       pos: nextPos,
     };
 
-    this.blur = end.blur;
-    this.opacity = end.opacity;
-    this.scale = end.scale;
-    this.zIndex = end.zIndex;
-    this.position = end.pos;
-
     if ((end.pos < start.pos && !isClockwiseRotation) || (end.pos > start.pos && isClockwiseRotation)) {
       const sizeStep1 = isClockwiseRotation ? start.pos : 1 - start.pos;
       const sizeStep2 = isClockwiseRotation ? 1 - end.pos : end.pos;
@@ -170,6 +164,12 @@ export class ItemCarousel {
         anim.cancel();
       };
     }
+
+    this.blur = end.blur;
+    this.opacity = end.opacity;
+    this.scale = end.scale;
+    this.zIndex = end.zIndex;
+    this.position = end.pos;
   }
 
   handleMouseDown() {

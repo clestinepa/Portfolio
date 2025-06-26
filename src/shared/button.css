@@ -19,7 +19,7 @@
     box-shadow: 0 0 0.5em 0em var(--black-opacity);
     transform: scale(var(--big-bounce));
     /* interaction */
-    transition: background-color var(--duration-transition) 0s ease, transform var(--duration-transition) 0s ease;
+    transition: color var(--duration-transition) ease, background-color var(--duration-transition) ease, transform var(--duration-transition) ease;
     animation: none;
     & .button-hover {
       /* position */

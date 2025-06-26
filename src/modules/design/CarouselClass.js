@@ -45,6 +45,9 @@ export class CarouselClass {
     CarouselClass.container.addEventListener("mouseup", this.handleMouseUpOrLeaving.bind(this));
     CarouselClass.container.addEventListener("mouseleave", this.handleMouseUpOrLeaving.bind(this));
 
+    document.getElementById("prev").addEventListener("click", this.prev.bind(this));
+    document.getElementById("next").addEventListener("click", this.next.bind(this));
+
     scramble(CarouselClass.DATA[0]);
   }
 
@@ -67,6 +70,18 @@ export class CarouselClass {
 
   get itemInFront() {
     return CarouselClass.DATA[getItemIdInFront(this.position) - 1];
+  }
+
+  next() {
+    if (this.items[0].element.getAnimations().length != 0) return;
+    this.moveToPos(1);
+    this.applyChangePosition();
+  }
+
+  prev() {
+    if (this.items[0].element.getAnimations().length != 0) return;
+    this.moveToPos(-1);
+    this.applyChangePosition();
   }
 
   /**
@@ -142,10 +157,12 @@ export class CarouselClass {
     this.isClicked = false;
     this.mouseDownAt = 0;
     //the position is changing
-    if (this.position !== this.prevPosition) {
-      scramble(this.itemInFront);
-      showDetails();
-    }
+    if (this.position !== this.prevPosition) this.applyChangePosition();
+  }
+
+  applyChangePosition() {
+    scramble(this.itemInFront);
+    showDetails();
     this.prevPosition = this.position;
   }
 
