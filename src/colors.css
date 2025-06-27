@@ -3,7 +3,6 @@
   --opacity-white: 0.4;
   --main-design: #e63946;
   --main-dev: #3cd4b9;
-  --main-dev-opacity: rgba(60, 212, 185, var(--opacity-black));
   --main-photo: #a0e8af;
   --main-montage: #ff9f1c;
   --secondary-design: var(--main-montage);

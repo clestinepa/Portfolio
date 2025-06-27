@@ -27,7 +27,7 @@ body::-webkit-scrollbar {
     width: calc(var(--size-scroll) / 2 + var(--scroll-percent));
     background: linear-gradient(165deg, var(--main) 0%, var(--secondary) 50%, var(--main) 100%);
     background-size: 200% 100%;
-    animation: gradient 10s infinite;
+    animation: gradient 5s infinite;
     border-radius: 0 var(--border-radius) var(--border-radius) 0;
   }
 }

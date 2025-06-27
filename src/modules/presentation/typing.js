@@ -52,8 +52,10 @@ const typingElement = document.getElementById("typing");
 const profile = document.getElementById("profile-picture-container");
 const caretAndBulb = document.getElementById("caret-and-bulb");
 const light = document.getElementById("ampoule-light");
+const invitation = document.getElementById("invitation");
 
 let wordIndex = 0;
+let counterApparition = 0;
 let letterIndex = words[wordIndex].length;
 let isDeleting = false;
 let timeoutId = null;
@@ -148,6 +150,14 @@ function typeEffect() {
     typingElement.textContent = currentWord.substring(0, letterIndex++);
   }
 
+  if (wordIndex == 0 && typingElement.textContent == currentWord) {
+    if (counterApparition == 1 && invitation.classList.contains("hide")) {
+      invitation.classList.toggle("hide");
+      restartAnimation(invitation.firstElementChild, `bounceInvitation 2s infinite`);
+    }
+    counterApparition++;
+  }
+
   timeoutId = setTimeout(typeEffect, time);
 }
 
@@ -160,6 +170,7 @@ function stopTypeEffect() {
   if (timeoutId === null) return;
   clearTimeout(timeoutId);
   wordIndex = 0;
+  counterApparition = 0;
   letterIndex = words[wordIndex].length;
   isDeleting = false;
   timeoutId = null;
@@ -167,8 +178,17 @@ function stopTypeEffect() {
   typingElement.textContent = words[wordIndex];
   profile.style.transform = "rotate(0deg)";
   profile.style.boxShadow = "var(--shadows-hidden)";
-  restartAnimation(profile, "none");
-  restartAnimation(profile.firstElementChild, "none");
+  restartAnimation(profile, "");
+  restartAnimation(profile.firstElementChild, "");
+  restartAnimation(invitation, "");
+}
+
+export function hideInvitationScroll() {
+  if (!invitation.classList.contains("hide")) {
+    invitation.classList.toggle("hide");
+    restartAnimation(invitation.firstElementChild, "");
+    counterApparition = 0;
+  }
 }
 
 const observerTyping = new IntersectionObserver(

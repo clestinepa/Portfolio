@@ -1,5 +1,6 @@
 import { myFrameLoop } from "../../shared/utils.js";
 import { Colibri, myColibri } from "../design/colibri.js";
+import { hideInvitationScroll } from "../presentation/typing.js";
 import { myCursor } from "./cursor.js";
 
 /** NEXT STEPS
@@ -134,6 +135,7 @@ function userIsScrolling() {
 }
 
 function handleScroll() {
+  hideInvitationScroll();
   myCursor.position.x = myCursor.position.fixedX + window.scrollX;
   myCursor.position.y = myCursor.position.fixedY + window.scrollY;
   clearTimeout(scrollTimeout);
