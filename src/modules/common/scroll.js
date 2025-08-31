@@ -1,4 +1,5 @@
 import { Colibri, myColibri } from "../design/colibri.js";
+import { hideInvitationScroll } from "../presentation/typing.js";
 import { myCursor } from "./cursor.js";
 
 /** NEXT STEPS
@@ -86,6 +87,7 @@ function clickProgressBar(e) {
 }
 
 function handleScroll() {
+  hideInvitationScroll();
   myCursor.position.x = myCursor.position.fixedX + window.scrollX;
   myCursor.position.y = myCursor.position.fixedY + window.scrollY;
   changeVisibilityColibri(getClosestSection());
