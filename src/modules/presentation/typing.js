@@ -183,7 +183,7 @@ function stopTypeEffect() {
   restartAnimation(invitation, "");
 }
 
-export function hideInvitationScroll() {
+function hideInvitationScroll() {
   if (!invitation.classList.contains("hide")) {
     invitation.classList.toggle("hide");
     restartAnimation(invitation.firstElementChild, "");

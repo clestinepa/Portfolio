@@ -1,6 +1,4 @@
-import { myFrameLoop } from "../../shared/utils.js";
 import { Colibri, myColibri } from "../design/colibri.js";
-import { hideInvitationScroll } from "../presentation/typing.js";
 import { myCursor } from "./cursor.js";
 
 /** NEXT STEPS
@@ -12,27 +10,14 @@ import { myCursor } from "./cursor.js";
  */
 
 /** Constants **/
-const SCROLL = {
-  ANIMATION: {
-    DURATION: 1000, //(in ms) duration of the animation scroll
-    TIMEOUT: 1000, //(in ms) timeout of no scroll needed before start the animation scroll
-  },
-};
+const SCROLL = {};
 /** ********* **/
 
+const sections = document.getElementsByClassName("section");
 const progressBar = document.getElementById("progress-bar");
 
-let scrollTimeout;
-let startY;
-let distance;
-let startTime;
-
 function getClosestSection() {
-  const sections = document.getElementsByClassName("section");
-
-  const visibleSections = [];
   let closestSection = null;
-  let closestEdge = null;
   let closestDistance = Infinity;
 
   const viewportTop = window.scrollY;
@@ -47,28 +32,15 @@ function getClosestSection() {
 
     // Check if section is at least partially visible
     if (sectionBottom > viewportTop && sectionTop < viewportBottom) {
-      visibleSections.push(section);
       const edge = CenterToTop < CenterToBottom ? sectionTop : sectionBottom - window.innerHeight;
       const distance = Math.abs(viewportTop - edge);
       if (distance < closestDistance) {
         closestDistance = distance;
-        closestEdge = edge;
         closestSection = section;
       }
     }
   }
-  return { visibleSections, section: closestSection, edge: closestEdge };
-}
-
-function smoothScrollTo() {
-  const elapsedTime = performance.now() - startTime;
-  const progress = Math.min(elapsedTime / SCROLL.ANIMATION.DURATION, 1);
-  const easedProgress = 1 - (1 - progress) * (1 - progress);
-
-  if (progress >= 1 || distance === 0) return { shouldContinue: false };
-
-  window.scrollTo(0, startY + distance * easedProgress);
-  return { shouldContinue: true };
+  return closestSection;
 }
 
 function changeVisibilityColibri(section) {
@@ -78,19 +50,6 @@ function changeVisibilityColibri(section) {
   } else if ((section.id != Colibri.sectionVisibleId || section.classList.contains("hide")) && colibri.isVisible) {
     colibri.hide(section);
   }
-}
-
-function snapToClosestSection() {
-  const closest = getClosestSection();
-
-  if (closest.section) {
-    changeVisibilityColibri(closest.section);
-    startY = window.scrollY;
-    distance = closest.visibleSections.length <= 1 ? 0 : closest.edge - startY; // Don't scroll if only one section is visible
-    startTime = performance.now();
-  }
-
-  myFrameLoop.start(smoothScrollTo);
 }
 
 export function snapToDesignDetail() {
@@ -126,30 +85,17 @@ function clickProgressBar(e) {
   });
 }
 
-/**
- * Stop the scroll animation when the user is scrolling
- * to ensure that the user actions are priority
- */
-function userIsScrolling() {
-  myFrameLoop.stop(smoothScrollTo);
-}
-
 function handleScroll() {
-  hideInvitationScroll();
   myCursor.position.x = myCursor.position.fixedX + window.scrollX;
   myCursor.position.y = myCursor.position.fixedY + window.scrollY;
-  clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(snapToClosestSection, SCROLL.ANIMATION.TIMEOUT);
+  changeVisibilityColibri(getClosestSection());
   handleProgressBar();
 }
 
 export const myScroll = {
   init: () => {
-    snapToClosestSection();
     handleProgressBar();
     /** EventListener **/
-    document.addEventListener("wheel", userIsScrolling);
-    document.addEventListener("touchmove", userIsScrolling);
     document.addEventListener("scroll", handleScroll);
     progressBar.addEventListener("click", clickProgressBar);
     /** ************* **/
