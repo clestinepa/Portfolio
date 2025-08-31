@@ -16,7 +16,7 @@ export class ItemCarousel {
   /** @type {number} */
   id;
   /** @type {HTMLImageElement} */
-  element = document.createElement("img");
+  element;
 
   /** @type {number} */
   blur;
@@ -39,16 +39,10 @@ export class ItemCarousel {
   constructor(id, carousel) {
     this.id = id;
     this.carousel = carousel;
-
-    const item = CarouselClass.DATA[this.id - 1];
-    this.element.src = `public/img/${item.img ?? "profile.jpg"}`;
-    this.element.className = "img-carousel grab-me";
-    this.element.id = `img-carousel-${item.id}`;
+    this.element = document.getElementById(`img-carousel-${id}`);
 
     const initialPos = CAROUSEL.STANDARD_POS[this.id - 1];
     this.changeTo(initialPos);
-
-    this.carousel.element.appendChild(this.element);
 
     this.element.addEventListener("mousedown", this.handleMouseDown.bind(this));
     this.element.addEventListener("mouseup", this.handleMouseUp.bind(this));
@@ -190,7 +184,7 @@ export class ItemCarousel {
     let deltaIndexStandardPos =
       this.position < 0.5
         ? getClosestIndexStandardPos(this.position) * -1
-        : CarouselClass.DATA.length - getClosestIndexStandardPos(this.position);
+        : this.carousel.items.length - getClosestIndexStandardPos(this.position);
     if (deltaIndexStandardPos != 0) this.carousel.moveToPos(deltaIndexStandardPos);
   }
 }

@@ -7,11 +7,14 @@ const detailMore = document.getElementById("detail-more");
 
 export function showDetails() {
   const itemInFront = myCarousel.instance.itemInFront;
-  detail.style.setProperty("--detail-url", `url("/public/img/${itemInFront.detailImg ?? "profile.jpg"}")`);
-  if (itemInFront.more) {
+  detail.style.setProperty(
+    "--detail-url",
+    `url("/public/img/${itemInFront.element.dataset.detailImg ?? "profile.jpg"}")`
+  );
+  if (itemInFront.element.dataset.moreText) {
     detailMore.style.display = "inline-grid";
-    detailMore.href = itemInFront.more.link;
-    document.getElementById("detail-more-text").innerHTML = itemInFront.more.text;
+    detailMore.href = itemInFront.element.dataset.moreLink;
+    document.getElementById("detail-more-text").innerHTML = itemInFront.element.dataset.moreText;
   } else {
     detailMore.style.display = "none";
   }

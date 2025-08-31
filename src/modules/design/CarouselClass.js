@@ -13,11 +13,10 @@ import {
 
 export class CarouselClass {
   static container = document.getElementById("carousel-container");
-  /** @type {{"id": number, "img": string, "detailImg": string, "more":{"text": string, "link": stringF}|undefined, "title": string, "description": string}[]} */
-  static DATA = [];
+  static nbItems = 9;
 
-  /** @type {Element} */
-  element;
+  /** @type {HTMLElement} */
+  element = document.getElementById("carousel");
 
   /** @type {number} */
   position = 0;
@@ -34,12 +33,8 @@ export class CarouselClass {
   isClockwiseRotation = false;
 
   constructor() {
-    this.element = document.createElement("div");
-    this.element.id = "carousel";
-    for (const item of CarouselClass.DATA) this.items.push(new ItemCarousel(item.id, this));
-
-    CarouselClass.container.appendChild(this.element);
-
+    for (const id of Array.from({ length: CarouselClass.nbItems }, (_, i) => i + 1))
+      this.items.push(new ItemCarousel(id, this));
     CarouselClass.container.addEventListener("mousedown", this.handleMouseDown.bind(this));
     CarouselClass.container.addEventListener("mousemove", this.handleMouseMove.bind(this));
     CarouselClass.container.addEventListener("mouseup", this.handleMouseUpOrLeaving.bind(this));
@@ -48,7 +43,7 @@ export class CarouselClass {
     document.querySelectorAll("prev").forEach((prev) => prev.addEventListener("click", this.prev.bind(this)));
     document.querySelectorAll("next").forEach((next) => next.addEventListener("click", this.next.bind(this)));
 
-    scramble(CarouselClass.DATA[0]);
+    scramble(this.items[0].element);
   }
 
   /**
@@ -69,7 +64,7 @@ export class CarouselClass {
   }
 
   get itemInFront() {
-    return CarouselClass.DATA[getItemIdInFront(this.position) - 1];
+    return this.items[getItemIdInFront(this.position) - 1];
   }
 
   next() {
@@ -94,8 +89,7 @@ export class CarouselClass {
     //we animate style of each item depending of their next position
     for (let item of this.items) {
       const indexOfNextPos =
-        (CarouselClass.DATA.length + getClosestIndexStandardPos(item.position) + deltaIndex) %
-        CarouselClass.DATA.length;
+        (this.items.length + getClosestIndexStandardPos(item.position) + deltaIndex) % this.items.length;
       const nextPos = CAROUSEL.STANDARD_POS[indexOfNextPos];
       item.animeTo(nextPos);
       //we apply the next position of the carousel ie next position of the first image
@@ -113,7 +107,7 @@ export class CarouselClass {
 
     //we change style of each image depending of their next position
     for (let item of this.items) {
-      let nextLinearPosUnconstrained = nextPosCarousel + (1 / CarouselClass.DATA.length) * (item.id - 1);
+      let nextLinearPosUnconstrained = nextPosCarousel + (1 / this.items.length) * (item.id - 1);
       let nextLinearPos = getConstrainedPos(nextLinearPosUnconstrained);
       let nextPos = getRealPos(nextLinearPos);
       item.changeTo(nextPos);
@@ -147,7 +141,7 @@ export class CarouselClass {
       let standardNextIndex = getNextClosestIndexStandardPos(this.position, this.isClockwiseRotation);
       if (CAROUSEL.STANDARD_POS[standardNextIndex] != this.position) {
         for (let item of this.items) {
-          const index = (item.id - 1 + standardNextIndex) % CarouselClass.DATA.length;
+          const index = (item.id - 1 + standardNextIndex) % this.items.length;
           const nextPos = CAROUSEL.STANDARD_POS[index];
           item.animeTo(nextPos);
           if (item.id - 1 == 0) this.position = nextPos;
@@ -161,7 +155,7 @@ export class CarouselClass {
   }
 
   applyChangePosition() {
-    scramble(this.itemInFront);
+    scramble(this.itemInFront.element);
     showDetails();
     this.prevPosition = this.position;
   }

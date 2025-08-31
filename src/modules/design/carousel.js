@@ -1,4 +1,3 @@
-import { dataDesign } from "../../shared/assets.js";
 import { CarouselClass } from "./CarouselClass.js";
 import { showDetails } from "./design.js";
 
@@ -34,7 +33,6 @@ export const myCarousel = {
   /** @type {CarouselClass|null} */
   instance: null,
   init: () => {
-    CarouselClass.DATA = dataDesign;
     myCarousel.instance = new CarouselClass();
     showDetails();
     updatePathCarousel();

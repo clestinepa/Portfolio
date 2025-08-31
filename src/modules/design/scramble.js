@@ -71,11 +71,11 @@ const description = document.getElementById("scramble");
 
 /**
  * Scramble the current carousel description with the description of the new item in front
- * @param {{title: string, description : string}} item the item in front of the carousel
+ * @param {HTMLElement} el the HTMLElement of the image in front of the carousel
  */
-export function scramble(item) {
-  scrambleButton.scrambleText(item.title);
-  scrambleDescription.scrambleText(item.description);
+export function scramble(img) {
+  scrambleButton.scrambleText(img.dataset.title);
+  scrambleDescription.scrambleText(img.dataset.description);
 }
 
 const scrambleButton = new Scramble(button);

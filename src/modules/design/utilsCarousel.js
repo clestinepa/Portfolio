@@ -109,7 +109,7 @@ export function getZIndex(pos) {
  */
 export function getItemIdInFront(pos) {
   const positions = CAROUSEL.STANDARD_POS.slice(0, -1);
-  const ids = Array.from({ length: CarouselClass.DATA.length }, (_, i) => i + 1);
+  const ids = Array.from({ length: CarouselClass.nbItems }, (_, i) => i + 1);
 
   const index = positions.findIndex((p) => p === pos);
   const rotatedIds = [...ids.slice(-index), ...ids.slice(0, -index)];
@@ -169,7 +169,7 @@ export function getConstrainedPos(pos) {
  * @returns {number} the real nonlinear remapped position
  */
 export function getRealPos(pos) {
-  const sizeLinearInterval = 1 / CarouselClass.DATA.length;
+  const sizeLinearInterval = 1 / CarouselClass.nbItems;
   const ratio = pos / sizeLinearInterval;
   const x1 = ratio - (ratio % 1);
   const x2 = x1 + 1;
