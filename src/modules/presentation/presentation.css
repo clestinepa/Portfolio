@@ -8,21 +8,24 @@
   max-height: 100vh;
   /* position */
   position: relative;
-  & .img-container {
-    /* appearance */
-    width: var(--width-picture-profile);
-    aspect-ratio: 4/5;
-  }
-  & .text-container {
-    & h1 {
-      /* content */
-      font-family: var(--font-corps);
+  & .img-text-wrapper {
+    margin-right: 0;
+    & .img-container {
+      /* appearance */
+      width: var(--width-picture-profile);
+      aspect-ratio: 4/5;
     }
-    & span {
-      /* content */
-      font-size: larger;
-      font-family: var(--font-title);
-      color: var(--main);
+    & .text-container {
+      & h1 {
+        /* content */
+        font-family: var(--font-corps);
+      }
+      & span {
+        /* content */
+        font-size: larger;
+        font-family: var(--font-title);
+        color: var(--main);
+      }
     }
   }
 }

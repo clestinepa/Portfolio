@@ -8,11 +8,11 @@
   & .text-container-about {
     /* position */
     position: relative;
-    &.end {
+    &:last-child {
       /* appearance */
       margin-top: var(--border-radius);
     }
-    &.odd {
+    &:nth-child(odd) {
       /* content */
       padding-right: var(--gap);
       & .text-illustration {
@@ -21,7 +21,7 @@
         right: 0;
       }
     }
-    &.even {
+    &:nth-child(even) {
       /* content */
       padding-left: var(--gap);
       & .text-illustration {
@@ -45,11 +45,11 @@
 @media (max-width: 768px) {
   #about-text {
     .text-container-about {
-      &.odd {
+      &:nth-child(odd) {
         /* content */
         padding-right: 0;
       }
-      &.even {
+      &:nth-child(even) {
         /* content */
         padding-left: 0;
       }

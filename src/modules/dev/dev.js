@@ -50,7 +50,7 @@ function displayGrid() {
 
     //wrapper
     let wrapper = document.createElement("div");
-    wrapper.className = `img-text-wrapper ${item.id % 2 ? "odd" : "even"}`;
+    wrapper.className = "img-text-wrapper";
     wrapper.appendChild(imgContainer);
     wrapper.appendChild(textContainer);
     gridContainer.appendChild(wrapper);

@@ -4,11 +4,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  &.odd {
+  &:nth-child(odd) {
     /* appearance */
     margin-right: var(--gap);
   }
-  &.even {
+  &:nth-child(even) {
     /* content */
     flex-direction: row-reverse;
     /* appearance */
