@@ -1,22 +1,31 @@
 const logos = [
   "ada",
+  "android-studio",
+  "angular",
+  "canva",
   "chart-js",
   "css",
+  "figma",
+  "filmora",
+  "github",
   "html",
   "java",
   "js",
   "jupyter",
+  "lightroom",
   "mapbox",
   "material-ui",
+  "miro",
   "openlayers",
   "python",
   "react",
   "redux",
   "svelte",
+  "tailwind",
+  "web-suite",
 ];
 
 export let svgHighlightStroke = "";
-
 
 /** @type {{"id": number, "img": string, "title": string, "text": string, "logos": string[], "buttons": {"link": string, "text": string}[]}[]} */
 export let dataDev = [];
