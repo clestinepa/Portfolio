@@ -42,7 +42,7 @@ export function shuffle(array) {
 class FrameLoop {
   frameId = null;
   /**
-   * @type {(() => {shouldContinue: boolean, timeout: number|undefined})[]}
+   * @type {() => boolean})[]}
    */
   callbacks = [];
 
@@ -52,8 +52,8 @@ class FrameLoop {
     const loop = () => {
       let shouldContinueLoop = true;
       for (let callback of this.callbacks) {
-        const { shouldContinue, timeout } = callback();
-        if (!shouldContinue) shouldContinueLoop = this.stop(callback, timeout);
+        const shouldContinueThis = callback();
+        if (!shouldContinueThis) shouldContinueLoop = this.stop(callback);
       }
       if (shouldContinueLoop) this.frameId = requestAnimationFrame(loop);
     };
@@ -65,13 +65,8 @@ class FrameLoop {
     if (this.callbacks.length === 0) cancelAnimationFrame(this.frameId);
   }
 
-  #timeout(timeout, callback) {
-    if (timeout > 0) setTimeout(() => callback(), timeout);
-    else callback();
-  }
-
   /**
-   * @param {() => {shouldContinue: boolean, timeout: number|undefined}} callbackToStart
+   * @param {() => boolean}} callbackToStart
    */
   start(callbackToStart) {
     if (this.callbacks.indexOf(callbackToStart) !== -1) return;
@@ -80,11 +75,11 @@ class FrameLoop {
   }
 
   /**
-   * @param {() => {shouldContinue: boolean, timeout: number|undefined}} callbackToStop
+   * @param {() => boolean} callbackToStop
    */
-  stop(callbackToStop, timeout = 0) {
+  stop(callbackToStop) {
     if (this.callbacks.indexOf(callbackToStop) === -1) return;
-    this.#timeout(timeout, () => this.#cancelAnimation(callbackToStop));
+    this.#cancelAnimation(callbackToStop);
     if (this.callbacks.length === 0) return false;
     return true;
   }

@@ -41,10 +41,10 @@ class Scramble {
 
     this.element.innerHTML = output;
 
-    if (complete >= this.queue.length) return { shouldContinue: false };
+    if (complete >= this.queue.length) return false;
     else this.counterFrame++;
 
-    return { shouldContinue: true };
+    return true;
   }
 
   scrambleText(newText) {

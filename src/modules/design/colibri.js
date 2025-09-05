@@ -25,7 +25,7 @@ const COLIBRI = {
   },
   //hide
   HIDE: {
-    TIMEOUT: 1000, //(in ms) timeout before stop animation frame
+    ANIMATION_DURATION: 1000, //(in ms) duration of the hide animation
   },
   //movement
   T_INTERPOLATION: {
@@ -186,16 +186,16 @@ export class Colibri {
   frameColibri() {
     this.#setAction();
     this.#setGoal();
-    const t = this.#t;
-    const positionGoal = this.#positionGoal;
+    const t = this.#t; //to calculate it once
+    const positionGoal = this.#positionGoal; //to calculate it once
     this.#setPosition(t, positionGoal);
 
     colibriElement.style.top = `${this.position.y}px`;
     colibriElement.style.left = `${this.position.x}px`;
     colibriElement.style.transform = `rotate(${this.position.angle}rad) scaleY(${this.#isFlipped ? "-1" : "1"})`;
 
-    if (!this.isVisible) return { shouldContinue: false, timeout: COLIBRI.HIDE.TIMEOUT };
-    else return { shouldContinue: true };
+    if (this.action === "hide" && this.#isGoalAchieved) return false;
+    return true;
   }
 
   hide(sectionWhereHidden) {
@@ -231,6 +231,6 @@ export const myColibri = {
     colibriElement.style.height = `${COLIBRI.SIZE}px`;
     colibriElement.style.top = `${myColibri.instance.position.y}px`;
     colibriElement.style.left = `${myColibri.instance.position.x}px`;
-    colibriElement.style.transition = `opacity ${COLIBRI.HIDE.TIMEOUT}ms ease-in-out`;
+    colibriElement.style.transition = `opacity ${COLIBRI.HIDE.ANIMATION_DURATION}ms ease-in-out`;
   },
 };

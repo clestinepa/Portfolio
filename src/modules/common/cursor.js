@@ -66,7 +66,7 @@ function removeSparkles() {
   let moveIndex = 0;
   let sparkle;
 
-  if (sparklesArr.length === 0) return { shouldContinue: false };
+  if (sparklesArr.length === 0) return false;
 
   for (let i = 0; i < sparklesArr.length; i++) {
     sparkle = sparklesArr[i];
@@ -75,7 +75,7 @@ function removeSparkles() {
   }
 
   sparklesArr.length = moveIndex;
-  return { shouldContinue: true };
+  return true;
 }
 
 function handleCursorMoving(e) {
@@ -91,7 +91,6 @@ function handleCursorMoving(e) {
 function handleCursorDown() {
   myColibri.instance.handleMouseDown();
 }
-
 
 export const myCursor = {
   position: {
