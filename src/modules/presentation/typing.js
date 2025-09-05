@@ -151,7 +151,7 @@ function typeEffect() {
   }
 
   if (wordIndex == 0 && typingElement.textContent == currentWord) {
-    if (counterApparition == 1 && invitation.classList.contains("hide")) {
+    if (counterApparition == 1 && invitation.classList.contains("hide") && window.scrollY < window.innerHeight / 10) {
       invitation.classList.toggle("hide");
       restartAnimation(invitation.firstElementChild, `bounceInvitation 2s infinite`);
     }
