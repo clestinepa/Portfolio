@@ -10,7 +10,7 @@ import { myCursor } from "../common/cursor.js";
 
 /** Constants **/
 const COLIBRI = {
-  SECTION_VISIBLE: 3, //rank of the section where the colibri is visible
+  SECTION_VISIBLE: 4, //rank of the section where the colibri is visible
   //appearance
   SIZE: 70, //(in px) size of the colibri
   MARGIN_MOUSE: 10, //(in px) margin x between mouse and colibri

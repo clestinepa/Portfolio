@@ -1,5 +1,6 @@
 import { loadAllAssets } from "./shared/assets.js";
 import { myPresentationSection } from "./modules/presentation/typing.js";
+import { myTechnicalSection } from "./modules/technical/technical.js";
 import { myAboutSection } from "./modules/about/about.js";
 import { myDesignSection } from "./modules/design/design.js";
 import { myDevSection } from "./modules/dev/dev.js";
@@ -21,6 +22,7 @@ async function initializeSite() {
 
   //sections
   myPresentationSection.init();
+  myTechnicalSection.init();
   myAboutSection.init();
   myDesignSection.init();
   myDevSection.init();
