@@ -4,7 +4,6 @@ import { myCursor } from "./cursor.js";
 
 /** NEXT STEPS
  * - improve UI : add assets that appears and/or move with scroll
- * - improve Progress Bar: can drag and drop with effective scroll applicable
  * - do I show each element with an animation scroll ?
  * - menu to scroll to section
  * - section save pour que quand je recharge la page, je suis au bon endroit (pcq là vu que les scripts ajoutent des éléments, la taille augmente)
@@ -16,6 +15,7 @@ const SCROLL = {};
 
 const sections = document.getElementsByClassName("section");
 const progressBar = document.getElementById("progress-bar");
+let isProgressBarClicked = false;
 
 function getClosestSection() {
   let closestSection = null;
@@ -72,18 +72,26 @@ function handleProgressBar() {
   progressBar.style.setProperty("--scroll-percent", `${scrollPercent}%`);
 }
 
+function handleMouseDown() {
+  isProgressBarClicked = true;
+}
+
 /**
  * @param {MouseEvent} e
+ * @param {boolean | undefined} isUp
  */
-function clickProgressBar(e) {
-  const scrollPercent = e.clientX / window.innerWidth;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const scrollTop = docHeight * scrollPercent;
-  window.scrollTo({
-    top: scrollTop,
-    left: 0,
-    behavior: "smooth",
-  });
+function handleMouseMoveAndUp(e, isUp = false) {
+  if (isProgressBarClicked) {
+    const scrollPercent = e.clientX / window.innerWidth;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollTop = docHeight * scrollPercent;
+    window.scrollTo({
+      top: scrollTop,
+      left: 0,
+      behavior: isUp ? "smooth" : "auto",
+    });
+    if (isUp) isProgressBarClicked = false;
+  }
 }
 
 function handleScroll() {
@@ -99,7 +107,10 @@ export const myScroll = {
     handleProgressBar();
     /** EventListener **/
     document.addEventListener("scroll", handleScroll);
-    progressBar.addEventListener("click", clickProgressBar);
+    progressBar.addEventListener("mousedown", handleMouseDown);
+    progressBar.addEventListener("mousemove", (e) => handleMouseMoveAndUp(e));
+    progressBar.addEventListener("mouseup", (e) => handleMouseMoveAndUp(e, true));
+    progressBar.addEventListener("mouseleave", (e) => handleMouseMoveAndUp(e, true));
     /** ************* **/
   },
 };

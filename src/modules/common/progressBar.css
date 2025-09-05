@@ -31,6 +31,9 @@ body::-webkit-scrollbar {
     border-radius: 0 var(--border-radius) var(--border-radius) 0;
   }
 }
+#progress-bar:hover {
+  --size-scroll: var(--border-radius);
+}
 
 @media (max-width: 768px) {
   #progress-container {
