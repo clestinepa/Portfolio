@@ -13,6 +13,7 @@
     & .img-container {
       /* appearance */
       width: var(--width-picture-profile);
+      max-height: 80vh;
       aspect-ratio: 4/5;
     }
     & .text-container {

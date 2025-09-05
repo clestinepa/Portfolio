@@ -42,12 +42,14 @@ function initParticles() {
     for (const logoName in svgLogos) {
       const wrapperSvg = document.createElement("div");
       wrapperSvg.innerHTML = svgLogos[logoName];
-      wrapperSvg.classList = "contact-particles tech-logo";
+      wrapperSvg.classList = "contact-particles";
+      //size and color
       wrapperSvg.style.setProperty(
         "--size",
         getRandomInt(CONTACT.PARTICLES.SIZE.MIN, CONTACT.PARTICLES.SIZE.MAX) + "px"
       );
       wrapperSvg.style.fill = getRandomVariableCSSColor();
+      //goal position
       const minRadius = Math.max(card.offsetWidth, card.offsetHeight);
       const maxRadius = Math.min(cardWrapper.offsetWidth, cardWrapper.offsetHeight) / 2;
       const radius = getRandom(minRadius, maxRadius);
@@ -56,8 +58,10 @@ function initParticles() {
       const y = Math.sin(angle) * radius;
       wrapperSvg.style.setProperty("--x", `calc(-50% + ${x}px)`);
       wrapperSvg.style.setProperty("--y", `calc(-50% + ${y}px)`);
+      //animation
       const randomDelay = getRandom(CONTACT.PARTICLES.ANIMATION.DELAY.MIN, CONTACT.PARTICLES.ANIMATION.DELAY.MAX);
       wrapperSvg.style.animation = `moveParticle ${CONTACT.PARTICLES.ANIMATION.DURATION}s ${randomDelay}s ease-in infinite`;
+
       cardWrapper.appendChild(wrapperSvg);
     }
   }

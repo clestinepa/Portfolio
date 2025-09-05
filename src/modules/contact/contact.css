@@ -68,6 +68,8 @@
 .contact-particles {
   /* appearance */
   opacity: calc(var(--opacity) * 2);
+  height: var(--size);
+  aspect-ratio: 1/1;
   /* position */
   position: absolute;
   transform-origin: center;
@@ -93,6 +95,7 @@
     width: var(--font-size-h1);
   }
   &:hover p {
+    /* content */
     color: var(--main);
   }
 }
